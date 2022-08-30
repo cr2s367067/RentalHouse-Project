@@ -26,6 +26,8 @@ class UserAuthenticationVM: ObservableObject {
     @Published var isProvider: Bool
     @Published var isRenter: Bool
     
+    @Published var userStatue: SignUpUserType = .provider
+    
     init(userName: String = "", password: String = "", isSignIn: Bool = false, isProvider: Bool = false, isRenter: Bool = false) {
         self.userName = userName
         self.password = password

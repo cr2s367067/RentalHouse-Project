@@ -155,3 +155,43 @@ struct ReuseableCard: View {
 //        ReuseableCard(objectName: "temp object", objectPrice: "500")
 //    }
 //}
+
+//MARK: - Reuseable room infomation text field
+
+enum InfoTextFieldType {
+    case horizontal
+    case vertical
+}
+
+struct ReuseableInfoTextField: View {
+    var fieldName: String
+    var layoutType: InfoTextFieldType = .horizontal
+    @Binding var input: String
+    var body: some View {
+        if layoutType == .horizontal {
+            HStack {
+                Text("\(fieldName):")
+                TextField("", text: $input)
+                    .textFieldStyle(.plain)
+                    .background(.white)
+            }
+            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.02, alignment: .leading)
+            .modifier(FlatGlass())
+        } else {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(fieldName):")
+                TextField("", text: $input)
+                    .textFieldStyle(.plain)
+                    .background(.white)
+            }
+            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .leading)
+            .modifier(FlatGlass())
+        }
+    }
+}
+
+struct ReuseableInfoTextField_preview: PreviewProvider {
+    static var previews: some View {
+        ReuseableInfoTextField(fieldName: "Room size", layoutType: .vertical, input: .constant("10"))
+    }
+}

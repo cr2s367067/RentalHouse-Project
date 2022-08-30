@@ -15,7 +15,6 @@ struct UserDashboard: View {
             editButton()
             userDetailComponent(mobile: "", line: "")
             Spacer()
-            signOutButton()
         }
         .modifier(ViewBackground())
     }
@@ -67,19 +66,7 @@ extension UserDashboard {
         .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.3, alignment: .leading)
     }
     
-    @ViewBuilder
-    func signOutButton() -> some View {
-        Button {
-            //Sign out function
-        } label: {
-            Text("Sign Out")
-                .foregroundColor(.red)
-                .font(.title3)
-                .fontWeight(.bold)
-        }
-        .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.03, alignment: .center)
-        .modifier(FlatGlass())
-    }
+    
     
     @ViewBuilder
     func editButton() -> some View {
