@@ -51,12 +51,6 @@ struct LoginView: View {
             
         }
         .modifier(ViewBackground())
-//        .padding()
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .background(alignment: .center) {
-//            LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
-//                .edgesIgnoringSafeArea([.top, .bottom])
-//        }
     }
 }
 

@@ -15,8 +15,12 @@
 		0E27A8EB28B9E043007F91D8 /* UserAuthenticationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27A8EA28B9E043007F91D8 /* UserAuthenticationVM.swift */; };
 		0E4AEE5728BB3452000EAD84 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4AEE5628BB3452000EAD84 /* ViewModifier.swift */; };
 		0E4AEE5928BB364E000EAD84 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4AEE5828BB364E000EAD84 /* SignUpView.swift */; };
+		0E51B78E28BDE89B003AB3ED /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */; };
+		0E51B79428BDF74A003AB3ED /* UserDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B79328BDF74A003AB3ED /* UserDashboard.swift */; };
+		0E51B79728BE0898003AB3ED /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B79628BE0898003AB3ED /* MenuView.swift */; };
 		0E5E24D128B9FAA600629B1D /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5E24D028B9FAA600629B1D /* AppViewModel.swift */; };
 		0E5E24D428BA01E000629B1D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5E24D328BA01E000629B1D /* Extensions.swift */; };
+		0EAE4B8C28BDDF4F001E8C0E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAE4B8B28BDDF4F001E8C0E /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,8 +33,12 @@
 		0E27A8EA28B9E043007F91D8 /* UserAuthenticationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationVM.swift; sourceTree = "<group>"; };
 		0E4AEE5628BB3452000EAD84 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		0E4AEE5828BB364E000EAD84 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
+		0E51B79328BDF74A003AB3ED /* UserDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDashboard.swift; sourceTree = "<group>"; };
+		0E51B79628BE0898003AB3ED /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		0E5E24D028B9FAA600629B1D /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		0E5E24D328BA01E000629B1D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0EAE4B8B28BDDF4F001E8C0E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,7 @@
 		0E27A8D128B9C6C6007F91D8 /* RentalHouse-Project */ = {
 			isa = PBXGroup;
 			children = (
+				0EAE4B8D28BDDF78001E8C0E /* CustomComponent */,
 				0E4AEE5528BB3436000EAD84 /* ViewModifiers */,
 				0E5E24D228BA01CD00629B1D /* Extensions */,
 				0E27A8E528B9C753007F91D8 /* Models */,
@@ -87,6 +96,9 @@
 		0E27A8E228B9C72B007F91D8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0E51B79528BE0886003AB3ED /* MenuView */,
+				0E51B79228BDF715003AB3ED /* UserDashboard */,
+				0EAE4B8A28BDDF2D001E8C0E /* HomeView */,
 				0E27A8E328B9C731007F91D8 /* SignInAndSignUp */,
 			);
 			path = Views;
@@ -141,12 +153,44 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		0E51B79228BDF715003AB3ED /* UserDashboard */ = {
+			isa = PBXGroup;
+			children = (
+				0E51B79328BDF74A003AB3ED /* UserDashboard.swift */,
+			);
+			path = UserDashboard;
+			sourceTree = "<group>";
+		};
+		0E51B79528BE0886003AB3ED /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
+				0E51B79628BE0898003AB3ED /* MenuView.swift */,
+			);
+			path = MenuView;
+			sourceTree = "<group>";
+		};
 		0E5E24D228BA01CD00629B1D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				0E5E24D328BA01E000629B1D /* Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0EAE4B8A28BDDF2D001E8C0E /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				0EAE4B8B28BDDF4F001E8C0E /* HomeView.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		0EAE4B8D28BDDF78001E8C0E /* CustomComponent */ = {
+			isa = PBXGroup;
+			children = (
+				0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */,
+			);
+			path = CustomComponent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,13 +263,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EAE4B8C28BDDF4F001E8C0E /* HomeView.swift in Sources */,
 				0E5E24D128B9FAA600629B1D /* AppViewModel.swift in Sources */,
 				0E5E24D428BA01E000629B1D /* Extensions.swift in Sources */,
 				0E27A8E128B9C71F007F91D8 /* LoginView.swift in Sources */,
+				0E51B78E28BDE89B003AB3ED /* CustomComponent.swift in Sources */,
 				0E27A8D528B9C6C6007F91D8 /* ContentView.swift in Sources */,
 				0E4AEE5928BB364E000EAD84 /* SignUpView.swift in Sources */,
+				0E51B79728BE0898003AB3ED /* MenuView.swift in Sources */,
 				0E27A8EB28B9E043007F91D8 /* UserAuthenticationVM.swift in Sources */,
 				0E4AEE5728BB3452000EAD84 /* ViewModifier.swift in Sources */,
+				0E51B79428BDF74A003AB3ED /* UserDashboard.swift in Sources */,
 				0E27A8D328B9C6C6007F91D8 /* RentalHouse_ProjectApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

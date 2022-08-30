@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var userAuth: UserAuthenticationVM
     var body: some View {
-        LoginView()
+        if userAuth.isSignIn {
+            HomeView()
+        } else {
+            LoginView()
+        }
     }
 }
 

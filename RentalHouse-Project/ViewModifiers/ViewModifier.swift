@@ -30,6 +30,9 @@ struct ViewBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(alignment: .center) {
                 LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
