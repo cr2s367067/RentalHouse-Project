@@ -173,7 +173,7 @@ struct ReuseableInfoTextField: View {
                 Text("\(fieldName):")
                 TextField("", text: $input)
                     .textFieldStyle(.plain)
-                    .background(.white)
+                    .background(.gray.opacity(0.2))
             }
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.02, alignment: .leading)
             .modifier(FlatGlass())
@@ -182,7 +182,7 @@ struct ReuseableInfoTextField: View {
                 Text("\(fieldName):")
                 TextField("", text: $input)
                     .textFieldStyle(.plain)
-                    .background(.white)
+                    .background(.gray.opacity(0.2))
             }
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .leading)
             .modifier(FlatGlass())
