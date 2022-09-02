@@ -164,6 +164,13 @@ enum InfoTextFieldType {
 }
 
 struct ReuseableInfoTextField: View {
+//    var widthPercentage: Double {
+//        if layoutType == .horizontal {
+//            return 0.5
+//        }
+//    }
+//    var heightPercentage: Double
+    private let colorOpacity = 0.08
     var fieldName: String
     var layoutType: InfoTextFieldType = .horizontal
     @Binding var input: String
@@ -173,25 +180,50 @@ struct ReuseableInfoTextField: View {
                 Text("\(fieldName):")
                 TextField("", text: $input)
                     .textFieldStyle(.plain)
-                    .background(.gray.opacity(0.2))
+                    .background(.gray.opacity(colorOpacity))
             }
-            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.02, alignment: .leading)
+            .frame(width: AppVM.uiScreenWidth * 0.8, height: AppVM.uiScreenHeight * 0.02, alignment: .leading)
             .modifier(FlatGlass())
         } else {
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(fieldName):")
                 TextField("", text: $input)
                     .textFieldStyle(.plain)
-                    .background(.gray.opacity(0.2))
+                    .background(.gray.opacity(colorOpacity))
             }
-            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .leading)
+            .frame(width: AppVM.uiScreenWidth * 0.8, height: AppVM.uiScreenHeight * 0.05, alignment: .leading)
             .modifier(FlatGlass())
         }
     }
 }
 
-struct ReuseableInfoTextField_preview: PreviewProvider {
+//struct ReuseableInfoTextField_preview: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableInfoTextField(fieldName: "Room size", layoutType: .vertical, input: .constant("10"))
+//    }
+//}
+
+
+//MARK: - Reuseable confirm check box
+struct ReuseableCofirmCheckBoxWithStatement: View {
+    var statement: String
+    var isAgree = false
+    var agreeFunc: (() -> Void)? = nil
+    var body: some View {
+        HStack(spacing: 5) {
+            Button {
+                agreeFunc?()
+            } label: {
+                Image(systemName: isAgree ? "checkmark.square" : "square")
+            }
+            Text(statement)
+                .font(.caption)
+        }
+    }
+}
+
+struct ReuseableCofirmCheckBoxWithStatement_preview: PreviewProvider {
     static var previews: some View {
-        ReuseableInfoTextField(fieldName: "Room size", layoutType: .vertical, input: .constant("10"))
+        ReuseableCofirmCheckBoxWithStatement(statement: "Test statement", isAgree: false, agreeFunc: nil)
     }
 }

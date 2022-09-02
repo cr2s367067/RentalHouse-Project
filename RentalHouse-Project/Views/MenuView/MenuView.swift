@@ -56,6 +56,7 @@ extension MenuView {
     func signOutButton() -> some View {
         Button {
             //Sign out function
+            userAuth.isSignIn = false
         } label: {
             Text("Sign Out")
                 .foregroundColor(.red)
