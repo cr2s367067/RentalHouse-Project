@@ -8,7 +8,8 @@
 import Foundation
 
 
-struct RoomPostDM: Codable {
+struct RoomPostDM: Identifiable, Codable {
+    var id = UUID().uuidString
     var roomSize: String
     var roomAddress: String
     var rentalPrice: String

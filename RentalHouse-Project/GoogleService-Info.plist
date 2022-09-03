@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>385223584534-kans3ll5srgrhhc2sst5lid5jo4b4nsj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.385223584534-kans3ll5srgrhhc2sst5lid5jo4b4nsj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDCwRs6NW_KJZEegNH_HvlrKTLj4uL8kHc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>385223584534</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>SweetHome-RentalHouse-Project</string>
+	<key>PROJECT_ID</key>
+	<string>sweethome-rentalhouse-project</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sweethome-rentalhouse-project.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:385223584534:ios:6cea346acab24c4a80fe37</string>
+</dict>
+</plist>
