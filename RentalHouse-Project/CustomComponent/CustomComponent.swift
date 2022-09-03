@@ -225,8 +225,54 @@ struct ReuseableCofirmCheckBoxWithStatement: View {
     }
 }
 
-struct ReuseableCofirmCheckBoxWithStatement_preview: PreviewProvider {
-    static var previews: some View {
-        ReuseableCofirmCheckBoxWithStatement(statement: "Test statement", isAgree: false, agreeFunc: nil)
+//struct ReuseableCofirmCheckBoxWithStatement_preview: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableCofirmCheckBoxWithStatement(statement: "Test statement", isAgree: false, agreeFunc: nil)
+//    }
+//}
+
+//MARK: - Reuseable room card
+struct ReuseableRoomItemCard: View {
+    var roomData: RoomPostDM = .empty
+    var body: some View {
+        HStack {
+            Image(systemName: "photo")
+                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.14, alignment: .center)
+                .background(alignment: .center) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.brown.opacity(0.3))
+                }
+            VStack(alignment: .leading, spacing: 15) {
+                Text(roomData.roomAddress)
+                Text("Size: \(roomData.roomSize)")
+                Text("Monthly Fee: \(roomData.rentalPrice)")
+            }
+            .font(.headline)
+            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.14, alignment: .topLeading)
+        }
+        .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.21, alignment: .center)
+        .modifier(FlatGlass())
+    }
+}
+
+//struct ReuseableRoomItemCard_preview: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableRoomItemCard()
+//    }
+//}
+
+//MARK: - Custom navigate menu item
+struct CustomNaviLink<Destination: View>: View {
+    var sysImage: String
+    var labelTitle: String
+    var destination: Destination
+    var body: some View {
+        NavigationLink {
+            destination
+        } label: {
+            Label(labelTitle, systemImage: sysImage)
+                .foregroundColor(.black)
+                .font(.title2)
+        }
     }
 }

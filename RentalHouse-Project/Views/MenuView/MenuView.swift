@@ -17,21 +17,14 @@ struct MenuView: View {
                     .font(.title)
                     .fontWeight(.heavy)
             }
-            NavigationLink {
-                UserDashboard()
-            } label: {
-                Label("User", systemImage: "person")
-                    .foregroundColor(.black)
-                    .font(.title2)
-            }
+            CustomNaviLink(
+                sysImage: "person",
+                labelTitle: "User",
+                destination: UserDashboard()
+            )
             if userAuth.userStatue == .provider {
-                NavigationLink {
-                    HousePostView()
-                } label: {
-                    Label("Post", systemImage: "square.and.pencil")
-                        .foregroundColor(.black)
-                        .font(.title2)
-                }
+                CustomNaviLink(sysImage: "square.and.pencil", labelTitle: "Post", destination: HousePostView())
+                CustomNaviLink(sysImage: "folder", labelTitle: "Folder", destination: PostCollectionView())
             }
             Spacer()
             signOutButton()
