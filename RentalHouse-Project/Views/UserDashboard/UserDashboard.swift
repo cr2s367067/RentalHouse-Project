@@ -16,7 +16,7 @@ struct UserDashboard: View {
             userDetailComponent(mobile: "", line: "")
             Spacer()
         }
-        .modifier(ViewBackground())
+        .modifier(ViewBackground(backgroundType: .naviBarIsShown))
     }
 }
 

@@ -47,9 +47,6 @@ extension HomeView {
                 ReuseableCard(objectName: "Some item", objectPrice: "59")
             }
         }
-        .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarHidden(true)
-        .modifier(ViewBackground())
+        .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
     }
 }

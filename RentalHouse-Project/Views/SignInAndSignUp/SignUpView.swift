@@ -42,7 +42,7 @@ struct SignUpView: View {
             }
             .modifier(FlatGlass())
         }
-        .modifier(ViewBackground())
+        .modifier(ViewBackground(backgroundType: .naviBarIsShown))
     }
 }
 

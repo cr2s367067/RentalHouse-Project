@@ -28,12 +28,25 @@ struct HousePostView: View {
                 ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $temp.roomAddress)
                 ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $temp.rentalPrice)
                 TitleAndDivier(title: "Confirm and Upload")
-                HStack {
-                    
+                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: temp.tosAgree) {
+                    temp.tosAgree.toggle()
+                }
+                Button {
+                    //Uploading process
+                } label: {
+                    Text("Post Room")
+                        .foregroundColor(.white)
+                        .font(.body)
+                        .fontWeight(.bold)
+                }
+                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.04, alignment: .center)
+                .background(alignment: .center) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color("ButtonBackground"))
                 }
             }
         }
-        .modifier(ViewBackground())
+        .modifier(ViewBackground(backgroundType: .naviBarIsShown))
     }
 }
 

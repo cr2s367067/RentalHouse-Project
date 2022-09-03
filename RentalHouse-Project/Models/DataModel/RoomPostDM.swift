@@ -13,6 +13,7 @@ struct RoomPostDM: Codable {
     var roomAddress: String
     var rentalPrice: String
     var additionalInfo: String
+    var tosAgree: Bool
 }
 
 extension RoomPostDM {
@@ -20,6 +21,7 @@ extension RoomPostDM {
         roomSize: "",
         roomAddress: "",
         rentalPrice: "",
-        additionalInfo: "ㄐ"
+        additionalInfo: "",
+        tosAgree: false
     )
 }

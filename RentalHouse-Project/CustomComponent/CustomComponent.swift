@@ -214,10 +214,13 @@ struct ReuseableCofirmCheckBoxWithStatement: View {
             Button {
                 agreeFunc?()
             } label: {
-                Image(systemName: isAgree ? "checkmark.square" : "square")
+                Image(systemName: isAgree ? "checkmark.square.fill" : "square")
+                    .foregroundColor(isAgree ? .green : .gray)
+                    .font(.headline)
             }
             Text(statement)
-                .font(.caption)
+                .font(.headline)
+                .fontWeight(.bold)
         }
     }
 }

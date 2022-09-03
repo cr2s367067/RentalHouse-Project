@@ -50,7 +50,7 @@ struct LoginView: View {
             }
             
         }
-        .modifier(ViewBackground())
+        .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
     }
 }
 

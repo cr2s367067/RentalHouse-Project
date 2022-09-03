@@ -25,15 +25,36 @@ struct FlatGlass: ViewModifier {
     }
 }
 
+enum BackgroundType {
+    case naviBarIsHidden
+    case naviBarIsShown
+}
+
 struct ViewBackground: ViewModifier {
+    var backgroundType: BackgroundType = .naviBarIsShown
     @StateObject var appVM = AppVM()
     func body(content: Content) -> some View {
-        content
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(alignment: .center) {
-                LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .edgesIgnoringSafeArea([.top, .bottom])
-            }
+        if backgroundType == .naviBarIsShown {
+            content
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(alignment: .center) {
+                    LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        .edgesIgnoringSafeArea([.top, .bottom])
+                }
+        } else {
+            content
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(true)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(alignment: .center) {
+                    LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        .edgesIgnoringSafeArea([.top, .bottom])
+                }
+        }
     }
 }

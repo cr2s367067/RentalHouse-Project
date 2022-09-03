@@ -26,6 +26,7 @@ struct MenuView: View {
             }
             if userAuth.userStatue == .provider {
                 NavigationLink {
+                    HousePostView()
                 } label: {
                     Label("Post", systemImage: "square.and.pencil")
                         .foregroundColor(.black)
