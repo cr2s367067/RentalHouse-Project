@@ -39,6 +39,11 @@ struct SignUpView: View {
                     }
                     Spacer()
                 }
+                ReuseableAuthButton(buttonName: "Sign Up") {
+                    Task {
+                        try await userAuth.createUser()
+                    }
+                }
             }
             .modifier(FlatGlass())
         }

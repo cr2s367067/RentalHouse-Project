@@ -276,3 +276,25 @@ struct CustomNaviLink<Destination: View>: View {
         }
     }
 }
+
+//MARK: - SignIn/SignUp button
+struct ReuseableAuthButton: View {
+    var buttonName: String
+    var taskFunction: (()->Void)? = nil
+    var body: some View {
+        Button {
+            taskFunction?()
+        } label: {
+            Text(buttonName)
+                .font(.body)
+                .fontWeight(.heavy)
+                .foregroundColor(.primary)
+        }
+        .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
+        .background(alignment: .center) {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.cyan.opacity(0.3))
+        }
+    }
+}
+

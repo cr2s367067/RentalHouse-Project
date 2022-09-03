@@ -13,6 +13,7 @@ struct LoginView: View {
     
     @EnvironmentObject var userAuth: UserAuthenticationVM
     @EnvironmentObject var appVM: AppVM
+
     
     var body: some View {
         VStack {
@@ -35,18 +36,25 @@ struct LoginView: View {
                 AuthTextField(fieldContain: $userAuth.password, fieldName: "Password", fieldType: .password)
             }
             .modifier(FlatGlass())
-            Button {
-                userAuth.isSignIn = true
-            } label: {
-                Text("Sign In")
-                    .font(.body)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.primary)
-            }
-            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
-            .background(alignment: .center) {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.cyan.opacity(0.3))
+//            Button {
+//                Task {
+//                   try await userAuth.login()
+//                }
+//            } label: {
+//                Text("Sign In")
+//                    .font(.body)
+//                    .fontWeight(.heavy)
+//                    .foregroundColor(.primary)
+//            }
+//            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
+//            .background(alignment: .center) {
+//                RoundedRectangle(cornerRadius: 10)
+//                    .fill(.cyan.opacity(0.3))
+//            }
+            ReuseableAuthButton(buttonName: "Sign In") {
+                Task {                
+                    try await userAuth.login()
+                }
             }
             
         }

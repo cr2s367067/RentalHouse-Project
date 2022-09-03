@@ -20,6 +20,8 @@ enum SignUpUserType: String {
 
 class UserAuthenticationVM: ObservableObject {
     
+    let fireAuth = FirebaseUserAuth()
+    
     @Published var userName: String
     @Published var password: String
     @Published var isSignIn: Bool
@@ -34,6 +36,26 @@ class UserAuthenticationVM: ObservableObject {
         self.isSignIn = isSignIn
         self.isProvider = isProvider
         self.isRenter = isRenter
+    }
+    
+    func login() async throws {
+        do {
+            try await fireAuth.signIn(email: userName, password: password, {
+                self.isSignIn = true
+            })
+        } catch {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func createUser() async throws {
+        do {
+            try await fireAuth.signUp(email: userName, password: password, {
+                self.isSignIn = true
+            })
+        } catch {
+            print("error: \(error.localizedDescription)")
+        }
     }
     
 }

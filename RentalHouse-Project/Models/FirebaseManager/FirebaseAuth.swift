@@ -6,7 +6,24 @@
 //
 
 import Foundation
+import FirebaseAuth
 
-class FirebaseAuth {
+class FirebaseUserAuth {
+    
+    let auth: Auth
+    
+    init() {
+        auth = Auth.auth()
+    }
+    
+    func signIn(email: String, password: String, _ completion: () -> Void) async throws {
+        try await auth.signIn(withEmail: email, password: password)
+        completion()
+    }
+    
+    func signUp(email: String, password: String, _ completion: () -> Void) async throws {
+        try await auth.createUser(withEmail: email, password: password)
+        completion()
+    }
     
 }
