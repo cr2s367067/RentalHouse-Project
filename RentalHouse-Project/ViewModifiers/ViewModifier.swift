@@ -58,3 +58,17 @@ struct ViewBackground: ViewModifier {
         }
     }
 }
+
+struct HandlerErrorByShowingAlertViewModifier: ViewModifier {
+    @StateObject var errorHandler = ErrorHandler()
+    func body(content: Content) -> some View {
+        content
+            .environmentObject(errorHandler)
+            .background(alignment: .center) {
+                EmptyView()
+                    .alert(item: $errorHandler.errorAlert) { alert in
+                        Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("Ok")))
+                    }
+            }
+    }
+}

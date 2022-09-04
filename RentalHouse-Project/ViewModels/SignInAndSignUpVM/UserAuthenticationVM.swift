@@ -38,6 +38,7 @@ class UserAuthenticationVM: ObservableObject {
         self.isRenter = isRenter
     }
     
+    @MainActor
     func login() async throws {
         do {
             try await fireAuth.signIn(email: userName, password: password, {
@@ -48,6 +49,7 @@ class UserAuthenticationVM: ObservableObject {
         }
     }
     
+    @MainActor
     func createUser() async throws {
         do {
             try await fireAuth.signUp(email: userName, password: password, {
