@@ -28,6 +28,7 @@ struct SignUpView: View {
                     Spacer()
                     SignUpUserButton(isSelected: userAuth.isProvider, userType: .provider) {
                         userAuth.isProvider = true
+                        userAuth.userStatue = .provider
                         if userAuth.isRenter {
                             userAuth.isRenter = false
                         }
@@ -35,6 +36,7 @@ struct SignUpView: View {
                     Spacer()
                     SignUpUserButton(isSelected: userAuth.isRenter, userType: .renter) {
                         userAuth.isRenter = true
+                        userAuth.userStatue = .renter
                         if userAuth.isProvider {
                             userAuth.isProvider = false
                         }
