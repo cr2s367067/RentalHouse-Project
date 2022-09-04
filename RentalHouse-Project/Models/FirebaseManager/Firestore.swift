@@ -6,7 +6,27 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
 
 class FirestoreDB {
     
+    let db: Firestore
+    
+    init() {
+        db = Firestore.firestore()
+    }
+    
+    func createUser(uid: String, user: UserDM) async throws {
+        let userPath = db.collection("Users").document(uid)
+        try await userPath.setData([
+            "nickName" : user.nickName,
+            "signUpType" : user.signUpType,
+            "mobile" : user.mobile,
+            "lineID" : user.lineID,
+            "profileImagePath" : user.profileImagePath
+        ])
+    }
+
 }

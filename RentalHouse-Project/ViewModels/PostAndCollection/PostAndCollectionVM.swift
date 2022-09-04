@@ -8,6 +8,12 @@
 import Foundation
 
 class PostAndCollectionVM: ObservableObject {
+    
+    let fireDB = FirestoreDB()
+    
     @Published var houseCollection = [RoomPostDM]()
     @Published var postingData: RoomPostDM = .empty
+    
+    
+    
 }

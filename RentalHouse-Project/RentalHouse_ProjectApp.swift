@@ -23,6 +23,7 @@ struct RentalHouse_ProjectApp: App {
             NavigationView {
                 ContentView()
                     .environmentObject(userAuth)
+                    .withErrorHandler()
             }
         }
     }

@@ -10,6 +10,8 @@ import SwiftUI
 struct SignUpView: View {
     
     @EnvironmentObject var userAuth: UserAuthenticationVM
+    @EnvironmentObject var errorHandler: ErrorHandler
+    
     
     var body: some View {
         VStack {
@@ -41,7 +43,11 @@ struct SignUpView: View {
                 }
                 ReuseableAuthButton(buttonName: "Sign Up") {
                     Task {
-                        try await userAuth.createUser()
+                        do {
+                            try await userAuth.createUser()
+                        } catch {
+                            errorHandler.handler(error: error)
+                        }
                     }
                 }
             }

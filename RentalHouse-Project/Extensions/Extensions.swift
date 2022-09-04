@@ -9,3 +9,8 @@ import Foundation
 import SwiftUI
 
 
+extension View {
+    func withErrorHandler() -> some View {
+        modifier(HandlerErrorByShowingAlertViewModifier())
+    }
+}

@@ -13,7 +13,7 @@ struct LoginView: View {
     
     @EnvironmentObject var userAuth: UserAuthenticationVM
     @EnvironmentObject var appVM: AppVM
-
+    @EnvironmentObject var errorHandler: ErrorHandler
     
     var body: some View {
         VStack {
@@ -37,8 +37,12 @@ struct LoginView: View {
             }
             .modifier(FlatGlass())
             ReuseableAuthButton(buttonName: "Sign In") {
-                Task {                
-                    try await userAuth.login()
+                Task {
+                    do {
+                        try await userAuth.login()
+                    } catch {
+                        errorHandler.handler(error: error)
+                    }
                 }
             }
             
