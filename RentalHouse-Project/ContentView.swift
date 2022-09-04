@@ -14,6 +14,9 @@ struct ContentView: View {
             HomeView()
         } else {
             LoginView()
+                .onAppear {
+                    userAuth.listenUser()
+                }
         }
     }
 }

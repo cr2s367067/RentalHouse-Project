@@ -24,6 +24,7 @@ class UserAuthenticationVM: ObservableObject {
     let fireDB = FirestoreDB()
     let errorHandler = ErrorHandler()
     
+    @Published var user: UserDM = .empty
     @Published var userName: String
     @Published var password: String
     @Published var isSignIn: Bool
@@ -41,10 +42,12 @@ class UserAuthenticationVM: ObservableObject {
         self.isRenter = isRenter
     }
     
-    @MainActor
+    
     func login() async throws {
         try await fireAuth.signIn(email: userName, password: password, {
-            self.isSignIn = true
+            DispatchQueue.main.async {
+                self.isSignIn = true
+            }
         })
     }
     
@@ -55,11 +58,20 @@ class UserAuthenticationVM: ObservableObject {
         self.isSignIn = true
     }
     
+    func userSignOut() throws {
+        try fireAuth.signOut()
+        self.isSignIn = false
+    }
     
     func listenUser() {
         fireAuth.currentUserListener {
             self.isSignIn = true
         }
+    }
+    
+    func getUser() async throws {
+        userUID = fireAuth.getUid()
+        try await fireDB.fetchUserInto(uid: userUID, user: &user)
     }
     
 }

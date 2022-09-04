@@ -29,4 +29,9 @@ class FirestoreDB {
         ])
     }
 
+    
+    func fetchUserInto(uid: String, user: inout UserDM) async throws {
+        let userPath = db.collection("Users").document(uid)
+        user = try await userPath.getDocument(as: UserDM.self)
+    }
 }

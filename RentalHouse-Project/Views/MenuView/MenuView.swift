@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     @EnvironmentObject var userAuth: UserAuthenticationVM
+    @EnvironmentObject var errorHandler: ErrorHandler
     @StateObject var appVM = AppVM()
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -49,8 +50,11 @@ extension MenuView {
     @ViewBuilder
     func signOutButton() -> some View {
         Button {
-            //Sign out function
-            userAuth.isSignIn = false
+            do {
+                try userAuth.userSignOut()
+            } catch {
+                errorHandler.handler(error: error)
+            }
         } label: {
             Text("Sign Out")
                 .foregroundColor(.red)
