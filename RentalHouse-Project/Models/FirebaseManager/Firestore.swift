@@ -34,4 +34,6 @@ class FirestoreDB {
         let userPath = db.collection("Users").document(uid)
         user = try await userPath.getDocument(as: UserDM.self)
     }
+    
+    
 }

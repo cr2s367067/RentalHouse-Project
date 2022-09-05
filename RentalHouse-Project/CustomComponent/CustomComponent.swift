@@ -351,3 +351,38 @@ struct SideMenuBar<SidebarContent: View, Content: View>: View {
         }
     }
 }
+
+//MARK: - Reuseable Button - Provider Type
+enum ProviderType: String {
+    case houseOwner = "Owner"
+    case rentalManager = "Manager"
+}
+
+struct ReuseableButtonProviderType: View {
+    var buttonName: ProviderType = .houseOwner
+    var isSelected: Bool
+    var buttonAction: (()->Void)? = nil
+    var body: some View {
+        HStack {
+            Button {
+                buttonAction?()
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: isSelected ? "checkmark.square.fill" : "square")
+                        .foregroundColor(isSelected ? .green : .gray)
+                    Text(buttonName.rawValue)
+                        .foregroundColor(.primary)
+                        .font(.body)
+                        .fontWeight(.bold)
+                }
+            }
+        }
+        .modifier(FlatGlass())
+    }
+}
+
+struct ReuseableButtonProviderType_preview: PreviewProvider {
+    static var previews: some View {
+        ReuseableButtonProviderType(isSelected: false)
+    }
+}

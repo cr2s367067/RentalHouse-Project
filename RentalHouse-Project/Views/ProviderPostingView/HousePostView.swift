@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HousePostView: View {
-    @State private var temp: RoomPostDM = .empty
+    @State private var roomData: RoomPostDM = .empty
+    @State private var isHouseOwner = false
+    @State private var isHouseManager = false
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
@@ -23,13 +25,32 @@ struct HousePostView: View {
                 .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
                 .modifier(FlatGlass())
                 TitleAndDivier(title: "Room Infomation")
-                ReuseableInfoTextField(fieldName: "Room Size", layoutType: .horizontal, input: $temp.roomSize)
+                HStack {
+                    ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
+                        isHouseOwner = true
+                        roomData.providerType = ProviderType.houseOwner.rawValue
+                        if isHouseManager {
+                            isHouseManager = false
+                        }
+                    }
+                    Spacer()
+                        .frame(width: AppVM.uiScreenWidth * 0.1)
+                    ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: isHouseManager) {
+                        isHouseManager = true
+                        roomData.providerType = ProviderType.rentalManager.rawValue
+                        if isHouseOwner {
+                            isHouseOwner = false
+                        }
+                    }
+                }
+                .frame(width: AppVM.uiScreenWidth * 0.8)
+                ReuseableInfoTextField(fieldName: "Room Size", layoutType: .horizontal, input: $roomData.roomSize)
                 
-                ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $temp.roomAddress)
-                ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $temp.rentalPrice)
+                ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $roomData.roomAddress)
+                ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $roomData.rentalPrice)
                 TitleAndDivier(title: "Confirm and Upload")
-                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: temp.tosAgree) {
-                    temp.tosAgree.toggle()
+                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: roomData.tosAgree) {
+                    roomData.tosAgree.toggle()
                 }
                 Button {
                     //Uploading process

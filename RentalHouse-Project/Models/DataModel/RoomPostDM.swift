@@ -15,6 +15,7 @@ struct RoomPostDM: Identifiable, Codable {
     var rentalPrice: String
     var additionalInfo: String
     var tosAgree: Bool
+    var providerType: String
 }
 
 extension RoomPostDM {
@@ -23,6 +24,7 @@ extension RoomPostDM {
         roomAddress: "",
         rentalPrice: "",
         additionalInfo: "",
-        tosAgree: false
+        tosAgree: false,
+        providerType: ""
     )
 }
