@@ -6,16 +6,19 @@
 //
 
 import Foundation
-
+import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct RoomPostDM: Identifiable, Codable {
-    var id = UUID().uuidString
+    @DocumentID var id: String?
     var roomSize: String
     var roomAddress: String
     var rentalPrice: String
     var additionalInfo: String
     var tosAgree: Bool
     var providerType: String
+    var roomCoverImage: String
+    @ServerTimestamp var uploadTime: Timestamp?
 }
 
 extension RoomPostDM {
@@ -25,6 +28,7 @@ extension RoomPostDM {
         rentalPrice: "",
         additionalInfo: "",
         tosAgree: false,
-        providerType: ""
+        providerType: "",
+        roomCoverImage: ""
     )
 }

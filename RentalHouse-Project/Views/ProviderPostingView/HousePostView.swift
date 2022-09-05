@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct HousePostView: View {
-    @State private var roomData: RoomPostDM = .empty
+    
+    @EnvironmentObject var pacVM: PostAndCollectionVM
+    @EnvironmentObject var errorHandler: ErrorHandler
+    
     @State private var isHouseOwner = false
     @State private var isHouseManager = false
     var body: some View {
@@ -28,7 +31,7 @@ struct HousePostView: View {
                 HStack {
                     ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
                         isHouseOwner = true
-                        roomData.providerType = ProviderType.houseOwner.rawValue
+                        pacVM.roomData.providerType = ProviderType.houseOwner.rawValue
                         if isHouseManager {
                             isHouseManager = false
                         }
@@ -37,23 +40,33 @@ struct HousePostView: View {
                         .frame(width: AppVM.uiScreenWidth * 0.1)
                     ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: isHouseManager) {
                         isHouseManager = true
-                        roomData.providerType = ProviderType.rentalManager.rawValue
+                        pacVM.roomData.providerType = ProviderType.rentalManager.rawValue
                         if isHouseOwner {
                             isHouseOwner = false
                         }
                     }
                 }
                 .frame(width: AppVM.uiScreenWidth * 0.8)
-                ReuseableInfoTextField(fieldName: "Room Size", layoutType: .horizontal, input: $roomData.roomSize)
+                ReuseableInfoTextField(fieldName: "Room Size", layoutType: .horizontal, input: $pacVM.roomData.roomSize)
                 
-                ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $roomData.roomAddress)
-                ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $roomData.rentalPrice)
+                ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $pacVM.roomData.roomAddress)
+                ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $pacVM.roomData.rentalPrice)
                 TitleAndDivier(title: "Confirm and Upload")
-                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: roomData.tosAgree) {
-                    roomData.tosAgree.toggle()
+                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
+                    pacVM.roomData.tosAgree.toggle()
                 }
                 Button {
-                    //Uploading process
+                    Task {
+                        do {
+                            //Uploading process
+                            //1. upload photos
+                            
+                            //2. upload rooms data
+                            try await pacVM.roomUpload()
+                        } catch {
+                            errorHandler.handler(error: error)
+                        }
+                    }
                 } label: {
                     Text("Post Room")
                         .foregroundColor(.white)

@@ -9,17 +9,27 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+enum CollectionType: String {
+    case users = "Users"
+    case rooms = "Rooms"
+}
 
 class FirestoreDB {
     
     let db: Firestore
+    var collectionType: CollectionType = .users
     
     init() {
         db = Firestore.firestore()
     }
     
+    func documentPath() -> DocumentReference {
+        return db.collection("").document("")
+    }
+    
     func createUser(uid: String, user: UserDM) async throws {
-        let userPath = db.collection("Users").document(uid)
+        collectionType = .users
+        let userPath = db.collection(collectionType.rawValue).document(uid)
         try await userPath.setData([
             "nickName" : user.nickName,
             "signUpType" : user.signUpType,
@@ -28,12 +38,31 @@ class FirestoreDB {
             "profileImagePath" : user.profileImagePath
         ])
     }
-
     
     func fetchUserInto(uid: String, user: inout UserDM) async throws {
-        let userPath = db.collection("Users").document(uid)
+        collectionType = .users
+        let userPath = db.collection(collectionType.rawValue).document(uid)
         user = try await userPath.getDocument(as: UserDM.self)
     }
     
+    
+    func roomUploadProcess(uid: String, room info: RoomPostDM) async throws {
+        collectionType = .rooms
+        let roomPath = db.collection(collectionType.rawValue).document(uid)
+        try await roomPath.setData([
+            "roomSize" : info.roomSize,
+            "roomAddress" : info.roomAddress,
+            "rentalPrice" : info.rentalPrice,
+            "additionalInfo" : info.additionalInfo,
+            "tosAgree" : info.tosAgree,
+            "providerType" : info.providerType,
+            "roomCoverImage" : info.roomCoverImage,
+            "uploadTime" : Date()
+        ])
+    }
+    
+    func fetchRoomUpload(uid: String) async throws {
+        
+    }
     
 }
