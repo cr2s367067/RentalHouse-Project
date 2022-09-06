@@ -8,20 +8,25 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var pacVM: PostAndCollectionVM
+    @EnvironmentObject var errorHandler: ErrorHandler
     @State private var searchingContext = ""
     @State private var show = false
     var body: some View {
-        SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.34, showSidebar: $show) {
-            MenuView()
-        } content: {
+//        SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.34, showSidebar: $show) {
+//            MenuView()
+//        } content: {
             homeContain()
-        }
+//        }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
+    static let pacVM = PostAndCollectionVM()
     static var previews: some View {
         HomeView()
+            .environmentObject(pacVM)
+            .withErrorHandler()
     }
 }
 
@@ -44,9 +49,18 @@ extension HomeView {
             }
             SearchBar(input: $searchingContext)
             ScrollView(.vertical, showsIndicators: false) {
-                ReuseableCard(objectName: "Some item", objectPrice: "59")
+                ForEach(pacVM.houseCollection) { room in
+                    ReuseableCard(roomAddress: room.roomAddress, roomPrice: room.rentalPrice, roomCoverImage: room.roomCoverImage)
+                }
             }
         }
         .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
+        .task {
+            do {
+                try await pacVM.fetchPostedRoom(from: .external)
+            } catch {
+                errorHandler.handler(error: error)
+            }
+        }
     }
 }

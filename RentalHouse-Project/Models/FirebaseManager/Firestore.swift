@@ -14,6 +14,11 @@ enum CollectionType: String {
     case rooms = "Rooms"
 }
 
+enum PostSpot {
+    case inside
+    case external
+}
+
 class FirestoreDB {
     
     let db: Firestore
@@ -21,10 +26,6 @@ class FirestoreDB {
     
     init() {
         db = Firestore.firestore()
-    }
-    
-    func documentPath() -> DocumentReference {
-        return db.collection("").document("")
     }
     
     func createUser(uid: String, user: UserDM) async throws {
@@ -46,23 +47,83 @@ class FirestoreDB {
     }
     
     
-    func roomUploadProcess(uid: String, room info: RoomPostDM) async throws {
+    func roomUploadProcess(
+        uid: String,
+        room info: RoomPostDM,
+        spot upload: PostSpot
+    ) async throws {
         collectionType = .rooms
-        let roomPath = db.collection(collectionType.rawValue).document(uid)
-        try await roomPath.setData([
-            "roomSize" : info.roomSize,
-            "roomAddress" : info.roomAddress,
-            "rentalPrice" : info.rentalPrice,
-            "additionalInfo" : info.additionalInfo,
-            "tosAgree" : info.tosAgree,
-            "providerType" : info.providerType,
-            "roomCoverImage" : info.roomCoverImage,
-            "uploadTime" : Date()
-        ])
+        switch upload {
+        case .inside:
+            let roomPath = db.collection(collectionType.rawValue).document(uid).collection(uid)
+            _  = try await roomPath.addDocument(data: [
+                "roomSize" : info.roomSize,
+                "roomAddress" : info.roomAddress,
+                "rentalPrice" : info.rentalPrice,
+                "additionalInfo" : info.additionalInfo,
+                "tosAgree" : info.tosAgree,
+                "providerType" : info.providerType,
+                "roomCoverImage" : info.roomCoverImage,
+                "providerInfo" : info.providerInfo,
+                "isOnPublic" : info.isOnPublic,
+                "uploadTime" : Date()
+            ])
+        case .external:
+            let roomPath = db.collection(collectionType.rawValue)
+            _  = try await roomPath.addDocument(data: [
+                "roomSize" : info.roomSize,
+                "roomAddress" : info.roomAddress,
+                "rentalPrice" : info.rentalPrice,
+                "additionalInfo" : info.additionalInfo,
+                "tosAgree" : info.tosAgree,
+                "providerType" : info.providerType,
+                "roomCoverImage" : info.roomCoverImage,
+                "providerInfo" : info.providerInfo,
+                "isOnPublic" : info.isOnPublic,
+                "uploadTime" : Date()
+            ])
+        }
     }
     
-    func fetchRoomUpload(uid: String) async throws {
+    func fetchUploadRoom(
+        uid: String,
+        fetchData: inout [RoomPostDM],
+        spot fetch: PostSpot
+    ) async throws {
+        collectionType = .rooms
+        
+        switch fetch {
+        case .inside:
+            let roomPath = db.collection(collectionType.rawValue).document(uid).collection(uid)
+            let document = try await roomPath.getDocuments().documents
+            fetchData = document.compactMap { queryDocumentSnapshot in
+                let result = Result {
+                    try queryDocumentSnapshot.data(as: RoomPostDM.self)
+                }
+                switch result {
+                case .success(let success):
+                    return success
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
+                return nil
+            }
+        case .external:
+            let roomPath = db.collection(collectionType.rawValue)
+            let document = try await roomPath.getDocuments().documents
+            fetchData = document.compactMap { queryDocumentSnapshot in
+                let result = Result {
+                    try queryDocumentSnapshot.data(as: RoomPostDM.self)
+                }
+                switch result {
+                case .success(let success):
+                    return success
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
+                return nil
+            }
+        }
         
     }
-    
 }

@@ -13,12 +13,26 @@ class PostAndCollectionVM: ObservableObject {
     let fireAuth = FirebaseUserAuth()
     
     @Published var houseCollection = [RoomPostDM]()
+    @Published var providerCollection = [RoomPostDM]()
     @Published var roomData: RoomPostDM = .empty
     
-    func roomUpload() async throws {
+    func roomUpload(to spot: PostSpot) async throws {
         let uid = fireAuth.getUid()
         guard !uid.isEmpty else { return }
-        try await fireDB.roomUploadProcess(uid: uid, room: roomData)
+        try await fireDB.roomUploadProcess(
+            uid: uid,
+            room: roomData,
+            spot: spot
+        )
     }
     
+    func fetchPostedRoom(from spot: PostSpot) async throws {
+        let uid = fireAuth.getUid()
+        guard !uid.isEmpty else { return }
+        try await fireDB.fetchUploadRoom(
+            uid: uid,
+            fetchData: &providerCollection,
+            spot: spot
+        )
+    }
 }

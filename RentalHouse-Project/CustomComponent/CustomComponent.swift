@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SDWebImageSwiftUI
 
 //MARK: - AuthTextField
 struct AuthTextField: View {
@@ -136,15 +137,19 @@ struct SearchBar: View {
 
 //MARK: - Reuseabel card component
 struct ReuseableCard: View {
-    var objectName: String
-    var objectPrice: String
+    var roomAddress: String
+    var roomPrice: String
+    var roomCoverImage: String
     var body: some View {
         HStack {
-            Image(systemName: "photo")
+            WebImage(url: URL(string: roomCoverImage))
+                .resizable()
+                .scaledToFit()
+                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
             Spacer()
             VStack(alignment: .leading, spacing: 10) {
-                Text(objectName)
-                Text("$\(objectPrice)")
+                Text(roomAddress)
+                Text("$\(roomPrice)")
                 Spacer()
             }
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
@@ -253,9 +258,9 @@ struct ReuseableRoomItemCard: View {
                 Text("Monthly Fee: \(roomData.rentalPrice)")
             }
             .font(.headline)
-            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.14, alignment: .topLeading)
+            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.1, alignment: .topLeading)
         }
-        .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.21, alignment: .center)
+        .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.13, alignment: .center)
         .modifier(FlatGlass())
     }
 }

@@ -18,6 +18,8 @@ struct RoomPostDM: Identifiable, Codable {
     var tosAgree: Bool
     var providerType: String
     var roomCoverImage: String
+    var providerInfo: String
+    var isOnPublic: Bool
     @ServerTimestamp var uploadTime: Timestamp?
 }
 
@@ -29,6 +31,20 @@ extension RoomPostDM {
         additionalInfo: "",
         tosAgree: false,
         providerType: "",
-        roomCoverImage: ""
+        roomCoverImage: "",
+        providerInfo: "",
+        isOnPublic: false
+    )
+    
+    static let dummy = RoomPostDM(
+        roomSize: "12",
+        roomAddress: "114 temp address",
+        rentalPrice: "4200",
+        additionalInfo: "none",
+        tosAgree: true,
+        providerType: "RentalManager",
+        roomCoverImage: "cover image address",
+        providerInfo: "provider uid",
+        isOnPublic: false
     )
 }

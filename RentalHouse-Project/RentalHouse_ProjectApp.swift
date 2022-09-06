@@ -17,12 +17,13 @@ import FirebaseFirestoreSwift
 struct RentalHouse_ProjectApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userAuth = UserAuthenticationVM()
-    
+    @StateObject var pacVM = PostAndCollectionVM()
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
                     .environmentObject(userAuth)
+                    .environmentObject(pacVM)
                     .withErrorHandler()
             }
         }

@@ -62,7 +62,7 @@ struct HousePostView: View {
                             //1. upload photos
                             
                             //2. upload rooms data
-                            try await pacVM.roomUpload()
+                            try await pacVM.roomUpload(to: .inside)
                         } catch {
                             errorHandler.handler(error: error)
                         }
@@ -85,7 +85,11 @@ struct HousePostView: View {
 }
 
 struct HousePostView_Previews: PreviewProvider {
+    static let pacVM = PostAndCollectionVM()
+    static let errorHandler = ErrorHandler()
     static var previews: some View {
         HousePostView()
+            .environmentObject(pacVM)
+            .environmentObject(errorHandler)
     }
 }
