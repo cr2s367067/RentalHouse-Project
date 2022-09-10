@@ -16,5 +16,3 @@ class AppVM: ObservableObject {
     @Published var randomGredientColor2 = "Gredient2"
     
 }
-
-

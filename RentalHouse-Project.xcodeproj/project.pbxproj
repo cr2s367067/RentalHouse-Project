@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0971F428CA0C5A007870EF /* PhotoPickerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0971F328CA0C5A007870EF /* PhotoPickerRepresentable.swift */; };
 		0E27A8D328B9C6C6007F91D8 /* RentalHouse_ProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27A8D228B9C6C6007F91D8 /* RentalHouse_ProjectApp.swift */; };
 		0E27A8D528B9C6C6007F91D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27A8D428B9C6C6007F91D8 /* ContentView.swift */; };
 		0E27A8D728B9C6C7007F91D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E27A8D628B9C6C7007F91D8 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E0971F328CA0C5A007870EF /* PhotoPickerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerRepresentable.swift; sourceTree = "<group>"; };
 		0E27A8CF28B9C6C6007F91D8 /* RentalHouse-Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RentalHouse-Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E27A8D228B9C6C6007F91D8 /* RentalHouse_ProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalHouse_ProjectApp.swift; sourceTree = "<group>"; };
 		0E27A8D428B9C6C6007F91D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E0971F228CA0C3B007870EF /* PhotoPickerRepresentable */ = {
+			isa = PBXGroup;
+			children = (
+				0E0971F328CA0C5A007870EF /* PhotoPickerRepresentable.swift */,
+			);
+			path = PhotoPickerRepresentable;
+			sourceTree = "<group>";
+		};
 		0E27A8C628B9C6C6007F91D8 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +162,7 @@
 		0E27A8E428B9C74C007F91D8 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0E0971F228CA0C3B007870EF /* PhotoPickerRepresentable */,
 				0EBD055128C47D48008B2D31 /* ErrorHandler */,
 				0EDA99ED28C323AB00B6B8A7 /* PostAndCollection */,
 				0E27A8E928B9E030007F91D8 /* SignInAndSignUpVM */,
@@ -385,6 +396,7 @@
 				0E4AEE5728BB3452000EAD84 /* ViewModifier.swift in Sources */,
 				0EDA99EF28C323CC00B6B8A7 /* PostAndCollectionVM.swift in Sources */,
 				0E56122628BE201F00745AFA /* RoomPostDM.swift in Sources */,
+				0E0971F428CA0C5A007870EF /* PhotoPickerRepresentable.swift in Sources */,
 				0EBD055328C47D5E008B2D31 /* ErrorHandler.swift in Sources */,
 				0E51B79428BDF74A003AB3ED /* UserDashboard.swift in Sources */,
 				0E27A8D328B9C6C6007F91D8 /* RentalHouse_ProjectApp.swift in Sources */,

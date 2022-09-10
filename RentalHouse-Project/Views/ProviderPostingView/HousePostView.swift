@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct HousePostView: View {
     
@@ -18,15 +19,7 @@ struct HousePostView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
                 TitleAndDivier(title: "Picking Room image")
-                Button {
-                    
-                } label: {
-                    Label("Photo Picker", systemImage: "plus.square")
-                        .foregroundColor(.black)
-                        .font(.title3)
-                }
-                .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
-                .modifier(FlatGlass())
+                photoPicker()
                 TitleAndDivier(title: "Room Infomation")
                 HStack {
                     ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
@@ -91,5 +84,38 @@ struct HousePostView_Previews: PreviewProvider {
         HousePostView()
             .environmentObject(pacVM)
             .environmentObject(errorHandler)
+    }
+}
+
+
+extension HousePostView {
+    
+    @available(iOS 16, *)
+    struct PhotoPicker_ios16: View {
+        @StateObject private var pacVM_ios16 = PostAndCollectionVM_ios16()
+        var body: some View {
+            PhotosPicker(selection: $pacVM_ios16.test) {
+                Label("Photo Picker", systemImage: "plus.square")
+                    .foregroundColor(.black)
+                    .font(.title3)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func photoPicker() -> some View {
+        if #available(iOS 16, *) {
+            PhotoPicker_ios16()
+        } else {
+            Button {
+                
+            } label: {
+                Label("Photo Picker", systemImage: "plus.square")
+                    .foregroundColor(.black)
+                    .font(.title3)
+            }
+            .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
+            .modifier(FlatGlass())
+        }
     }
 }

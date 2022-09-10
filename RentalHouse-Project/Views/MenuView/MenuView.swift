@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuView: View {
     @EnvironmentObject var userAuth: UserAuthenticationVM
     @EnvironmentObject var errorHandler: ErrorHandler
+    @EnvironmentObject var pacVM: PostAndCollectionVM
     @StateObject var appVM = AppVM()
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -24,8 +25,16 @@ struct MenuView: View {
                 destination: UserDashboard()
             )
             if userAuth.userStatue == .provider {
-                CustomNaviLink(sysImage: "square.and.pencil", labelTitle: "Post", destination: HousePostView())
-                CustomNaviLink(sysImage: "folder", labelTitle: "Folder", destination: PostCollectionView())
+                CustomNaviLink(
+                    sysImage: "square.and.pencil",
+                    labelTitle: "Post",
+                    destination: HousePostView().environmentObject(pacVM)
+                )
+                CustomNaviLink(
+                    sysImage: "folder",
+                    labelTitle: "Folder",
+                    destination: PostCollectionView().environmentObject(pacVM)
+                )
             }
             Spacer()
             signOutButton()
@@ -58,7 +67,7 @@ extension MenuView {
         } label: {
             Text("Sign Out")
                 .foregroundColor(.red)
-                .font(.title3)
+                .font(.body)
                 .fontWeight(.bold)
         }
         .frame(width: AppVM.uiScreenWidth * 0.2, height: AppVM.uiScreenHeight * 0.03, alignment: .center)
