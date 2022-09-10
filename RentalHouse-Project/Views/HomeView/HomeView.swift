@@ -50,7 +50,7 @@ extension HomeView {
             SearchBar(input: $searchingContext)
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(pacVM.houseCollection) { room in
-                    ReuseableCard(roomAddress: room.roomAddress, roomPrice: room.rentalPrice, roomCoverImage: room.roomCoverImage)
+                    ReuseableCard(roomAddress: room.roomAddress, roomPrice: room.rentalPrice, roomsImage: room.roomsImage)
                 }
             }
         }

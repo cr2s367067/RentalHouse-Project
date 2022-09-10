@@ -17,7 +17,7 @@ struct RoomPostDM: Identifiable, Codable {
     var additionalInfo: String
     var tosAgree: Bool
     var providerType: String
-    var roomCoverImage: String
+    var roomsImage: [String]
     var providerInfo: String
     var isOnPublic: Bool
     @ServerTimestamp var uploadTime: Timestamp?
@@ -31,7 +31,7 @@ extension RoomPostDM {
         additionalInfo: "",
         tosAgree: false,
         providerType: "",
-        roomCoverImage: "",
+        roomsImage: [],
         providerInfo: "",
         isOnPublic: false
     )
@@ -43,7 +43,7 @@ extension RoomPostDM {
         additionalInfo: "none",
         tosAgree: true,
         providerType: "RentalManager",
-        roomCoverImage: "cover image address",
+        roomsImage: ["cover image address"],
         providerInfo: "provider uid",
         isOnPublic: false
     )

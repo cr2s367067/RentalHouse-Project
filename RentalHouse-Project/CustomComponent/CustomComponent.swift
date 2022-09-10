@@ -139,10 +139,10 @@ struct SearchBar: View {
 struct ReuseableCard: View {
     var roomAddress: String
     var roomPrice: String
-    var roomCoverImage: String
+    var roomsImage: [String]
     var body: some View {
         HStack {
-            WebImage(url: URL(string: roomCoverImage))
+            WebImage(url: URL(string: roomsImage.randomElement() ?? ""))
                 .resizable()
                 .scaledToFit()
                 .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.2, alignment: .center)

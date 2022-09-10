@@ -22,6 +22,7 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
     @Published var houseCollection = [RoomPostDM]()
     @Published var providerCollection = [RoomPostDM]()
     @Published var roomData: RoomPostDM = .empty
+    @Published var selectedImage = [UIImage]()
     
     func roomUpload(to spot: PostSpot) async throws {
         let uid = fireAuth.getUid()

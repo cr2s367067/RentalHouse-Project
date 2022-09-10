@@ -15,6 +15,8 @@ struct HousePostView: View {
     
     @State private var isHouseOwner = false
     @State private var isHouseManager = false
+    @State private var showPhpicker = false
+    @State private var selectedLimit = 4
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
@@ -108,7 +110,7 @@ extension HousePostView {
             PhotoPicker_ios16()
         } else {
             Button {
-                
+                showPhpicker.toggle()
             } label: {
                 Label("Photo Picker", systemImage: "plus.square")
                     .foregroundColor(.black)
@@ -116,6 +118,9 @@ extension HousePostView {
             }
             .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
             .modifier(FlatGlass())
+            .sheet(isPresented: $showPhpicker) {
+                PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.selectedImage)
+            }
         }
     }
 }
