@@ -12,17 +12,19 @@ import _PhotosUI_SwiftUI
 protocol RoomsAction {
     func roomUpload(to spot: PostSpot) async throws
     func fetchPostedRoom(from spot: PostSpot) async throws
+    
 }
 
 class PostAndCollectionVM: ObservableObject, RoomsAction {
     
+    let fireStorage = FireStorage()
     let fireDB = FirestoreDB()
     let fireAuth = FirebaseUserAuth()
     
     @Published var houseCollection = [RoomPostDM]()
     @Published var providerCollection = [RoomPostDM]()
     @Published var roomData: RoomPostDM = .empty
-    @Published var selectedImage = [UIImage]()
+    @Published var imageManager = [UIImage]()
     
     func roomUpload(to spot: PostSpot) async throws {
         let uid = fireAuth.getUid()
@@ -32,6 +34,11 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
             room: roomData,
             spot: spot
         )
+    }
+    
+    func roomImageUpload() async throws {
+        let uid = fireAuth.getUid()
+        try await fireStorage.uploadProcess(to: .roomsImage, images: imageManager, uid: uid, roomUID: "")
     }
     
     @MainActor
@@ -48,6 +55,11 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
 
 @available(iOS 16, *)
 class PostAndCollectionVM_ios16: ObservableObject {
-    @Published var test: PhotosPickerItem? = nil
+    @Published var selectedPhotos: [PhotosPickerItem]
+//    @Published var imageManager = [UIImage]()
+    
+    init(selectedPhotos: [PhotosPickerItem]? = nil) {
+        self.selectedPhotos = selectedPhotos ?? []
+    }
 }
 

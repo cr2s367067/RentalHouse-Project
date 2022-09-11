@@ -31,6 +31,7 @@ extension UserDashboard {
     @ViewBuilder
     func userHeader() -> some View {
         HStack(spacing: 10) {
+            //Overlay user profile, if it's exist
             Image(systemName: "person")
                 .resizable()
                 .scaledToFit()

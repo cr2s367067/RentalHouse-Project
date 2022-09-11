@@ -55,7 +55,7 @@ struct HousePostView: View {
                         do {
                             //Uploading process
                             //1. upload photos
-                            
+                            try await pacVM.roomImageUpload()
                             //2. upload rooms data
                             try await pacVM.roomUpload(to: .inside)
                         } catch {
@@ -95,11 +95,28 @@ extension HousePostView {
     @available(iOS 16, *)
     struct PhotoPicker_ios16: View {
         @StateObject private var pacVM_ios16 = PostAndCollectionVM_ios16()
+        @StateObject private var pacVM = PostAndCollectionVM()
+        @StateObject private var errorHandler = ErrorHandler()
         var body: some View {
-            PhotosPicker(selection: $pacVM_ios16.test) {
+            PhotosPicker(selection: $pacVM_ios16.selectedPhotos, maxSelectionCount: 5, matching: .images) {
                 Label("Photo Picker", systemImage: "plus.square")
                     .foregroundColor(.black)
                     .font(.title3)
+            }
+            .onChange(of: pacVM_ios16.selectedPhotos) { newValue in
+                Task {
+                    do {
+                        for item in newValue {
+                            guard let data = try await item.loadTransferable(type: Data.self) else { return }
+                            if let image = UIImage(data: data) {
+                                pacVM.imageManager.append(image)
+                            }
+                        }
+                        debugPrint("Selected Image: \(pacVM.imageManager), contain amount: \(pacVM.imageManager.count)")
+                    } catch {
+                        errorHandler.handler(error: error)
+                    }
+                }
             }
         }
     }
@@ -119,7 +136,7 @@ extension HousePostView {
             .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
             .modifier(FlatGlass())
             .sheet(isPresented: $showPhpicker) {
-                PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.selectedImage)
+                PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.imageManager)
             }
         }
     }
