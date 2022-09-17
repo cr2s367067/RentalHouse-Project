@@ -41,7 +41,8 @@ struct ViewBackground: ViewModifier {
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(alignment: .center) {
-                    LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    Image("room")
+                    Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea([.top, .bottom])
                 }
         } else {
@@ -52,7 +53,8 @@ struct ViewBackground: ViewModifier {
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(alignment: .center) {
-                    LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    Image("room")
+                    Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea([.top, .bottom])
                 }
         }
@@ -73,3 +75,16 @@ struct HandlerErrorByShowingAlertViewModifier: ViewModifier {
     }
 }
 
+
+struct TextFieldModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .foregroundColor(.white)
+            .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.07)
+            .background(alignment: .center) {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.gray.opacity(0.5))
+            }
+    }
+}

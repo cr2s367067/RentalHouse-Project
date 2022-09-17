@@ -11,34 +11,41 @@ import SDWebImageSwiftUI
 
 //MARK: - AuthTextField
 struct AuthTextField: View {
+    private let holderTextColorOpacity = 0.7
     var fieldContain: Binding<String>
     var fieldName = ""
     var fieldType: LoginTextFieldType = .userName
+    var hasContain: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             if fieldType == .userName {
-                Text(fieldName)
                 TextField("", text: fieldContain)
-                    .textFieldStyle(.roundedBorder)
+                    .placeholder(when: hasContain) {
+                        Text(fieldName)
+                            .foregroundColor(.white.opacity(holderTextColorOpacity))
+                    }
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .keyboardType(.emailAddress)
+                    .modifier(TextFieldModifier())
             } else {
-                Text(fieldName)
                 SecureField("", text: fieldContain)
-                    .textFieldStyle(.roundedBorder)
+                    .placeholder(when: hasContain) {
+                        Text(fieldName)
+                            .foregroundColor(.white.opacity(holderTextColorOpacity))
+                    }
                     .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
                     .keyboardType(.default)
+                    .modifier(TextFieldModifier())
             }
         }
-        .padding()
-        .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.09, alignment: .center)
     }
 }
 
 //struct AuthTextField_preview: PreviewProvider {
 //    static var previews: some View {
-//        AuthTextField(fieldContain: .constant(""), fieldName: "Username", fieldType: .userName)
+//        AuthTextField(fieldContain: .constant(""), fieldName: "Username", fieldType: .userName, hasContain: false)
 //    }
 //}
 
@@ -56,9 +63,9 @@ struct SignUpUserButton: View {
                 } label: {
                     HStack {
                         Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                            .foregroundColor(isSelected ? .green : .black)
+                            .foregroundColor(isSelected ? .green : .white)
                         Text(userType.rawValue)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                     }
                 }
             } else {
@@ -67,9 +74,9 @@ struct SignUpUserButton: View {
                 } label: {
                     HStack(spacing: 5) {
                         Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                            .foregroundColor(isSelected ? .green : .black)
+                            .foregroundColor(isSelected ? .green : .white)
                         Text(userType.rawValue)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                     }
                 }
             }
@@ -137,34 +144,44 @@ struct SearchBar: View {
 
 //MARK: - Reuseabel card component
 struct ReuseableCard: View {
+    var roomName: String
     var roomAddress: String
     var roomPrice: String
     var roomsImage: [String]
     var body: some View {
         HStack {
-            WebImage(url: URL(string: roomsImage.randomElement() ?? ""))
+//            WebImage(url: URL(string: roomsImage.randomElement() ?? ""))
+            Image("room")
                 .resizable()
-                .scaledToFit()
-                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
+//                .scaledToFit()
+                .frame(width: AppVM.uiScreenWidth * 0.44, height: AppVM.uiScreenHeight * 0.18, alignment: .center)
             Spacer()
             VStack(alignment: .leading, spacing: 10) {
+                Text(roomName)
                 Text(roomAddress)
                 Text("$\(roomPrice)")
+                    .background {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(.black.opacity(0.5))
+                    }
                 Spacer()
             }
+            .padding()
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
         }
         .padding()
-        .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
-        .modifier(FlatGlass())
+        .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
+        .background(alignment: .center) {
+            Color.gray.opacity(0.9)
+        }
     }
 }
 
-//struct ReuseableCard_preview: PreviewProvider {
-//    static var previews: some View {
-//        ReuseableCard(objectName: "temp object", objectPrice: "500")
-//    }
-//}
+struct ReuseableCard_preview: PreviewProvider {
+    static var previews: some View {
+        ReuseableCard(roomName: "Temp name", roomAddress: "dunnu address", roomPrice: "1000", roomsImage: .init())
+    }
+}
 
 //MARK: - Reuseable room infomation text field
 
@@ -300,10 +317,10 @@ struct ReuseableAuthButton: View {
                 .fontWeight(.heavy)
                 .foregroundColor(.primary)
         }
-        .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
+        .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
         .background(alignment: .center) {
             RoundedRectangle(cornerRadius: 10)
-                .fill(.cyan.opacity(0.3))
+                .fill(.cyan)
         }
     }
 }
@@ -386,8 +403,8 @@ struct ReuseableButtonProviderType: View {
     }
 }
 
-struct ReuseableButtonProviderType_preview: PreviewProvider {
-    static var previews: some View {
-        ReuseableButtonProviderType(isSelected: false)
-    }
-}
+//struct ReuseableButtonProviderType_preview: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableButtonProviderType(isSelected: false)
+//    }
+//}

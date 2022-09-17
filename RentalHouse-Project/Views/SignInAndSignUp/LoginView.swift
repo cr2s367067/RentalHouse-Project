@@ -16,26 +16,44 @@ struct LoginView: View {
     @EnvironmentObject var errorHandler: ErrorHandler
     
     var body: some View {
-        VStack {
+        VStack(spacing: 15) {
             HStack {
+                Text("START TO FIND YOUR RIGHT PLACE")
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .fontWeight(.heavy)
                 Spacer()
-                NavigationLink("Sign up") {
-                    SignUpView()
-                        .environmentObject(userAuth)
-                }
-                .foregroundColor(.blue)
             }
-            VStack(alignment: .center, spacing: 5) {
+            VStack(alignment: .center, spacing: 10) {
                 HStack {
                     Text("Sign In")
-                        .font(.title)
-                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .font(.title3)
+                        .fontWeight(.bold)
                     Spacer()
                 }
-                AuthTextField(fieldContain: $userAuth.userName, fieldName: "Username", fieldType: .userName)
-                AuthTextField(fieldContain: $userAuth.password, fieldName: "Password", fieldType: .password)
+                AuthTextField(
+                    fieldContain: $userAuth.userName,
+                    fieldName: "Username",
+                    fieldType: .userName,
+                    hasContain: userAuth.userName.isEmpty
+                )
+                AuthTextField(
+                    fieldContain: $userAuth.password,
+                    fieldName: "Password",
+                    fieldType: .password,
+                    hasContain: userAuth.userName.isEmpty
+                )
+                HStack {
+                    Spacer()
+                    NavigationLink {
+                        
+                    } label: {
+                        Text("Forget password?")
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                }
             }
-            .modifier(FlatGlass())
             ReuseableAuthButton(buttonName: "Sign In") {
                 Task {
                     do {
@@ -44,6 +62,16 @@ struct LoginView: View {
                         errorHandler.handler(error: error)
                     }
                 }
+            }
+            HStack {
+                NavigationLink {
+                    SignUpView()
+                        .environmentObject(userAuth)
+                } label: {
+                    Text("Sign up")
+                        .foregroundColor(Color("SignUpButton"))
+                }
+                .foregroundColor(.blue)
             }
             
         }

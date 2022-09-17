@@ -50,20 +50,21 @@ class FirestoreDB {
     func roomUploadProcess(
         uid: String,
         room info: RoomPostDM,
-        spot upload: PostSpot
+        spot upload: PostSpot,
+        roomUID: String
     ) async throws {
         collectionType = .rooms
         switch upload {
         case .inside:
-            let roomPath = db.collection(collectionType.rawValue).document(uid).collection(uid)
-            _  = try await roomPath.addDocument(data: [
+            let roomPath = db.collection(collectionType.rawValue).document(uid).collection(uid).document(roomUID)
+            _  = try await roomPath.setData([
                 "roomSize" : info.roomSize,
                 "roomAddress" : info.roomAddress,
                 "rentalPrice" : info.rentalPrice,
                 "additionalInfo" : info.additionalInfo,
                 "tosAgree" : info.tosAgree,
                 "providerType" : info.providerType,
-                "roomCoverImage" : info.roomsImage,
+                "roomsImage" : info.roomsImage,
                 "providerInfo" : info.providerInfo,
                 "isOnPublic" : info.isOnPublic,
                 "uploadTime" : Date()
@@ -77,7 +78,7 @@ class FirestoreDB {
                 "additionalInfo" : info.additionalInfo,
                 "tosAgree" : info.tosAgree,
                 "providerType" : info.providerType,
-                "roomCoverImage" : info.roomsImage,
+                "roomsImage" : info.roomsImage,
                 "providerInfo" : info.providerInfo,
                 "isOnPublic" : info.isOnPublic,
                 "uploadTime" : Date()

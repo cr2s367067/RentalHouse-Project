@@ -18,12 +18,23 @@ struct SignUpView: View {
             VStack {
                 HStack {
                     Text("Sign Up")
-                        .font(.title)
+                        .foregroundColor(.white)
+                        .font(.title3)
                         .fontWeight(.heavy)
                     Spacer()
                 }
-                AuthTextField(fieldContain: $userAuth.userName, fieldName: "Username", fieldType: .userName)
-                AuthTextField(fieldContain: $userAuth.password, fieldName: "Password", fieldType: .password)
+                AuthTextField(
+                    fieldContain: $userAuth.userName,
+                    fieldName: "Username",
+                    fieldType: .userName,
+                    hasContain: userAuth.userName.isEmpty
+                )
+                AuthTextField(
+                    fieldContain: $userAuth.password,
+                    fieldName: "Password",
+                    fieldType: .password,
+                    hasContain: userAuth.password.isEmpty
+                )
                 HStack {
                     Spacer()
                     SignUpUserButton(isSelected: userAuth.isProvider, userType: .provider) {
@@ -53,7 +64,6 @@ struct SignUpView: View {
                     }
                 }
             }
-            .modifier(FlatGlass())
         }
         .modifier(ViewBackground(backgroundType: .naviBarIsShown))
     }

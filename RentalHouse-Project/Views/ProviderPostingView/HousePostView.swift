@@ -53,11 +53,7 @@ struct HousePostView: View {
                 Button {
                     Task {
                         do {
-                            //Uploading process
-                            //1. upload photos
-                            try await pacVM.roomImageUpload()
-                            //2. upload rooms data
-                            try await pacVM.roomUpload(to: .inside)
+                            try await pacVM.roomCreateProcess()
                         } catch {
                             errorHandler.handler(error: error)
                         }
