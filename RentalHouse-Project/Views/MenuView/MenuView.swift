@@ -41,7 +41,7 @@ struct MenuView: View {
         }
         .padding()
         .background(alignment: .center) {
-            LinearGradient(colors: [Color(appVM.randomGredientColor1), Color(appVM.randomGredientColor2)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            Color("GeneralBackground")
                 .edgesIgnoringSafeArea([.top, .bottom])
         }
     }

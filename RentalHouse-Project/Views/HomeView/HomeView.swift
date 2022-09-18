@@ -38,23 +38,28 @@ extension HomeView {
                 Button {
                     show.toggle()
                 } label: {
-                    Image(systemName: "line.3.horizontal.circle")
-                        .foregroundColor(.black.opacity(0.8))
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundColor(.white)
                         .font(.title)
                 }
-                Text("Find Your Perfect Spot")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                Spacer()
+                SearchBar(input: $searchingContext)
             }
-            SearchBar(input: $searchingContext)
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(pacVM.houseCollection) { room in
-//                    ReuseableCard(roomAddress: room.roomAddress, roomPrice: room.rentalPrice, roomsImage: room.roomsImage)
+                    NavigationLink {
+                        
+                    } label: {
+                        ReuseableCard(
+                            roomAddress: room.roomAddress,
+                            roomIntro: room.additionalInfo,
+                            roomPrice: room.rentalPrice,
+                            roomsImage: room.roomsImage
+                        )
+                    }
                 }
             }
         }
-        .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
+        .modifier(ViewBackground(backgroundType: .generalBackground))
         .task {
             do {
                 try await pacVM.fetchPostedRoom(from: .external)

@@ -36,7 +36,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         Auth.auth().useEmulator(withHost:"localhost", port:9099)
         let settings = Firestore.firestore().settings
-        settings.host = "localhost:8080"
+        settings.host = "localhost:8081"
         settings.isPersistenceEnabled = false
         settings.isSSLEnabled = false
         Firestore.firestore().settings = settings

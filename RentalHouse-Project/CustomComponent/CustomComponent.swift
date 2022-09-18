@@ -121,14 +121,16 @@ struct SearchBar: View {
         VStack(alignment: .leading) {
             HStack(alignment: .lastTextBaseline, spacing: 5) {
                 Image(systemName: "magnifyingglass")
+                    .foregroundColor(.white.opacity(0.5))
                 TextField("", text: $input)
+                    .foregroundColor(.white)
                     .onTapGesture {
                         self.input = ""
                     }
             }
-            .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.02)
+            .frame(width: AppVM.uiScreenWidth * 0.75, height: AppVM.uiScreenHeight * 0.02)
             .background(alignment: .center) {
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 5)
                     .fill(.clear)
             }
             .modifier(FlatGlass())
@@ -144,8 +146,8 @@ struct SearchBar: View {
 
 //MARK: - Reuseabel card component
 struct ReuseableCard: View {
-    var roomName: String
     var roomAddress: String
+    var roomIntro: String
     var roomPrice: String
     var roomsImage: [String]
     var body: some View {
@@ -157,17 +159,20 @@ struct ReuseableCard: View {
                 .frame(width: AppVM.uiScreenWidth * 0.44, height: AppVM.uiScreenHeight * 0.18, alignment: .center)
             Spacer()
             VStack(alignment: .leading, spacing: 10) {
-                Text(roomName)
                 Text(roomAddress)
-                Text("$\(roomPrice)")
+                Text(roomIntro)
+                    .frame(minHeight: AppVM.uiScreenHeight * 0.05, maxHeight: AppVM.uiScreenHeight * 0.1)
+                Text("$\(roomPrice)/月")
+                    .foregroundColor(.white)
                     .background {
                         RoundedRectangle(cornerRadius: 5)
-                            .fill(.black.opacity(0.5))
+                            .fill(.black.opacity(0.35))
+                            .frame(minWidth: AppVM.uiScreenWidth * 0.2, minHeight: AppVM.uiScreenHeight * 0.035)
                     }
                 Spacer()
             }
             .padding()
-            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
+            .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.2, alignment: .leading)
         }
         .padding()
         .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.2, alignment: .center)
@@ -179,7 +184,7 @@ struct ReuseableCard: View {
 
 struct ReuseableCard_preview: PreviewProvider {
     static var previews: some View {
-        ReuseableCard(roomName: "Temp name", roomAddress: "dunnu address", roomPrice: "1000", roomsImage: .init())
+        ReuseableCard(roomAddress: "Temp name", roomIntro: "dunnu addressdunnu addressdunnu addressdunnu address", roomPrice: "1000", roomsImage: .init())
     }
 }
 

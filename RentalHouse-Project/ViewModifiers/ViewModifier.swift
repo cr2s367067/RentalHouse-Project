@@ -28,13 +28,16 @@ struct FlatGlass: ViewModifier {
 enum BackgroundType {
     case naviBarIsHidden
     case naviBarIsShown
+    case generalBackground
 }
 
 struct ViewBackground: ViewModifier {
     var backgroundType: BackgroundType = .naviBarIsShown
     @StateObject var appVM = AppVM()
     func body(content: Content) -> some View {
-        if backgroundType == .naviBarIsShown {
+        
+        switch backgroundType {
+        case .naviBarIsHidden:
             content
                 .navigationTitle("")
                 .navigationBarTitleDisplayMode(.inline)
@@ -45,7 +48,7 @@ struct ViewBackground: ViewModifier {
                     Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea([.top, .bottom])
                 }
-        } else {
+        case .naviBarIsShown:
             content
                 .navigationTitle("")
                 .navigationBarTitleDisplayMode(.inline)
@@ -57,7 +60,42 @@ struct ViewBackground: ViewModifier {
                     Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea([.top, .bottom])
                 }
+        case .generalBackground:
+            content
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(true)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(alignment: .center) {
+                    Color("GeneralBackground")
+                        .edgesIgnoringSafeArea([.top, .bottom])
+                }
         }
+//        if backgroundType == .naviBarIsShown {
+//            content
+//                .navigationTitle("")
+//                .navigationBarTitleDisplayMode(.inline)
+//                .padding()
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(alignment: .center) {
+//                    Image("room")
+//                    Color.black.opacity(0.6)
+//                        .edgesIgnoringSafeArea([.top, .bottom])
+//                }
+//        } else {
+//            content
+//                .navigationTitle("")
+//                .navigationBarTitleDisplayMode(.inline)
+//                .navigationBarHidden(true)
+//                .padding()
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(alignment: .center) {
+//                    Image("room")
+//                    Color.black.opacity(0.6)
+//                        .edgesIgnoringSafeArea([.top, .bottom])
+//                }
+//        }
     }
 }
 
