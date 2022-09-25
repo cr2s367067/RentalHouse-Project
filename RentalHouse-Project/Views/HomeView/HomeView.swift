@@ -47,7 +47,7 @@ extension HomeView {
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(pacVM.houseCollection) { room in
                     NavigationLink {
-                        
+                        RoomDetailView(roomInfo: room)
                     } label: {
                         ReuseableCard(
                             roomAddress: room.roomAddress,
@@ -60,6 +60,7 @@ extension HomeView {
             }
         }
         .modifier(ViewBackground(backgroundType: .generalBackground))
+        .navigationBarHidden(true)
         .task {
             do {
                 try await pacVM.fetchPostedRoom(from: .external)

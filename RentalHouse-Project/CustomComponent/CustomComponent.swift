@@ -107,6 +107,29 @@ struct TitleAndDivier: View {
     }
 }
 
+//MARK: - Post view room info text field
+struct PostViewTitleAndTextField: View {
+    var fieldOpacity = 0.7
+    var title: String
+    var roomInfoContain: Binding<String>
+    var fieldName: String
+    var hasContain: Bool
+    var body: some View {
+        VStack {
+            HStack {
+                Text(title)
+                Spacer()
+            }
+            TextField("", text: roomInfoContain)
+                .placeholder(when: hasContain) {
+                    Text(fieldName)
+                        .foregroundColor(.white.opacity(fieldOpacity))
+                }
+        }
+        
+    }
+}
+
 
 //struct TitleAndDivider_preview: PreviewProvider {
 //    static var previews: some View {
@@ -303,7 +326,7 @@ struct CustomNaviLink<Destination: View>: View {
             destination
         } label: {
             Label(labelTitle, systemImage: sysImage)
-                .foregroundColor(.black)
+                .foregroundColor(.white)
                 .font(.title2)
         }
     }

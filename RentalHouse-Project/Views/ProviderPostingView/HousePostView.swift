@@ -20,9 +20,10 @@ struct HousePostView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
-                TitleAndDivier(title: "Picking Room image")
+                postHeader(title: "Room Photos Upload")
                 photoPicker()
-                TitleAndDivier(title: "Room Infomation")
+                postHeader(title: "Room Infomation")
+                //Provider type
                 HStack {
                     ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
                         isHouseOwner = true
@@ -42,14 +43,20 @@ struct HousePostView: View {
                     }
                 }
                 .frame(width: AppVM.uiScreenWidth * 0.8)
-                ReuseableInfoTextField(fieldName: "Room Size", layoutType: .horizontal, input: $pacVM.roomData.roomSize)
-                
-                ReuseableInfoTextField(fieldName: "Room Address", layoutType: .vertical, input: $pacVM.roomData.roomAddress)
-                ReuseableInfoTextField(fieldName: "Rental Price", layoutType: .horizontal, input: $pacVM.roomData.rentalPrice)
-                TitleAndDivier(title: "Confirm and Upload")
-                ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
-                    pacVM.roomData.tosAgree.toggle()
+                Group {
+                    PostViewTitleAndTextField(title: "Room Size", roomInfoContain: $pacVM.roomData.roomSize, fieldName: "Please enter room size", hasContain: pacVM.roomData.roomSize.isEmpty)
+                    
+                    PostViewTitleAndTextField(title: "Room Address", roomInfoContain: $pacVM.roomData.roomAddress, fieldName: "Please enter room address", hasContain: pacVM.roomData.roomAddress.isEmpty)
+                    PostViewTitleAndTextField(title: "Rental Price", roomInfoContain: $pacVM.roomData.rentalPrice, fieldName: "Please enter rental price", hasContain: pacVM.roomData.rentalPrice.isEmpty)
+                    PostViewTitleAndTextField(title: "Room Introdution", roomInfoContain: $pacVM.roomData.additionalInfo, fieldName: "Please introduce this room", hasContain: pacVM.roomData.additionalInfo.isEmpty)
                 }
+                Group {
+                    postHeader(title: "Confirm and Upload")
+                    ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
+                        pacVM.roomData.tosAgree.toggle()
+                    }
+                }
+                Spacer()
                 Button {
                     Task {
                         do {
@@ -64,14 +71,14 @@ struct HousePostView: View {
                         .font(.body)
                         .fontWeight(.bold)
                 }
-                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.04, alignment: .center)
+                .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.04, alignment: .center)
                 .background(alignment: .center) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color("ButtonBackground"))
+                    Color("ButtonBackground")
                 }
             }
         }
-        .modifier(ViewBackground(backgroundType: .naviBarIsShown))
+        .modifier(ViewBackground(backgroundType: .generalBackground))
+        //.navigationTitle("Post")
     }
 }
 
@@ -134,6 +141,16 @@ extension HousePostView {
             .sheet(isPresented: $showPhpicker) {
                 PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.imageManager)
             }
+        }
+    }
+    
+    @ViewBuilder
+    func postHeader(title: String) -> some View {
+        HStack {
+            Text(title)
+                .foregroundColor(.white)
+                .fontWeight(.bold)
+            Spacer()
         }
     }
 }

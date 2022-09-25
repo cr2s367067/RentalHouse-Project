@@ -38,6 +38,7 @@ struct RoomDetailView: View {
             Spacer()
         }
         .modifier(ViewBackground(backgroundType: .generalBackground))
+        .navigationBarHidden(false)
     }
 }
 

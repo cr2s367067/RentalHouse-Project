@@ -27,6 +27,11 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
     @Published var roomData: RoomPostDM = .empty
     @Published var imageManager = [UIImage]()
     
+    init() {
+        #if DEBUG
+        houseCollection = [.dummy]
+        #endif
+    }
     
     func roomCreateProcess() async throws {
         let roomUID = UUID().uuidString

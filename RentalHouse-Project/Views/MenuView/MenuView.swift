@@ -16,28 +16,35 @@ struct MenuView: View {
         VStack(alignment: .leading, spacing: 15) {
             HStack {
                 Text("Setting")
+                    .foregroundColor(.white)
                     .font(.title)
                     .fontWeight(.heavy)
             }
+            .padding(.leading, 10)
             CustomNaviLink(
                 sysImage: "person",
                 labelTitle: "User",
                 destination: UserDashboard()
             )
-            if userAuth.userStatue == .provider {
-                CustomNaviLink(
-                    sysImage: "square.and.pencil",
-                    labelTitle: "Post",
-                    destination: HousePostView().environmentObject(pacVM)
-                )
-                CustomNaviLink(
-                    sysImage: "folder",
-                    labelTitle: "Folder",
-                    destination: PostCollectionView().environmentObject(pacVM)
-                )
+            .padding(.leading, 10)
+            Group {
+                if userAuth.userStatue == .provider {
+                    CustomNaviLink(
+                        sysImage: "square.and.pencil",
+                        labelTitle: "Post",
+                        destination: HousePostView().environmentObject(pacVM)
+                    )
+                    CustomNaviLink(
+                        sysImage: "folder",
+                        labelTitle: "Folder",
+                        destination: PostCollectionView().environmentObject(pacVM)
+                    )
+                }
             }
+            .padding(.leading, 10)
             Spacer()
             signOutButton()
+                .padding(.leading, 10)
         }
         .padding()
         .background(alignment: .center) {

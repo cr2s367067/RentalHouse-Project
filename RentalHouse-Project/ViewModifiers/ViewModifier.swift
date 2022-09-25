@@ -64,7 +64,6 @@ struct ViewBackground: ViewModifier {
             content
                 .navigationTitle("")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(true)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(alignment: .center) {
@@ -72,30 +71,6 @@ struct ViewBackground: ViewModifier {
                         .edgesIgnoringSafeArea([.top, .bottom])
                 }
         }
-//        if backgroundType == .naviBarIsShown {
-//            content
-//                .navigationTitle("")
-//                .navigationBarTitleDisplayMode(.inline)
-//                .padding()
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(alignment: .center) {
-//                    Image("room")
-//                    Color.black.opacity(0.6)
-//                        .edgesIgnoringSafeArea([.top, .bottom])
-//                }
-//        } else {
-//            content
-//                .navigationTitle("")
-//                .navigationBarTitleDisplayMode(.inline)
-//                .navigationBarHidden(true)
-//                .padding()
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(alignment: .center) {
-//                    Image("room")
-//                    Color.black.opacity(0.6)
-//                        .edgesIgnoringSafeArea([.top, .bottom])
-//                }
-//        }
     }
 }
 
