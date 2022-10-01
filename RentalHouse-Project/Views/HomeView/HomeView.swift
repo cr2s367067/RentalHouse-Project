@@ -56,6 +56,7 @@ extension HomeView {
                             roomsImage: room.roomsImage
                         )
                     }
+                    .padding(.top, 18)
                 }
             }
         }

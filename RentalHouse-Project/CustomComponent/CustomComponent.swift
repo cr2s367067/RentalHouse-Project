@@ -118,6 +118,7 @@ struct PostViewTitleAndTextField: View {
         VStack {
             HStack {
                 Text(title)
+                    .foregroundColor(.white)
                 Spacer()
             }
             TextField("", text: roomInfoContain)
@@ -125,17 +126,19 @@ struct PostViewTitleAndTextField: View {
                     Text(fieldName)
                         .foregroundColor(.white.opacity(fieldOpacity))
                 }
+            Divider()
+                .background(.white.opacity(0.5))
+                .frame(height: 2)
         }
-        
     }
 }
 
 
-//struct TitleAndDivider_preview: PreviewProvider {
-//    static var previews: some View {
-//        TitleAndDivier(title: "Some Title")
-//    }
-//}
+struct TitleAndDivider_preview: PreviewProvider {
+    static var previews: some View {
+        TitleAndDivier(title: "Some Title")
+    }
+}
     
 //MARK: - Search Bar
 struct SearchBar: View {
@@ -205,11 +208,11 @@ struct ReuseableCard: View {
     }
 }
 
-struct ReuseableCard_preview: PreviewProvider {
-    static var previews: some View {
-        ReuseableCard(roomAddress: "Temp name", roomIntro: "dunnu addressdunnu addressdunnu addressdunnu address", roomPrice: "1000", roomsImage: .init())
-    }
-}
+//struct ReuseableCard_preview: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableCard(roomAddress: "Temp name", roomIntro: "dunnu addressdunnu addressdunnu addressdunnu address", roomPrice: "1000", roomsImage: .init())
+//    }
+//}
 
 //MARK: - Reuseable room infomation text field
 
@@ -421,7 +424,7 @@ struct ReuseableButtonProviderType: View {
                     Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                         .foregroundColor(isSelected ? .green : .gray)
                     Text(buttonName.rawValue)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                         .font(.body)
                         .fontWeight(.bold)
                 }

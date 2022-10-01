@@ -18,63 +18,75 @@ struct HousePostView: View {
     @State private var showPhpicker = false
     @State private var selectedLimit = 4
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .center, spacing: 10) {
-                postHeader(title: "Room Photos Upload")
-                photoPicker()
-                postHeader(title: "Room Infomation")
-                //Provider type
-                HStack {
-                    ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
-                        isHouseOwner = true
-                        pacVM.roomData.providerType = ProviderType.houseOwner.rawValue
-                        if isHouseManager {
-                            isHouseManager = false
-                        }
+        VStack {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .center, spacing: AppVM.uiScreenHeight * 0.04) {
+                    postHeader(title: "Room Photos Upload")
+                    HStack {
+                        photoPicker()
+                        Spacer()
                     }
-                    Spacer()
-                        .frame(width: AppVM.uiScreenWidth * 0.1)
-                    ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: isHouseManager) {
-                        isHouseManager = true
-                        pacVM.roomData.providerType = ProviderType.rentalManager.rawValue
-                        if isHouseOwner {
-                            isHouseOwner = false
+//                    //if photo is selected
+//                    HStack {
+//
+//                    }
+                    Group{
+                        //MARK: - Provider type
+                        postHeader(title: "Room Infomation")
+                        HStack {
+                            ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
+                                isHouseOwner = true
+                                pacVM.roomData.providerType = ProviderType.houseOwner.rawValue
+                                if isHouseManager {
+                                    isHouseManager = false
+                                }
+                            }
+                            Spacer()
+                                .frame(width: AppVM.uiScreenWidth * 0.1)
+                            ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: isHouseManager) {
+                                isHouseManager = true
+                                pacVM.roomData.providerType = ProviderType.rentalManager.rawValue
+                                if isHouseOwner {
+                                    isHouseOwner = false
+                                }
+                            }
                         }
+                        .frame(width: AppVM.uiScreenWidth * 0.8)
                     }
-                }
-                .frame(width: AppVM.uiScreenWidth * 0.8)
-                Group {
                     PostViewTitleAndTextField(title: "Room Size", roomInfoContain: $pacVM.roomData.roomSize, fieldName: "Please enter room size", hasContain: pacVM.roomData.roomSize.isEmpty)
-                    
                     PostViewTitleAndTextField(title: "Room Address", roomInfoContain: $pacVM.roomData.roomAddress, fieldName: "Please enter room address", hasContain: pacVM.roomData.roomAddress.isEmpty)
                     PostViewTitleAndTextField(title: "Rental Price", roomInfoContain: $pacVM.roomData.rentalPrice, fieldName: "Please enter rental price", hasContain: pacVM.roomData.rentalPrice.isEmpty)
                     PostViewTitleAndTextField(title: "Room Introdution", roomInfoContain: $pacVM.roomData.additionalInfo, fieldName: "Please introduce this room", hasContain: pacVM.roomData.additionalInfo.isEmpty)
                 }
-                Group {
-                    postHeader(title: "Confirm and Upload")
-                    ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
-                        pacVM.roomData.tosAgree.toggle()
+            }
+            .padding()
+            .background {
+                Color("ContainBackground")
+                    .offset(y: AppVM.uiScreenHeight * 0.005)
+                    .frame(height: AppVM.uiScreenHeight * 0.83)
+                    .edgesIgnoringSafeArea([.bottom])
+            }
+            Button {
+                Task {
+                    do {
+                        try await pacVM.roomCreateProcess()
+                    } catch {
+                        errorHandler.handler(error: error)
                     }
                 }
-                Spacer()
-                Button {
-                    Task {
-                        do {
-                            try await pacVM.roomCreateProcess()
-                        } catch {
-                            errorHandler.handler(error: error)
-                        }
-                    }
-                } label: {
-                    Text("Post Room")
-                        .foregroundColor(.white)
-                        .font(.body)
-                        .fontWeight(.bold)
-                }
-                .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.04, alignment: .center)
-                .background(alignment: .center) {
-                    Color("ButtonBackground")
-                }
+            } label: {
+                Text("Post Room")
+                    .foregroundColor(.white)
+                    .font(.body)
+                    .fontWeight(.bold)
+            }
+            .offset(y: AppVM.uiScreenHeight * 0.03)
+            .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.07, alignment: .center)
+            .background(alignment: .center) {
+                Color("ButtonBackground")
+                    .offset(y: AppVM.uiScreenHeight * 0.042)
+                    .frame(height: AppVM.uiScreenHeight * 0.12)
+                    .edgesIgnoringSafeArea([.bottom])
             }
         }
         .modifier(ViewBackground(backgroundType: .generalBackground))
@@ -102,9 +114,12 @@ extension HousePostView {
         @StateObject private var errorHandler = ErrorHandler()
         var body: some View {
             PhotosPicker(selection: $pacVM_ios16.selectedPhotos, maxSelectionCount: 5, matching: .images) {
-                Label("Photo Picker", systemImage: "plus.square")
-                    .foregroundColor(.black)
-                    .font(.title3)
+                Image(systemName: "plus")
+                    .foregroundColor(.white)
+                    .background {
+                        Rectangle()
+                            .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [10]))
+                    }
             }
             .onChange(of: pacVM_ios16.selectedPhotos) { newValue in
                 Task {
