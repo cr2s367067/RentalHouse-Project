@@ -122,6 +122,7 @@ struct PostViewTitleAndTextField: View {
                 Spacer()
             }
             TextField("", text: roomInfoContain)
+                .foregroundColor(.white)
                 .placeholder(when: hasContain) {
                     Text(fieldName)
                         .foregroundColor(.white.opacity(fieldOpacity))
@@ -189,7 +190,6 @@ struct ReuseableCard: View {
                 Text(roomIntro)
                     .frame(minHeight: AppVM.uiScreenHeight * 0.05, maxHeight: AppVM.uiScreenHeight * 0.1)
                 Text("$\(roomPrice)/月")
-                    .foregroundColor(.white)
                     .background {
                         RoundedRectangle(cornerRadius: 5)
                             .fill(.black.opacity(0.35))
@@ -197,6 +197,7 @@ struct ReuseableCard: View {
                     }
                 Spacer()
             }
+            .foregroundColor(.white)
             .padding()
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.2, alignment: .leading)
         }
@@ -277,6 +278,7 @@ struct ReuseableCofirmCheckBoxWithStatement: View {
                     .font(.headline)
             }
             Text(statement)
+                .foregroundColor(.white)
                 .font(.headline)
                 .fontWeight(.bold)
         }
@@ -330,7 +332,7 @@ struct CustomNaviLink<Destination: View>: View {
         } label: {
             Label(labelTitle, systemImage: sysImage)
                 .foregroundColor(.white)
-                .font(.title2)
+                .font(.body)
         }
     }
 }

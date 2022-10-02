@@ -33,13 +33,15 @@ enum BackgroundType {
 
 struct ViewBackground: ViewModifier {
     var backgroundType: BackgroundType = .naviBarIsShown
+    var navigationTitle: String = ""
     @StateObject var appVM = AppVM()
+    
     func body(content: Content) -> some View {
         
         switch backgroundType {
         case .naviBarIsHidden:
             content
-                .navigationTitle("")
+                .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -50,7 +52,7 @@ struct ViewBackground: ViewModifier {
                 }
         case .naviBarIsShown:
             content
-                .navigationTitle("")
+                .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
                 .padding()
@@ -62,7 +64,7 @@ struct ViewBackground: ViewModifier {
                 }
         case .generalBackground:
             content
-                .navigationTitle("")
+                .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

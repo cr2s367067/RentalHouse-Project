@@ -17,34 +17,39 @@ struct MenuView: View {
             HStack {
                 Text("Setting")
                     .foregroundColor(.white)
-                    .font(.title)
-                    .fontWeight(.heavy)
+                    .font(.title3)
+                    .fontWeight(.bold)
             }
-            .padding(.leading, 10)
+            .padding(.leading, 5)
             CustomNaviLink(
                 sysImage: "person",
                 labelTitle: "User",
                 destination: UserDashboard()
+                    .environmentObject(errorHandler)
             )
-            .padding(.leading, 10)
+            .padding(.leading, 5)
             Group {
                 if userAuth.userStatue == .provider {
                     CustomNaviLink(
                         sysImage: "square.and.pencil",
                         labelTitle: "Post",
-                        destination: HousePostView().environmentObject(pacVM)
+                        destination: HousePostView()
+                            .environmentObject(pacVM)
+                            .environmentObject(errorHandler)
                     )
                     CustomNaviLink(
                         sysImage: "folder",
                         labelTitle: "Folder",
-                        destination: PostCollectionView().environmentObject(pacVM)
+                        destination: PostCollectionView()
+                            .environmentObject(pacVM)
+                            .environmentObject(errorHandler)
                     )
                 }
             }
-            .padding(.leading, 10)
+            .padding(.leading, 5)
             Spacer()
             signOutButton()
-                .padding(.leading, 10)
+                .padding(.leading, 5)
         }
         .padding()
         .background(alignment: .center) {
@@ -72,12 +77,16 @@ extension MenuView {
                 errorHandler.handler(error: error)
             }
         } label: {
-            Text("Sign Out")
-                .foregroundColor(.red)
+            Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+                .foregroundColor(.white)
                 .font(.body)
-                .fontWeight(.bold)
         }
-        .frame(width: AppVM.uiScreenWidth * 0.2, height: AppVM.uiScreenHeight * 0.03, alignment: .center)
-        .modifier(FlatGlass())
+        .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.03, alignment: .center)
+        .background {
+            Color("SignOutButtonBackground")
+                .offset(x: -5, y: 5)
+                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.15)
+                .edgesIgnoringSafeArea([.bottom, .leading])
+        }
     }
 }

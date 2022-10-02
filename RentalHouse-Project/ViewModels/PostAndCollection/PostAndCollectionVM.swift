@@ -22,10 +22,16 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
     let fireDB = FirestoreDB()
     let fireAuth = FirebaseUserAuth()
     
+    @Published var selectedPhotos = [PhotosPickerItem]()
+    
     @Published var houseCollection = [RoomPostDM]()
     @Published var providerCollection = [RoomPostDM]()
     @Published var roomData: RoomPostDM = .empty
     @Published var imageManager = [UIImage]()
+    @Published var isProgressing = false
+    @Published var isHouseOwner = false
+    @Published var isHouseManager = false
+    
     
     init() {
         #if DEBUG
@@ -33,16 +39,28 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
         #endif
     }
     
+    func restoreDefault() {
+        roomData = .empty
+        imageManager.removeAll()
+        selectedPhotos.removeAll()
+        isHouseOwner = false
+        isHouseManager = false
+    }
+    
+    @MainActor
     func roomCreateProcess() async throws {
         let roomUID = UUID().uuidString
+        isProgressing = true
         try await roomUpload(to: .inside, roomUID: roomUID)
         try await roomImageUpload(roomUID: roomUID)
-        
+        restoreDefault()
+        isProgressing = false
     }
     
     
-    internal func roomUpload(to spot: PostSpot, roomUID: String) async throws {
+    func roomUpload(to spot: PostSpot, roomUID: String) async throws {
         let uid = fireAuth.getUid()
+        debugPrint("Get uid: \(uid)")
         guard !uid.isEmpty else { return }
         try await fireDB.roomUploadProcess(
             uid: uid,
@@ -52,7 +70,7 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
         )
     }
     
-    internal func roomImageUpload(roomUID: String) async throws {
+    func roomImageUpload(roomUID: String) async throws {
         let uid = fireAuth.getUid()
         try await fireStorage.uploadProcess(to: .roomsImage, images: imageManager, uid: uid, roomUID: roomUID)
     }
@@ -67,6 +85,22 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
             spot: spot
         )
     }
+    
+    //FIX: providertype, and provider info doesn't input!!!
+    func roomInfoBlankCheck() throws {
+        guard !roomData.roomSize.isEmpty,
+                !roomData.roomAddress.isEmpty,
+                !roomData.rentalPrice.isEmpty,
+                !roomData.additionalInfo.isEmpty,
+                roomData.tosAgree != false,
+                !roomData.providerType.isEmpty
+        else {
+            throw RoomPostError.infoEmpty
+        }
+              
+    }
+    
+    
 }
 
 @available(iOS 16, *)

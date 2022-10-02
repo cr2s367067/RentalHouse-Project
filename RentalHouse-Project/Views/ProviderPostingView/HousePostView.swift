@@ -13,12 +13,12 @@ struct HousePostView: View {
     @EnvironmentObject var pacVM: PostAndCollectionVM
     @EnvironmentObject var errorHandler: ErrorHandler
     
-    @State private var isHouseOwner = false
-    @State private var isHouseManager = false
+
     @State private var showPhpicker = false
     @State private var selectedLimit = 4
     var body: some View {
         VStack {
+            Spacer()
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: AppVM.uiScreenHeight * 0.04) {
                     postHeader(title: "Room Photos Upload")
@@ -26,28 +26,39 @@ struct HousePostView: View {
                         photoPicker()
                         Spacer()
                     }
-//                    //if photo is selected
-//                    HStack {
-//
-//                    }
+                    //if photo is selected
+                    if !pacVM.imageManager.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(pacVM.imageManager, id: \.self) { image in
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .foregroundColor(.white)
+                                        .cornerRadius(5)
+                                        .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.17)
+                                }
+                            }
+                        }
+                    }
+                    
                     Group{
                         //MARK: - Provider type
                         postHeader(title: "Room Infomation")
                         HStack {
-                            ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: isHouseOwner) {
-                                isHouseOwner = true
+                            ReuseableButtonProviderType(buttonName: .houseOwner, isSelected: pacVM.isHouseOwner) {
+                                pacVM.isHouseOwner = true
                                 pacVM.roomData.providerType = ProviderType.houseOwner.rawValue
-                                if isHouseManager {
-                                    isHouseManager = false
+                                if pacVM.isHouseManager {
+                                    pacVM.isHouseManager = false
                                 }
                             }
                             Spacer()
                                 .frame(width: AppVM.uiScreenWidth * 0.1)
-                            ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: isHouseManager) {
-                                isHouseManager = true
+                            ReuseableButtonProviderType(buttonName: .rentalManager, isSelected: pacVM.isHouseManager) {
+                                pacVM.isHouseManager = true
                                 pacVM.roomData.providerType = ProviderType.rentalManager.rawValue
-                                if isHouseOwner {
-                                    isHouseOwner = false
+                                if pacVM.isHouseOwner {
+                                    pacVM.isHouseOwner = false
                                 }
                             }
                         }
@@ -57,18 +68,24 @@ struct HousePostView: View {
                     PostViewTitleAndTextField(title: "Room Address", roomInfoContain: $pacVM.roomData.roomAddress, fieldName: "Please enter room address", hasContain: pacVM.roomData.roomAddress.isEmpty)
                     PostViewTitleAndTextField(title: "Rental Price", roomInfoContain: $pacVM.roomData.rentalPrice, fieldName: "Please enter rental price", hasContain: pacVM.roomData.rentalPrice.isEmpty)
                     PostViewTitleAndTextField(title: "Room Introdution", roomInfoContain: $pacVM.roomData.additionalInfo, fieldName: "Please introduce this room", hasContain: pacVM.roomData.additionalInfo.isEmpty)
+                    postHeader(title: "Confirm and Upload")
+                    ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
+                        pacVM.roomData.tosAgree.toggle()
+                    }
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            .frame(height: AppVM.uiScreenHeight * 0.74)
             .background {
                 Color("ContainBackground")
-                    .offset(y: AppVM.uiScreenHeight * 0.005)
-                    .frame(height: AppVM.uiScreenHeight * 0.83)
+                    .offset(y: AppVM.uiScreenHeight * 0.02)
+                    .frame(height: AppVM.uiScreenHeight * 0.8)
                     .edgesIgnoringSafeArea([.bottom])
             }
             Button {
                 Task {
                     do {
+                        try pacVM.roomInfoBlankCheck()
                         try await pacVM.roomCreateProcess()
                     } catch {
                         errorHandler.handler(error: error)
@@ -80,7 +97,7 @@ struct HousePostView: View {
                     .font(.body)
                     .fontWeight(.bold)
             }
-            .offset(y: AppVM.uiScreenHeight * 0.03)
+            .offset(y: AppVM.uiScreenHeight * 0.025)
             .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.07, alignment: .center)
             .background(alignment: .center) {
                 Color("ButtonBackground")
@@ -89,8 +106,12 @@ struct HousePostView: View {
                     .edgesIgnoringSafeArea([.bottom])
             }
         }
-        .modifier(ViewBackground(backgroundType: .generalBackground))
-        //.navigationTitle("Post")
+        .modifier(ViewBackground(backgroundType: .generalBackground, navigationTitle: AppVM.NanigationTitles.postPage.rawValue))
+        .overlay {
+            if pacVM.isProgressing {
+                CoverView()
+            }
+        }
     }
 }
 
@@ -107,57 +128,96 @@ struct HousePostView_Previews: PreviewProvider {
 
 extension HousePostView {
     
-    @available(iOS 16, *)
-    struct PhotoPicker_ios16: View {
-        @StateObject private var pacVM_ios16 = PostAndCollectionVM_ios16()
-        @StateObject private var pacVM = PostAndCollectionVM()
-        @StateObject private var errorHandler = ErrorHandler()
-        var body: some View {
-            PhotosPicker(selection: $pacVM_ios16.selectedPhotos, maxSelectionCount: 5, matching: .images) {
-                Image(systemName: "plus")
-                    .foregroundColor(.white)
-                    .background {
-                        Rectangle()
-                            .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [10]))
-                    }
-            }
-            .onChange(of: pacVM_ios16.selectedPhotos) { newValue in
-                Task {
-                    do {
+    @ViewBuilder
+    func photoPicker() -> some View {
+        PhotosPicker(selection: $pacVM.selectedPhotos, maxSelectionCount: 5) {
+            Image(systemName: "plus")
+                .foregroundColor(.white)
+                .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.17)
+                .background {
+                    Rectangle()
+                        .strokeBorder(.white.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [10]))
+                }
+        }
+        .onChange(of: pacVM.selectedPhotos) { newValue in
+            Task {
+                do {
+                    if pacVM.imageManager.isEmpty && pacVM.selectedPhotos.isEmpty {
                         for item in newValue {
                             guard let data = try await item.loadTransferable(type: Data.self) else { return }
                             if let image = UIImage(data: data) {
                                 pacVM.imageManager.append(image)
                             }
                         }
-                        debugPrint("Selected Image: \(pacVM.imageManager), contain amount: \(pacVM.imageManager.count)")
-                    } catch {
-                        errorHandler.handler(error: error)
+                    } else {
+                        pacVM.imageManager.removeAll()
+                        pacVM.selectedPhotos.removeAll()
+                        for item in newValue {
+                            guard let data = try await item.loadTransferable(type: Data.self) else { return }
+                            if let image = UIImage(data: data) {
+                                pacVM.imageManager.append(image)
+                            }
+                        }
                     }
+                } catch {
+                    errorHandler.handler(error: error)
                 }
             }
         }
     }
     
-    @ViewBuilder
-    func photoPicker() -> some View {
-        if #available(iOS 16, *) {
-            PhotoPicker_ios16()
-        } else {
-            Button {
-                showPhpicker.toggle()
-            } label: {
-                Label("Photo Picker", systemImage: "plus.square")
-                    .foregroundColor(.black)
-                    .font(.title3)
-            }
-            .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
-            .modifier(FlatGlass())
-            .sheet(isPresented: $showPhpicker) {
-                PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.imageManager)
-            }
-        }
-    }
+//    @available(iOS 16, *)
+//    struct PhotoPicker_ios16: View {
+//        @StateObject private var pacVM_ios16 = PostAndCollectionVM_ios16()
+//        @StateObject private var pacVM = PostAndCollectionVM()
+//        @StateObject private var errorHandler = ErrorHandler()
+//        var body: some View {
+//            PhotosPicker(selection: $pacVM_ios16.selectedPhotos, maxSelectionCount: 5, matching: .images) {
+//                Image(systemName: "plus")
+//                    .foregroundColor(.white)
+//                    .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.17)
+//                    .background {
+//                        Rectangle()
+//                            .strokeBorder(.white.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [10]))
+//                    }
+//            }
+//            .onChange(of: pacVM_ios16.selectedPhotos) { newValue in
+//                Task {
+//                    do {
+//                        for item in newValue {
+//                            guard let data = try await item.loadTransferable(type: Data.self) else { return }
+//                            if let image = UIImage(data: data) {
+//                                pacVM.imageManager.append(image)
+//                            }
+//                        }
+//                        debugPrint("Selected Image: \(pacVM.imageManager), contain amount: \(pacVM.imageManager.count)")
+//                    } catch {
+//                        errorHandler.handler(error: error)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    @ViewBuilder
+//    func photoPicker() -> some View {
+//        if #available(iOS 16, *) {
+//            PhotoPicker_ios16()
+//        } else {
+//            Button {
+//                showPhpicker.toggle()
+//            } label: {
+//                Label("Photo Picker", systemImage: "plus.square")
+//                    .foregroundColor(.black)
+//                    .font(.title3)
+//            }
+//            .frame(width: AppVM.uiScreenWidth * 0.80, height: AppVM.uiScreenHeight * 0.3, alignment: .center)
+//            .modifier(FlatGlass())
+//            .sheet(isPresented: $showPhpicker) {
+//                PHPickerRepresentable(selectLimit: $selectedLimit, images: $pacVM.imageManager)
+//            }
+//        }
+//    }
     
     @ViewBuilder
     func postHeader(title: String) -> some View {

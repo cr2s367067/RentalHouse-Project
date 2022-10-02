@@ -56,7 +56,7 @@ class FireStorage {
             let roomDownloadRef = try await imgRef.downloadURL().absoluteString
             roomImagesSet.append(roomDownloadRef)
         }
-        let roomPath = db.collection(CollectionType.rooms.rawValue).document(roomUID)
+        let roomPath = db.collection(CollectionType.rooms.rawValue).document(uid).collection(uid).document(roomUID)
         try await roomPath.updateData([
             "roomsImage" : roomImagesSet
         ])

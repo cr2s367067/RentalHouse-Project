@@ -65,7 +65,7 @@ class FirestoreDB {
                 "tosAgree" : info.tosAgree,
                 "providerType" : info.providerType,
                 "roomsImage" : info.roomsImage,
-                "providerInfo" : info.providerInfo,
+                "providerInfo" : uid,
                 "isOnPublic" : info.isOnPublic,
                 "uploadTime" : Date()
             ])
@@ -79,7 +79,7 @@ class FirestoreDB {
                 "tosAgree" : info.tosAgree,
                 "providerType" : info.providerType,
                 "roomsImage" : info.roomsImage,
-                "providerInfo" : info.providerInfo,
+                "providerInfo" : uid,
                 "isOnPublic" : info.isOnPublic,
                 "uploadTime" : Date()
             ])

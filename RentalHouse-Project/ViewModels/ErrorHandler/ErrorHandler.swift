@@ -8,6 +8,18 @@
 import Foundation
 
 
+enum RoomPostError: LocalizedError {
+    case infoEmpty
+    
+    var errorDescription: String? {
+        switch self {
+        case .infoEmpty:
+            return NSLocalizedString("Please, fill out whole blank", comment: "")
+        }
+    }
+}
+
+
 struct ErrorAlert: Identifiable {
     var id = UUID()
     var message: String
