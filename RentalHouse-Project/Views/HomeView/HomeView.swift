@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var pacVM: PostAndCollectionVM
     @EnvironmentObject var errorHandler: ErrorHandler
+    @EnvironmentObject var userAuthVM: UserAuthenticationVM
     @State private var searchingContext = ""
     @State private var show = false
     var body: some View {
@@ -34,6 +35,10 @@ extension HomeView {
     @ViewBuilder
     func homeContain() -> some View {
         VStack {
+            Button("test") {
+                print("\(userAuthVM.user)")
+                print("\(userAuthVM.userStatue)")
+            }
             HStack {
                 Button {
                     show.toggle()
@@ -64,6 +69,7 @@ extension HomeView {
         .navigationBarHidden(true)
         .task {
             do {
+                try await userAuthVM.getUser()
                 try await pacVM.fetchPostedRoom(from: .external)
             } catch {
                 errorHandler.handler(error: error)

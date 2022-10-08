@@ -108,10 +108,10 @@ struct TitleAndDivier: View {
 }
 
 //MARK: - Post view room info text field
-struct PostViewTitleAndTextField: View {
+struct CustomTextFieldWithName: View {
     var fieldOpacity = 0.7
     var title: String
-    var roomInfoContain: Binding<String>
+    var infoContain: Binding<String>
     var fieldName: String
     var hasContain: Bool
     var body: some View {
@@ -121,7 +121,7 @@ struct PostViewTitleAndTextField: View {
                     .foregroundColor(.white)
                 Spacer()
             }
-            TextField("", text: roomInfoContain)
+            TextField("", text: infoContain)
                 .foregroundColor(.white)
                 .placeholder(when: hasContain) {
                     Text(fieldName)

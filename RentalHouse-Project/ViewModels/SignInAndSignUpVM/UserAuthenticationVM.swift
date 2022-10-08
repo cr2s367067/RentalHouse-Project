@@ -18,6 +18,12 @@ enum SignUpUserType: String {
     case renter = "Renter"
 }
 
+enum UserDashboardContainTitle: String {
+    case nickName = "Nick Name"
+    case mobileNum = "Mobile Number"
+    case lineID = "Line ID"
+}
+
 class UserAuthenticationVM: ObservableObject {
     
     let fireAuth = FirebaseUserAuth()
@@ -31,15 +37,15 @@ class UserAuthenticationVM: ObservableObject {
     @Published var isProvider: Bool
     @Published var isRenter: Bool
     @Published var userStatue: SignUpUserType = .provider
+    @Published var userUID: String
     
-    private var userUID: String = ""
-    
-    init(userName: String = "", password: String = "", isSignIn: Bool = false, isProvider: Bool = false, isRenter: Bool = false) {
+    init(userName: String = "", password: String = "", isSignIn: Bool = false, isProvider: Bool = false, isRenter: Bool = false, userUID: String = "") {
         self.userName = userName
         self.password = password
         self.isSignIn = isSignIn
         self.isProvider = isProvider
         self.isRenter = isRenter
+        self.userUID = userUID
     }
     
     
@@ -69,12 +75,25 @@ class UserAuthenticationVM: ObservableObject {
         }
     }
     
+    @MainActor
     func getUser() async throws {
         userUID = fireAuth.getUid()
         try await fireDB.fetchUserInto(uid: userUID, user: &user)
+        userStatue = .init(rawValue: user.signUpType) ?? .provider
     }
     
 }
 
-
-
+extension UserAuthenticationVM {
+    //User info update function
+    @MainActor
+    func userUpdate() async throws {
+        userUID = fireAuth.getUid()
+//        guard AppVM.isSame(lhs: user, rhs: user) else {
+//            debugPrint("is not the same")
+//            return
+//        }
+//        debugPrint("is same")
+        try await fireDB.userInfoUpdate(uid: userUID, user: &user)
+    }
+}

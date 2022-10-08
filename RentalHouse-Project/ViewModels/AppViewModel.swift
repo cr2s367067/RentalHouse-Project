@@ -10,6 +10,8 @@ import UIKit
 
 class AppVM: ObservableObject {
     
+    static let shared = AppVM()
+    
     enum NanigationTitles: String {
         case postPage = "Post"
         case userPage = "User Profile"
@@ -25,4 +27,8 @@ class AppVM: ObservableObject {
     @Published var randomGredientColor1 = "Gredient1"
     @Published var randomGredientColor2 = "Gredient2"
     
+    static func isSame<T: Equatable>(lhs: T, rhs: T) -> Bool {
+        return lhs == rhs
+    }
+
 }

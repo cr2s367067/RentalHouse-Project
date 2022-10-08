@@ -26,6 +26,7 @@ struct MenuView: View {
                 labelTitle: "User",
                 destination: UserDashboard()
                     .environmentObject(errorHandler)
+                    .environmentObject(userAuth)
             )
             .padding(.leading, 5)
             Group {

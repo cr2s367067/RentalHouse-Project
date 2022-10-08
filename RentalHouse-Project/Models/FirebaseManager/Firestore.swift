@@ -28,6 +28,7 @@ class FirestoreDB {
         db = Firestore.firestore()
     }
     
+    //MARK: - User's create, fetch and update functions
     func createUser(uid: String, user: UserDM) async throws {
         collectionType = .users
         let userPath = db.collection(collectionType.rawValue).document(uid)
@@ -46,6 +47,22 @@ class FirestoreDB {
         user = try await userPath.getDocument(as: UserDM.self)
     }
     
+    func userInfoUpdate(uid: String, user: inout UserDM) async throws {
+        collectionType = .users
+        let userPath = db.collection(collectionType.rawValue).document(uid)
+        _ = try await userPath.updateData([
+            "nickName" : user.nickName,
+            "mobile" : user.mobile,
+            "lineID" : user.lineID,
+            "profileImagePath" : user.profileImagePath
+        ])
+        user = try await userPath.getDocument(as: UserDM.self)
+    }
+    
+}
+
+//MARK: - Room's post and fetch functions
+extension FirestoreDB {
     
     func roomUploadProcess(
         uid: String,

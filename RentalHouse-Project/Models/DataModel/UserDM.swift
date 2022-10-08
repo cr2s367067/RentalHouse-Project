@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct UserDM: Codable {
+struct UserDM: Codable, Equatable {
     var nickName: String
     var signUpType: String
     var mobile: String
