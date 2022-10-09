@@ -183,6 +183,7 @@ extension UserDashboard {
         if isEdit {
             navButtonStatus = .isEditing
             debugPrint("Is editing mode")
+            userAuthVM.storUserInfoInTemp()
         } else {
             navButtonStatus = .isNotEditing
             debugPrint("Is not editing mode, info will updating")

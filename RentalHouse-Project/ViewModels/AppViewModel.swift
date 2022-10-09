@@ -15,7 +15,8 @@ class AppVM: ObservableObject {
     enum NanigationTitles: String {
         case postPage = "Post"
         case userPage = "User Profile"
-    }
+        case roomCollection = "Room Collection"
+     }
     
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]

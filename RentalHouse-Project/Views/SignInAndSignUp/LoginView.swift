@@ -67,6 +67,7 @@ struct LoginView: View {
                 NavigationLink {
                     SignUpView()
                         .environmentObject(userAuth)
+                        .environmentObject(errorHandler)
                 } label: {
                     Text("Sign up")
                         .foregroundColor(Color("SignUpButton"))

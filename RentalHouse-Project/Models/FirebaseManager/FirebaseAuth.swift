@@ -20,9 +20,13 @@ class FirebaseUserAuth {
         return auth.currentUser?.uid ?? ""
     }
     
-    func signIn(email: String, password: String, _ completion: () -> Void) async throws {
+//    func signIn(email: String, password: String, _ completion: () -> Void) async throws {
+//        try await auth.signIn(withEmail: email, password: password)
+//        completion()
+//    }
+    
+    func signIn(email: String, password: String) async throws {
         try await auth.signIn(withEmail: email, password: password)
-        completion()
     }
     
     func signUp(email: String, password: String, uid: inout String) async throws {

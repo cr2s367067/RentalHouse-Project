@@ -39,6 +39,8 @@ class UserAuthenticationVM: ObservableObject {
     @Published var userStatue: SignUpUserType = .provider
     @Published var userUID: String
     
+    private var tempHolder: UserDM = .empty
+    
     init(userName: String = "", password: String = "", isSignIn: Bool = false, isProvider: Bool = false, isRenter: Bool = false, userUID: String = "") {
         self.userName = userName
         self.password = password
@@ -49,12 +51,11 @@ class UserAuthenticationVM: ObservableObject {
     }
     
     
+    @MainActor
     func login() async throws {
-        try await fireAuth.signIn(email: userName, password: password, {
-            DispatchQueue.main.async {
-                self.isSignIn = true
-            }
-        })
+        try await fireAuth.signIn(email: userName, password: password)
+        self.isSignIn = true
+        self.resetUsernameAndPassword()
     }
     
     @MainActor
@@ -62,6 +63,7 @@ class UserAuthenticationVM: ObservableObject {
         try await fireAuth.signUp(email: userName, password: password, uid: &userUID)
         try await fireDB.createUser(uid: userUID, user: .userIntoInit(signUpType: userStatue.rawValue))
         self.isSignIn = true
+        resetUsernameAndPassword()
     }
     
     func userSignOut() throws {
@@ -82,6 +84,12 @@ class UserAuthenticationVM: ObservableObject {
         userStatue = .init(rawValue: user.signUpType) ?? .provider
     }
     
+    private func resetUsernameAndPassword() {
+        guard !userName.isEmpty && !password.isEmpty else { return }
+        userName.removeAll()
+        password.removeAll()
+    }
+    
 }
 
 extension UserAuthenticationVM {
@@ -89,11 +97,15 @@ extension UserAuthenticationVM {
     @MainActor
     func userUpdate() async throws {
         userUID = fireAuth.getUid()
-//        guard AppVM.isSame(lhs: user, rhs: user) else {
-//            debugPrint("is not the same")
-//            return
-//        }
-//        debugPrint("is same")
+        guard !AppVM.isSame(lhs: user, rhs: tempHolder) else {
+            debugPrint("Data hasn't change")
+            return
+        }
+        debugPrint("Data is change ready to upload")
         try await fireDB.userInfoUpdate(uid: userUID, user: &user)
+    }
+    
+    func storUserInfoInTemp() {
+        self.tempHolder = user
     }
 }

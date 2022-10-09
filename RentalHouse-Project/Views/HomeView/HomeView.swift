@@ -35,10 +35,6 @@ extension HomeView {
     @ViewBuilder
     func homeContain() -> some View {
         VStack {
-            Button("test") {
-                print("\(userAuthVM.user)")
-                print("\(userAuthVM.userStatue)")
-            }
             HStack {
                 Button {
                     show.toggle()

@@ -13,14 +13,18 @@ struct PostCollectionView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
-                TitleAndDivier(title: "Room Collection")
                 //for each this card
                 ForEach(pacVM.providerCollection) { room in
-                    ReuseableRoomItemCard(roomData: room)
+                    NavigationLink {
+                        RoomDetailView(roomInfo: room)
+                    } label: {
+                        ReuseableRoomItemCard(roomData: room)
+                    }
+
                 }
             }
         }
-        .modifier(ViewBackground(backgroundType: .naviBarIsShown))
+        .modifier(ViewBackground(backgroundType: .generalBackground, navigationTitle: AppVM.NanigationTitles.roomCollection.rawValue))
         .task {
             do {
                 try await pacVM.fetchPostedRoom(from: .inside)

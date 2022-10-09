@@ -12,12 +12,16 @@ struct RoomDetailView: View {
     var roomInfo: RoomPostDM
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "photo")
-                .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.3)
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(.white.opacity(0.7))
-                }
+            if roomInfo.roomsImage.count > 1 {
+                PageHorizontalScrollView(imageSet: roomInfo.roomsImage)
+            } else {
+                Image(systemName: "photo")
+                    .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.3)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.white.opacity(0.7))
+                    }
+            }
             SessionUnit {
                 Text(roomInfo.additionalInfo)
             }

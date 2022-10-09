@@ -296,22 +296,40 @@ struct ReuseableRoomItemCard: View {
     var roomData: RoomPostDM = .empty
     var body: some View {
         HStack {
-            Image(systemName: "photo")
-                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.14, alignment: .center)
-                .background(alignment: .center) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(.brown.opacity(0.3))
-                }
+            if roomData.roomsImage.count > 1 {
+                WebImage(url: URL(string: getFirstCoverImage(roomData: roomData)))
+                    .resizable()
+                    .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.14, alignment: .center)
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+            } else {
+                Image(systemName: "photo")
+                    .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.14, alignment: .center)
+                    .background(alignment: .center) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.brown.opacity(0.3))
+                    }
+            }
             VStack(alignment: .leading, spacing: 15) {
                 Text(roomData.roomAddress)
                 Text("Size: \(roomData.roomSize)")
                 Text("Monthly Fee: \(roomData.rentalPrice)")
             }
+            .foregroundColor(.white)
             .font(.headline)
             .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.1, alignment: .topLeading)
         }
         .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.13, alignment: .center)
         .modifier(FlatGlass())
+    }
+}
+
+extension ReuseableRoomItemCard {
+    func getFirstCoverImage(roomData: RoomPostDM) -> String {
+        if roomData.roomsImage.count > 1 {
+            return roomData.roomsImage.first ?? ""
+        }
+        return ""
     }
 }
 
@@ -349,8 +367,8 @@ struct ReuseableAuthButton: View {
                 .font(.body)
                 .fontWeight(.heavy)
                 .foregroundColor(.primary)
+                .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
         }
-        .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
         .background(alignment: .center) {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.cyan)
@@ -441,3 +459,28 @@ struct ReuseableButtonProviderType: View {
 //        ReuseableButtonProviderType(isSelected: false)
 //    }
 //}
+
+//MARK: - PageStyle scroll view
+struct PageHorizontalScrollView: View {
+    
+    var imageSet: [String]?
+
+    var body: some View {
+        if let imageSet = imageSet {
+            TabView {
+                ForEach(imageSet, id: \.self) { img in
+                    if let url = URL(string: img) {
+                        WebImage(url: url)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+            }
+            .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.3)
+            .tabViewStyle(PageTabViewStyle())
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .interactive))
+        }
+    }
+    
+}

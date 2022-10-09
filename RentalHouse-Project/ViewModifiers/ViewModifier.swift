@@ -43,6 +43,7 @@ struct ViewBackground: ViewModifier {
             content
                 .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(true)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(alignment: .center) {
@@ -54,7 +55,7 @@ struct ViewBackground: ViewModifier {
             content
                 .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(true)
+                .navigationBarHidden(false)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(alignment: .center) {
