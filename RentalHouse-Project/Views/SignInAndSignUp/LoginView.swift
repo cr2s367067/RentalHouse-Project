@@ -14,69 +14,73 @@ struct LoginView: View {
     @EnvironmentObject var userAuth: UserAuthenticationVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var errorHandler: ErrorHandler
-    
+    @State private var loginViewPath = NavigationPath()
     var body: some View {
-        VStack(spacing: 15) {
-            HStack {
-                Text("START TO FIND YOUR RIGHT PLACE")
-                    .foregroundColor(.white)
-                    .font(.title)
-                    .fontWeight(.heavy)
-                Spacer()
-            }
-            VStack(alignment: .center, spacing: 10) {
+        NavigationStack(path: $loginViewPath) {
+            VStack(spacing: 15) {
                 HStack {
-                    Text("Sign In")
+                    Text("START TO FIND YOUR RIGHT PLACE")
                         .foregroundColor(.white)
-                        .font(.title3)
-                        .fontWeight(.bold)
+                        .font(.title)
+                        .fontWeight(.heavy)
                     Spacer()
                 }
-                AuthTextField(
-                    fieldContain: $userAuth.userName,
-                    fieldName: "Username",
-                    fieldType: .userName,
-                    hasContain: userAuth.userName.isEmpty
-                )
-                AuthTextField(
-                    fieldContain: $userAuth.password,
-                    fieldName: "Password",
-                    fieldType: .password,
-                    hasContain: userAuth.userName.isEmpty
-                )
+                VStack(alignment: .center, spacing: 10) {
+                    HStack {
+                        Text("Sign In")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    AuthTextField(
+                        fieldContain: $userAuth.userName,
+                        fieldName: "Username",
+                        fieldType: .userName,
+                        hasContain: userAuth.userName.isEmpty
+                    )
+                    AuthTextField(
+                        fieldContain: $userAuth.password,
+                        fieldName: "Password",
+                        fieldType: .password,
+                        hasContain: userAuth.password.isEmpty
+                    )
+                    HStack {
+                        Spacer()
+                        NavigationLink {
+                            
+                        } label: {
+                            Text("Forget password?")
+                                .foregroundColor(.white.opacity(0.7))
+                        }
+                    }
+                }
+                ReuseableAuthButton(buttonName: "Sign In") {
+                    Task {
+                        do {
+                            try await userAuth.login()
+                            guard loginViewPath.count > 1 else { return }
+                            loginViewPath.removeLast()
+                        } catch {
+                            errorHandler.handler(error: error)
+                        }
+                    }
+                }
                 HStack {
-                    Spacer()
                     NavigationLink {
-                        
+                        SignUpView()
+                            .environmentObject(userAuth)
+                            .environmentObject(errorHandler)
                     } label: {
-                        Text("Forget password?")
-                            .foregroundColor(.white.opacity(0.7))
+                        Text("Sign up")
+                            .foregroundColor(Color("SignUpButton"))
                     }
+                    .foregroundColor(.blue)
                 }
+                
             }
-            ReuseableAuthButton(buttonName: "Sign In") {
-                Task {
-                    do {
-                        try await userAuth.login()
-                    } catch {
-                        errorHandler.handler(error: error)
-                    }
-                }
-            }
-            HStack {
-                NavigationLink {
-                    SignUpView()
-                        .environmentObject(userAuth)
-                        .environmentObject(errorHandler)
-                } label: {
-                    Text("Sign up")
-                        .foregroundColor(Color("SignUpButton"))
-                }
-                .foregroundColor(.blue)
-            }
-            
+            .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
         }
-        .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
     }
 }
 

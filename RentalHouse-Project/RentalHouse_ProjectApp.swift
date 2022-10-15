@@ -20,12 +20,10 @@ struct RentalHouse_ProjectApp: App {
     @StateObject var pacVM = PostAndCollectionVM()
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ContentView()
-                    .environmentObject(userAuth)
-                    .environmentObject(pacVM)
-                    .withErrorHandler()                
-            }
+            ContentView()
+                .environmentObject(userAuth)
+                .environmentObject(pacVM)
+                .withErrorHandler()
         }
     }
 }

@@ -13,11 +13,14 @@ struct HomeView: View {
     @EnvironmentObject var userAuthVM: UserAuthenticationVM
     @State private var searchingContext = ""
     @State private var show = false
+    @State private var homePath = NavigationPath()
     var body: some View {
-        SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.34, showSidebar: $show) {
-            MenuView()
-        } content: {
-            homeContain()
+        NavigationStack(path: $homePath) {
+            SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.34, showSidebar: $show) {
+                MenuView()
+            } content: {
+                homeContain()
+            }
         }
     }
 }

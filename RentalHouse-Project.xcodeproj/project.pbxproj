@@ -14,6 +14,7 @@
 		0E27A8DA28B9C6C7007F91D8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E27A8D928B9C6C7007F91D8 /* Preview Assets.xcassets */; };
 		0E27A8E128B9C71F007F91D8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27A8E028B9C71F007F91D8 /* LoginView.swift */; };
 		0E27A8EB28B9E043007F91D8 /* UserAuthenticationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27A8EA28B9E043007F91D8 /* UserAuthenticationVM.swift */; };
+		0E337CBB28FB020F00F4697E /* CustomMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E337CBA28FB020F00F4697E /* CustomMenuView.swift */; };
 		0E4AEE5728BB3452000EAD84 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4AEE5628BB3452000EAD84 /* ViewModifier.swift */; };
 		0E4AEE5928BB364E000EAD84 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4AEE5828BB364E000EAD84 /* SignUpView.swift */; };
 		0E51B78E28BDE89B003AB3ED /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */; };
@@ -51,6 +52,7 @@
 		0E27A8D928B9C6C7007F91D8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0E27A8E028B9C71F007F91D8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0E27A8EA28B9E043007F91D8 /* UserAuthenticationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationVM.swift; sourceTree = "<group>"; };
+		0E337CBA28FB020F00F4697E /* CustomMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuView.swift; sourceTree = "<group>"; };
 		0E4AEE5628BB3452000EAD84 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		0E4AEE5828BB364E000EAD84 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				0E51B79628BE0898003AB3ED /* MenuView.swift */,
+				0E337CBA28FB020F00F4697E /* CustomMenuView.swift */,
 			);
 			path = MenuView;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				0E51B79728BE0898003AB3ED /* MenuView.swift in Sources */,
 				0E27A8EB28B9E043007F91D8 /* UserAuthenticationVM.swift in Sources */,
 				0E4AEE5728BB3452000EAD84 /* ViewModifier.swift in Sources */,
+				0E337CBB28FB020F00F4697E /* CustomMenuView.swift in Sources */,
 				0EDA99EF28C323CC00B6B8A7 /* PostAndCollectionVM.swift in Sources */,
 				0E7D37C628D6F3E300E702EC /* RoomDetailView.swift in Sources */,
 				0E56122628BE201F00745AFA /* RoomPostDM.swift in Sources */,

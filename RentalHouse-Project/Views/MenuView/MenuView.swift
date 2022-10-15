@@ -81,8 +81,8 @@ extension MenuView {
             Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
                 .foregroundColor(.white)
                 .font(.body)
+                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.1, alignment: .center)
         }
-        .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.03, alignment: .center)
         .background {
             Color("SignOutButtonBackground")
                 .offset(x: -5, y: 5)

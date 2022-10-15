@@ -88,6 +88,8 @@ class UserAuthenticationVM: ObservableObject {
         guard !userName.isEmpty && !password.isEmpty else { return }
         userName.removeAll()
         password.removeAll()
+        isRenter = false
+        isProvider = false
     }
     
 }
