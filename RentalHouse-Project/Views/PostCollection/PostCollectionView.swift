@@ -12,18 +12,9 @@ struct PostCollectionView: View {
     @EnvironmentObject var errorHandler: ErrorHandler
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            VStack {
-                //for each this card
-                ForEach(pacVM.providerCollection) { room in
-                    NavigationLink {
-                        RoomDetailView(roomInfo: room)
-                    } label: {
-                        ReuseableRoomItemCard(roomData: room)
-                    }
-
-                }
-            }
+            collectionEmptyCheck()
         }
+        .scrollDisabled(pacVM.providerCollection.isEmpty ? true : false)
         .modifier(ViewBackground(backgroundType: .generalBackground, navigationTitle: AppVM.NanigationTitles.roomCollection.rawValue))
         .task {
             do {
@@ -41,5 +32,31 @@ struct PostCollectionView_Previews: PreviewProvider {
         PostCollectionView()
             .environmentObject(pacVM)
             .withErrorHandler()
+    }
+}
+
+extension PostCollectionView {
+    @ViewBuilder
+    func collectionEmptyCheck() -> some View {
+        if pacVM.providerCollection.isEmpty {
+            VStack {
+                Text("Hi, you havn't post any room😅")
+                    .foregroundColor(.white)
+                    .font(.title2)
+            }
+        } else {
+            VStack {
+                //for each this card
+                ForEach(pacVM.providerCollection) { room in
+                    NavigationLink {
+                        RoomDetailView(roomInfo: room)
+                    } label: {
+                        ReuseableRoomItemCard(roomData: room)
+                    }
+
+                }
+            }
+
+        }
     }
 }

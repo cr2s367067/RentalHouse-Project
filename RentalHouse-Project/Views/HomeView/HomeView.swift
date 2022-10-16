@@ -16,8 +16,8 @@ struct HomeView: View {
     @State private var homePath = NavigationPath()
     var body: some View {
         NavigationStack(path: $homePath) {
-            SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.34, showSidebar: $show) {
-                MenuView()
+            SideMenuBar(sidebarWidth: AppVM.uiScreenWidth * 0.6, showSidebar: $show) {
+                CustomMenuView()
             } content: {
                 homeContain()
             }
@@ -40,7 +40,9 @@ extension HomeView {
         VStack {
             HStack {
                 Button {
-                    show.toggle()
+                    withAnimation {
+                        show.toggle()
+                    }
                 } label: {
                     Image(systemName: "line.3.horizontal")
                         .foregroundColor(.white)

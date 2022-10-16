@@ -14,57 +14,50 @@ struct CustomMenuView: View {
     @StateObject var appVM = AppVM()
     var body: some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack {
-                        Text("Setting")
-                            .foregroundColor(.white)
-                            .font(.title3)
-                            .fontWeight(.bold)
-                    }
-                    .padding(.leading, 5)
-                    CustomNaviLink(
-                        sysImage: "person",
-                        labelTitle: "User",
-                        destination: UserDashboard()
-                            .environmentObject(errorHandler)
-                            .environmentObject(userAuth)
-                    )
-                    .padding(.leading, 5)
-                    Group {
-                        if userAuth.userStatue == .provider {
-                            CustomNaviLink(
-                                sysImage: "square.and.pencil",
-                                labelTitle: "Post",
-                                destination: HousePostView()
-                                    .environmentObject(pacVM)
-                                    .environmentObject(errorHandler)
-                            )
-                            CustomNaviLink(
-                                sysImage: "folder",
-                                labelTitle: "Folder",
-                                destination: PostCollectionView()
-                                    .environmentObject(pacVM)
-                                    .environmentObject(errorHandler)
-                            )
-                        }
-                    }
-                    .padding(.leading, 5)
-                    Spacer()
-                    signOutButton()
-                        .padding(.leading, 5)
+            VStack(alignment: .leading, spacing: 15) {
+                HStack {
+                    Text("Setting")
+                        .foregroundColor(.white)
+                        .font(.title3)
+                        .fontWeight(.bold)
                 }
-                .frame(width: AppVM.uiScreenWidth * 0.63, height: AppVM.uiScreenHeight)
-                .background {
-                    Color("GeneralBackground")
-                        .edgesIgnoringSafeArea([.top, .bottom])
+                .padding(.leading, 5)
+                CustomNaviLink(
+                    sysImage: "person",
+                    labelTitle: "User",
+                    destination: UserDashboard()
+                        .environmentObject(errorHandler)
+                        .environmentObject(userAuth)
+                )
+                .padding(.leading, 5)
+                Group {
+                    if userAuth.userStatue == .provider {
+                        CustomNaviLink(
+                            sysImage: "square.and.pencil",
+                            labelTitle: "Post",
+                            destination: HousePostView()
+                                .environmentObject(pacVM)
+                                .environmentObject(errorHandler)
+                        )
+                        CustomNaviLink(
+                            sysImage: "folder",
+                            labelTitle: "Folder",
+                            destination: PostCollectionView()
+                                .environmentObject(pacVM)
+                                .environmentObject(errorHandler)
+                        )
+                    }
                 }
+                .padding(.leading, 5)
                 Spacer()
+                signOutButton()
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+//        .frame(width: AppVM.uiScreenWidth * 0.5)
+        .frame(maxWidth: .infinity)
         .background {
-            Color.black.opacity(0.93)
+            Color("GeneralBackground")
                 .edgesIgnoringSafeArea([.top, .bottom])
         }
     }

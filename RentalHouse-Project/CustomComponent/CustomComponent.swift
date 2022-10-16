@@ -397,29 +397,36 @@ struct SideMenuBar<SidebarContent: View, Content: View>: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            sidebarContent
-                .frame(width: sidebarWidth, alignment: .leading)
-                .offset(x: showSidebar ? 0 : -1 * sidebarWidth, y: 0)
-                .animation(.easeInOut, value: 2)
             mainContent
                 .overlay(
                     Group {
                         if showSidebar {
-                            Color.white
-                                .opacity(showSidebar ? 0.01 : 0)
+                            Color.black.opacity(0.8)
+                                .edgesIgnoringSafeArea([.top, .bottom])
                                 .onTapGesture {
-                                    self.showSidebar = false
+                                    withAnimation {
+                                        self.showSidebar = false
+                                    }
                                 }
-                        } else {
-                            Color.clear
-                                .opacity(showSidebar ? 0 : 0)
-                                .onTapGesture {
-                                    self.showSidebar = false
-                                }
+                                .animation(.easeInOut, value: 2)
                         }
-                    }
+                    }, alignment: .center
                 )
-                .offset(x: showSidebar ? sidebarWidth : 0, y: 0)
+//                .overlay(
+//                    Group {
+//                        if showSidebar {
+//                            Color.black
+//                                .opacity(showSidebar ? 0.8 : 0)
+//                                .onTapGesture {
+//                                    self.showSidebar = false
+//                                }
+//                        }
+//                    }
+//                )
+                .animation(.easeInOut, value: 2)
+            sidebarContent
+                .frame(width: sidebarWidth, alignment: .leading)
+                .offset(x: showSidebar ? 0 : -1 * sidebarWidth, y: 0)
                 .animation(.easeInOut, value: 2)
         }
     }
