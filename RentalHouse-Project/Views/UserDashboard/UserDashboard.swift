@@ -36,8 +36,10 @@ struct UserDashboard: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    isEditMode.toggle()
-                    editEvaluate(isEdit: isEditMode)
+                    withAnimation {                    
+                        isEditMode.toggle()
+                        editEvaluate(isEdit: isEditMode)
+                    }
                 } label: {
                     switch navButtonStatus {
                     case .isNotEditing:
@@ -162,18 +164,6 @@ extension UserDashboard {
             Spacer()
         }
         .frame(width: AppVM.uiScreenWidth * 0.87, height: AppVM.uiScreenHeight * 0.3, alignment: .leading)
-    }
-    
-    
-    
-    @ViewBuilder
-    func editButton() -> some View {
-        HStack {
-            Spacer()
-            Button("Edit") {
-                //Edit toggle
-            }
-        }
     }
 }
 

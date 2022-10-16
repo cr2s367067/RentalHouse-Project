@@ -9,6 +9,9 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct RoomDetailView: View {
+    
+    @State private var isEdit = false
+    
     var roomInfo: RoomPostDM
     var body: some View {
         VStack(spacing: 20) {
@@ -41,8 +44,24 @@ struct RoomDetailView: View {
             }
             Spacer()
         }
+        .sheet(isPresented: $isEdit, onDismiss: {
+            print("Update room's info")
+        }, content: {
+            RoomUpdateSheetView()
+        })
         .modifier(ViewBackground(backgroundType: .generalBackground))
         .navigationBarHidden(false)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    isEdit.toggle()
+                } label: {
+                    Image(systemName: "slider.horizontal.3")
+                        .foregroundColor(.white)
+                        .font(.body)
+                }
+            }
+        }
     }
 }
 
