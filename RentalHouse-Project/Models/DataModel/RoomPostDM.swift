@@ -45,6 +45,6 @@ extension RoomPostDM {
         providerType: "RentalManager",
         roomsImage: ["cover image address"],
         providerInfo: "provider uid",
-        isOnPublic: false
+        isOnPublic: true
     )
 }

@@ -412,17 +412,6 @@ struct SideMenuBar<SidebarContent: View, Content: View>: View {
                         }
                     }, alignment: .center
                 )
-//                .overlay(
-//                    Group {
-//                        if showSidebar {
-//                            Color.black
-//                                .opacity(showSidebar ? 0.8 : 0)
-//                                .onTapGesture {
-//                                    self.showSidebar = false
-//                                }
-//                        }
-//                    }
-//                )
                 .animation(.easeInOut, value: 2)
             sidebarContent
                 .frame(width: sidebarWidth, alignment: .leading)

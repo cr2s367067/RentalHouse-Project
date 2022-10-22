@@ -13,15 +13,16 @@ struct CustomMenuView: View {
     @EnvironmentObject var pacVM: PostAndCollectionVM
     @StateObject var appVM = AppVM()
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 15) {
-                HStack {
-                    Text("Setting")
-                        .foregroundColor(.white)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                }
-                .padding(.leading, 5)
+        VStack(spacing: 15) {
+            HStack {
+                Text("Setting")
+                    .foregroundColor(.white)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                Spacer()
+            }
+            .padding(.leading, (AppVM.uiScreenWidth / 4) * 0.3)
+            HStack {
                 CustomNaviLink(
                     sysImage: "person",
                     labelTitle: "User",
@@ -29,9 +30,12 @@ struct CustomMenuView: View {
                         .environmentObject(errorHandler)
                         .environmentObject(userAuth)
                 )
-                .padding(.leading, 5)
-                Group {
-                    if userAuth.userStatue == .provider {
+                Spacer()
+            }
+            .padding(.leading, (AppVM.uiScreenWidth / 4) * 0.3)
+            Group {
+                if userAuth.userStatue == .provider {
+                    HStack {
                         CustomNaviLink(
                             sysImage: "square.and.pencil",
                             labelTitle: "Post",
@@ -39,6 +43,9 @@ struct CustomMenuView: View {
                                 .environmentObject(pacVM)
                                 .environmentObject(errorHandler)
                         )
+                        Spacer()
+                    }
+                    HStack {
                         CustomNaviLink(
                             sysImage: "folder",
                             labelTitle: "Folder",
@@ -46,15 +53,21 @@ struct CustomMenuView: View {
                                 .environmentObject(pacVM)
                                 .environmentObject(errorHandler)
                         )
+                        Spacer()
                     }
                 }
-                .padding(.leading, 5)
-                Spacer()
+            }
+            .padding(.leading, (AppVM.uiScreenWidth / 4) * 0.3)
+            Spacer()
+            HStack {
                 signOutButton()
+                Spacer()
+            }
+            .background {
+                Color("SignOutButtonBackground")
+                    .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
             }
         }
-        .padding()
-//        .frame(width: AppVM.uiScreenWidth * 0.5)
         .frame(maxWidth: .infinity)
         .background {
             Color("GeneralBackground")
@@ -84,13 +97,9 @@ extension CustomMenuView {
             Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
                 .foregroundColor(.white)
                 .font(.body)
-                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.1, alignment: .center)
-        }
-        .background {
-            Color("SignOutButtonBackground")
-                .offset(x: -5, y: 5)
-                .frame(width: AppVM.uiScreenWidth * 0.3, height: AppVM.uiScreenHeight * 0.15)
-                .edgesIgnoringSafeArea([.bottom, .leading])
+                .frame(height: (AppVM.uiScreenHeight / 4) * 0.2)
+                .frame(maxWidth: .infinity)
+//                .frame(width: AppVM.uiScreenWidth * 0.5, height: AppVM.uiScreenHeight * 0.1, alignment: .center)
         }
     }
 }

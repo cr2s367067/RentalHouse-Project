@@ -11,54 +11,66 @@ import SDWebImageSwiftUI
 struct RoomDetailView: View {
     
     @State private var isEdit = false
-    
-    var roomInfo: RoomPostDM
+    @State var roomInfo: RoomPostDM?
+
     var body: some View {
         VStack(spacing: 20) {
-            if roomInfo.roomsImage.count > 1 {
-                PageHorizontalScrollView(imageSet: roomInfo.roomsImage)
-            } else {
-                Image(systemName: "photo")
-                    .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.3)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white.opacity(0.7))
-                    }
-            }
-            SessionUnit {
-                Text(roomInfo.additionalInfo)
-            }
-            SessionUnit {
-                Text("地址: \(roomInfo.roomAddress)")
-                Text("聯絡人: \(roomInfo.providerInfo)")
-                Text("聯絡方式: \(roomInfo.providerInfo)")
-            }
-            HStack {
-                Text("$\(roomInfo.rentalPrice)/月")
-                    .frame(width: AppVM.uiScreenWidth * 0.23, height: AppVM.uiScreenHeight * 0.03)
-                    .background {
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(.gray)
-                    }
-                Spacer()
+            if let roomInfo = roomInfo {
+                if roomInfo.roomsImage.count > 1 {
+                    PageHorizontalScrollView(imageSet: roomInfo.roomsImage)
+                } else {
+                    Image(systemName: "photo")
+                        .frame(width: AppVM.uiScreenWidth * 0.9, height: AppVM.uiScreenHeight * 0.3)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.white.opacity(0.7))
+                        }
+                }
+                SessionUnit {
+                    Text(roomInfo.additionalInfo)
+                }
+                SessionUnit {
+                    Text("地址: \(roomInfo.roomAddress)")
+                    Text("聯絡人: \(roomInfo.providerInfo)")
+                    Text("聯絡方式: \(roomInfo.providerInfo)")
+                }
+                HStack {
+                    Text("$\(roomInfo.rentalPrice)/月")
+                        .foregroundColor(.white)
+                        .frame(width: AppVM.uiScreenWidth * 0.23, height: AppVM.uiScreenHeight * 0.03)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.gray)
+                        }
+                    Spacer()
+                }
             }
             Spacer()
         }
         .sheet(isPresented: $isEdit, onDismiss: {
             print("Update room's info")
         }, content: {
-            RoomUpdateSheetView()
+            if let roomInfo = roomInfo {
+                RoomUpdateSheetView(roomInfo: roomInfo)
+            }
         })
         .modifier(ViewBackground(backgroundType: .generalBackground))
         .navigationBarHidden(false)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    isEdit.toggle()
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                        .foregroundColor(.white)
-                        .font(.body)
+            if !(roomInfo?.isOnPublic ?? true) {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack {
+                        Button("Test") {
+                            print("Testing")
+                        }
+                        Button {
+                            isEdit.toggle()
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .foregroundColor(.white)
+                                .font(.body)
+                        }
+                    }
                 }
             }
         }
