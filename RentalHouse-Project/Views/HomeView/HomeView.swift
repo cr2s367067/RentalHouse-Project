@@ -54,6 +54,7 @@ extension HomeView {
                 ForEach(pacVM.houseCollection) { room in
                     NavigationLink {
                         RoomDetailView(roomInfo: room)
+                            .environmentObject(errorHandler)
                     } label: {
                         ReuseableCard(
                             roomAddress: room.roomAddress,

@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestoreSwift
 import FirebaseFirestore
 
-struct RoomPostDM: Identifiable, Codable {
+struct RoomPostDM: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
     var roomSize: String
     var roomAddress: String

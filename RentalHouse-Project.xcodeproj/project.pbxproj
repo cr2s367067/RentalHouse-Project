@@ -30,7 +30,6 @@
 		0E7D37C628D6F3E300E702EC /* RoomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7D37C528D6F3E300E702EC /* RoomDetailView.swift */; };
 		0E9A740C28FC3003002D0CEF /* RoomUpdateSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9A740B28FC3003002D0CEF /* RoomUpdateSheetView.swift */; };
 		0EA5E2E628C71F7B002E45CF /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA5E2E528C71F7B002E45CF /* SDWebImageSwiftUI */; };
-		0EA5E2E828C725DF002E45CF /* RoomCollectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA5E2E728C725DF002E45CF /* RoomCollectionDetailView.swift */; };
 		0EAE4B8C28BDDF4F001E8C0E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAE4B8B28BDDF4F001E8C0E /* HomeView.swift */; };
 		0EBD055328C47D5E008B2D31 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD055228C47D5E008B2D31 /* ErrorHandler.swift */; };
 		0EBD055528C48AC1008B2D31 /* UserDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD055428C48AC1008B2D31 /* UserDM.swift */; };
@@ -66,7 +65,6 @@
 		0E5E24D328BA01E000629B1D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0E7D37C528D6F3E300E702EC /* RoomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailView.swift; sourceTree = "<group>"; };
 		0E9A740B28FC3003002D0CEF /* RoomUpdateSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUpdateSheetView.swift; sourceTree = "<group>"; };
-		0EA5E2E728C725DF002E45CF /* RoomCollectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCollectionDetailView.swift; sourceTree = "<group>"; };
 		0EAE4B8B28BDDF4F001E8C0E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0EBD055228C47D5E008B2D31 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		0EBD055428C48AC1008B2D31 /* UserDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDM.swift; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				0EDA99EB28C2E95600B6B8A7 /* PostCollectionView.swift */,
-				0EA5E2E728C725DF002E45CF /* RoomCollectionDetailView.swift */,
 			);
 			path = PostCollection;
 			sourceTree = "<group>";
@@ -411,7 +408,6 @@
 				0E5E24D428BA01E000629B1D /* Extensions.swift in Sources */,
 				0E9A740C28FC3003002D0CEF /* RoomUpdateSheetView.swift in Sources */,
 				0EDA99EC28C2E95600B6B8A7 /* PostCollectionView.swift in Sources */,
-				0EA5E2E828C725DF002E45CF /* RoomCollectionDetailView.swift in Sources */,
 				0E27A8E128B9C71F007F91D8 /* LoginView.swift in Sources */,
 				0EDA99F628C3262C00B6B8A7 /* FirebaseStorage.swift in Sources */,
 				0EDA99F428C3261E00B6B8A7 /* Firestore.swift in Sources */,

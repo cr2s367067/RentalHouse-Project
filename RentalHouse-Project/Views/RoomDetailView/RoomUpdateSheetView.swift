@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RoomUpdateSheetView: View {
-//    @EnvironmentObject var pacVM: PostAndCollectionVM
+    
     @EnvironmentObject var errorHandler: ErrorHandler
     
     @State var roomInfo: RoomPostDM

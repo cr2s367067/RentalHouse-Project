@@ -13,7 +13,7 @@ struct CustomMenuView: View {
     @EnvironmentObject var pacVM: PostAndCollectionVM
     @StateObject var appVM = AppVM()
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 20) {
             HStack {
                 Text("Setting")
                     .foregroundColor(.white)

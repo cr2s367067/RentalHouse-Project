@@ -57,6 +57,20 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
         isProgressing = false
     }
     
+    @MainActor
+    func roomInfoUpdate(roomUID: String) async throws {
+        try await roomUpload(to: .inside, roomUID: roomUID, method: .update)
+    }
+    
+    @MainActor
+    func roomInfoUpdateProcess(roomUID: String) async throws {
+        try await roomUpload(to: .inside, roomUID: roomUID, method: .update)
+    }
+    
+    func roomRemoveFromePublic(roomUID: String) async throws {
+        //TODO: create remove method when user changes room status for private
+    }
+    
     
     func roomUpload(to spot: PostSpot, roomUID: String, method: UploadMethod) async throws {
         let uid = fireAuth.getUid()
@@ -64,7 +78,7 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
         guard !uid.isEmpty else { return }
         try await fireDB.roomUploadProcess(
             uid: uid,
-            room: roomData,
+            room: &roomData,
             spot: spot,
             method: method,
             roomUID: roomUID

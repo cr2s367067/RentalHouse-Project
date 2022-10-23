@@ -53,6 +53,7 @@ extension PostCollectionView {
                 ForEach(pacVM.providerCollection) { room in
                     NavigationLink {
                         RoomDetailView(roomInfo: room)
+                            .environmentObject(errorHandler)
                     } label: {
                         ReuseableRoomItemCard(roomData: room)
                     }

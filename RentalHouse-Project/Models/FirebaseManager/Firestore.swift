@@ -70,7 +70,7 @@ extension FirestoreDB {
     
     func roomUploadProcess(
         uid: String,
-        room info: RoomPostDM,
+        room info: inout RoomPostDM,
         spot upload: PostSpot,
         method create: UploadMethod,
         roomUID: String
@@ -105,6 +105,8 @@ extension FirestoreDB {
                     "isOnPublic" : info.isOnPublic,
                     "uploadTime" : Date()
                 ])
+                //TODO: Fetch new data when it's updated
+                info = try await roomPath.getDocument(as: RoomPostDM.self)
             }
         case .external:
             let roomPath = db.collection(collectionType.rawValue)
@@ -164,4 +166,6 @@ extension FirestoreDB {
         }
         
     }
+    
+    //TODO: Create a remove process for publisher to remove the room that they uploaded
 }

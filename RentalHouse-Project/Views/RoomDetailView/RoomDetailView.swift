@@ -15,10 +15,15 @@ struct RoomDetailView: View {
         case isPrivate = "Private"
     }
     
+    @EnvironmentObject var errorHandler: ErrorHandler
+    @EnvironmentObject var pacVM: PostAndCollectionVM
+    
     @State private var isPost = false
     @State private var isEdit = false
     @State var roomInfo: RoomPostDM?
     @State private var postStatus: PostStatus = .isPrivate
+    
+    @State private var tempHolder: RoomPostDM = .empty
 
     var body: some View {
         VStack(spacing: 20) {
@@ -37,6 +42,7 @@ struct RoomDetailView: View {
                     Text(roomInfo.additionalInfo)
                 }
                 SessionUnit {
+                    Text("坪數: \(roomInfo.roomSize)")
                     Text("地址: \(roomInfo.roomAddress)")
                     Text("聯絡人: \(roomInfo.providerInfo)")
                     Text("聯絡方式: \(roomInfo.providerInfo)")
@@ -51,12 +57,37 @@ struct RoomDetailView: View {
                         }
                     Spacer()
                 }
+                if AppVM.navigationLocate == .isLocal {
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Text("Remove Room")
+                            .font(.body)
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                            .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
+                    }
+                    .background(alignment: .center) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.red)
+                    }
+                }
             }
             Spacer()
         }
         .sheet(isPresented: $isEdit, onDismiss: {
-            //TODO: Update process
-
+            Task {
+                do {
+                    guard AppVM.navigationLocate == .isLocal else { return }
+                    //FIXME: Neet to fix the comparing logic.
+                    debugPrint("roominfo: \(roomInfo), tempholder: \(tempHolder)")
+                    guard !AppVM.isSame(lhs: roomInfo, rhs: tempHolder) else { return }
+                    try await pacVM.roomInfoUpdate(roomUID: roomInfo?.id ?? "")
+                } catch {
+                    errorHandler.handler(error: error)
+                }
+            }
         }, content: {
             if let roomInfo = roomInfo {
                 RoomUpdateSheetView(roomInfo: roomInfo)
@@ -67,6 +98,7 @@ struct RoomDetailView: View {
         .onAppear {
             if let roomInfo = roomInfo {
                 isPost = roomInfo.isOnPublic
+                self.tempHolder = roomInfo
             }
         }
         .toolbar {
