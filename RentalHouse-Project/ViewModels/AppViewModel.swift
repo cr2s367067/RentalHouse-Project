@@ -18,12 +18,17 @@ class AppVM: ObservableObject {
         case roomCollection = "Room Collection"
      }
     
+    enum NavigationLocate {
+        case isLocal, isPublic
+    }
+    
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     static let uiScreenWidth = UIScreen.main.bounds.width
     static let uiScreenHeight = UIScreen.main.bounds.height
+    static var navigationLocate: NavigationLocate = .isLocal
     
     @Published var randomGredientColor1 = "Gredient1"
     @Published var randomGredientColor2 = "Gredient2"

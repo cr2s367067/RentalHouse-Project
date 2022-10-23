@@ -96,6 +96,7 @@ struct HousePostView: View {
                     .foregroundColor(.white)
                     .font(.body)
                     .fontWeight(.bold)
+                    .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.07, alignment: .center)
             }
             .offset(y: AppVM.uiScreenHeight * 0.025)
             .frame(width: AppVM.uiScreenWidth, height: AppVM.uiScreenHeight * 0.07, alignment: .center)

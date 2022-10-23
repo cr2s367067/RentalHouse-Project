@@ -10,7 +10,7 @@ import PhotosUI
 import _PhotosUI_SwiftUI
 
 protocol RoomsAction {
-    func roomUpload(to spot: PostSpot, roomUID: String) async throws
+    func roomUpload(to spot: PostSpot, roomUID: String, method: UploadMethod) async throws
     func roomImageUpload(roomUID: String) async throws
     func fetchPostedRoom(from spot: PostSpot) async throws
     
@@ -51,14 +51,14 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
     func roomCreateProcess() async throws {
         let roomUID = UUID().uuidString
         isProgressing = true
-        try await roomUpload(to: .inside, roomUID: roomUID)
+        try await roomUpload(to: .inside, roomUID: roomUID, method: .create)
         try await roomImageUpload(roomUID: roomUID)
         restoreDefault()
         isProgressing = false
     }
     
     
-    func roomUpload(to spot: PostSpot, roomUID: String) async throws {
+    func roomUpload(to spot: PostSpot, roomUID: String, method: UploadMethod) async throws {
         let uid = fireAuth.getUid()
         debugPrint("Get uid: \(uid)")
         guard !uid.isEmpty else { return }
@@ -66,6 +66,7 @@ class PostAndCollectionVM: ObservableObject, RoomsAction {
             uid: uid,
             room: roomData,
             spot: spot,
+            method: method,
             roomUID: roomUID
         )
     }

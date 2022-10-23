@@ -10,8 +10,15 @@ import SDWebImageSwiftUI
 
 struct RoomDetailView: View {
     
+    enum PostStatus: String {
+        case isPublic = "Public"
+        case isPrivate = "Private"
+    }
+    
+    @State private var isPost = false
     @State private var isEdit = false
     @State var roomInfo: RoomPostDM?
+    @State private var postStatus: PostStatus = .isPrivate
 
     var body: some View {
         VStack(spacing: 20) {
@@ -48,7 +55,8 @@ struct RoomDetailView: View {
             Spacer()
         }
         .sheet(isPresented: $isEdit, onDismiss: {
-            print("Update room's info")
+            //TODO: Update process
+
         }, content: {
             if let roomInfo = roomInfo {
                 RoomUpdateSheetView(roomInfo: roomInfo)
@@ -56,21 +64,40 @@ struct RoomDetailView: View {
         })
         .modifier(ViewBackground(backgroundType: .generalBackground))
         .navigationBarHidden(false)
+        .onAppear {
+            if let roomInfo = roomInfo {
+                isPost = roomInfo.isOnPublic
+            }
+        }
         .toolbar {
-            if !(roomInfo?.isOnPublic ?? true) {
+            if AppVM.navigationLocate == .isLocal {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
-                        Button("Test") {
-                            print("Testing")
-                        }
+                        Text(postStatus.rawValue)
+                            .foregroundColor(isPost ? .green : .red)
+                        Toggle("PostPublic", isOn: $isPost)
+                            .toggleStyle(.switch)
+                            .labelsHidden()
+                            .onChange(of: isPost) { _ in
+                                if isPost {
+                                    postStatus = .isPublic
+                                    //TODO: Post in public
+                                } else {
+                                    postStatus = .isPrivate
+                                    //TODO: remove from public
+                                }
+                            }
                         Button {
-                            isEdit.toggle()
+                            withAnimation {
+                                isEdit.toggle()
+                            }
                         } label: {
                             Image(systemName: "slider.horizontal.3")
                                 .foregroundColor(.white)
                                 .font(.body)
                         }
                     }
+                    .padding(.horizontal)
                 }
             }
         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RoomUpdateSheetView: View {
-    @EnvironmentObject var pacVM: PostAndCollectionVM
+//    @EnvironmentObject var pacVM: PostAndCollectionVM
     @EnvironmentObject var errorHandler: ErrorHandler
     
     @State var roomInfo: RoomPostDM
@@ -46,7 +46,7 @@ struct RoomUpdateSheetView: View {
                                 .foregroundColor(.white)
                             Spacer()
                         }
-                        TextEditor(text: $pacVM.roomData.additionalInfo)
+                        TextEditor(text: $roomInfo.additionalInfo)
                             .padding()
                             .frame(width: AppVM.uiScreenWidth * 0.91, height: AppVM.uiScreenHeight * 0.4)
                             .background { Color.white}

@@ -19,6 +19,10 @@ enum PostSpot {
     case external
 }
 
+enum UploadMethod {
+    case create, update
+}
+
 class FirestoreDB {
     
     let db: Firestore
@@ -68,24 +72,40 @@ extension FirestoreDB {
         uid: String,
         room info: RoomPostDM,
         spot upload: PostSpot,
+        method create: UploadMethod,
         roomUID: String
     ) async throws {
         collectionType = .rooms
         switch upload {
         case .inside:
             let roomPath = db.collection(collectionType.rawValue).document(uid).collection(uid).document(roomUID)
-            _  = try await roomPath.setData([
-                "roomSize" : info.roomSize,
-                "roomAddress" : info.roomAddress,
-                "rentalPrice" : info.rentalPrice,
-                "additionalInfo" : info.additionalInfo,
-                "tosAgree" : info.tosAgree,
-                "providerType" : info.providerType,
-                "roomsImage" : info.roomsImage,
-                "providerInfo" : uid,
-                "isOnPublic" : info.isOnPublic,
-                "uploadTime" : Date()
-            ])
+            switch create {
+            case .create:
+                _  = try await roomPath.setData([
+                    "roomSize" : info.roomSize,
+                    "roomAddress" : info.roomAddress,
+                    "rentalPrice" : info.rentalPrice,
+                    "additionalInfo" : info.additionalInfo,
+                    "tosAgree" : info.tosAgree,
+                    "providerType" : info.providerType,
+                    "roomsImage" : info.roomsImage,
+                    "providerInfo" : uid,
+                    "isOnPublic" : info.isOnPublic,
+                    "uploadTime" : Date()
+                ])
+            case .update:
+                _ = try await roomPath.updateData([
+                    "roomSize" : info.roomSize,
+                    "roomAddress" : info.roomAddress,
+                    "rentalPrice" : info.rentalPrice,
+                    "additionalInfo" : info.additionalInfo,
+                    "tosAgree" : info.tosAgree,
+                    "providerType" : info.providerType,
+                    "roomsImage" : info.roomsImage,
+                    "isOnPublic" : info.isOnPublic,
+                    "uploadTime" : Date()
+                ])
+            }
         case .external:
             let roomPath = db.collection(collectionType.rawValue)
             _  = try await roomPath.addDocument(data: [

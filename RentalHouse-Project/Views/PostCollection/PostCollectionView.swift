@@ -16,6 +16,9 @@ struct PostCollectionView: View {
         }
         .scrollDisabled(pacVM.providerCollection.isEmpty ? true : false)
         .modifier(ViewBackground(backgroundType: .generalBackground, navigationTitle: AppVM.NanigationTitles.roomCollection.rawValue))
+        .onAppear {
+            AppVM.navigationLocate = .isLocal
+        }
         .task {
             do {
                 try await pacVM.fetchPostedRoom(from: .inside)

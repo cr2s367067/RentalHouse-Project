@@ -68,6 +68,9 @@ extension HomeView {
         }
         .modifier(ViewBackground(backgroundType: .generalBackground))
         .navigationBarHidden(true)
+        .onAppear {
+            AppVM.navigationLocate = .isPublic
+        }
         .task {
             do {
                 try await userAuthVM.getUser()

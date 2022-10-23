@@ -104,3 +104,11 @@ struct TextFieldModifier: ViewModifier {
             }
     }
 }
+
+
+//TODO: Add the custom image background style toggle
+//struct ImageBackgroundToggleStyle: ToggleStyle {
+//    func makeBody(configuration: Configuration) -> some View {
+//
+//    }
+//}
