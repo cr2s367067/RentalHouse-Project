@@ -115,31 +115,43 @@ struct CustomTextFieldWithName: View {
     var fieldName: String
     var hasContain: Bool
     var body: some View {
-        VStack {
+        VStack(spacing: (AppVM.uiScreenHeight / 5) * 0.1) {
             HStack {
                 Text(title)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
+                    .font(Font.custom("SFPro-Regular", size: 14))
                 Spacer()
             }
             TextField("", text: infoContain)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
+                .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
+                .cornerRadius(10)
                 .placeholder(when: hasContain) {
                     Text(fieldName)
-                        .foregroundColor(.white.opacity(fieldOpacity))
+                        .foregroundColor(Color.init(red: 0.717, green: 0.717, blue: 0.717))
+                        .font(Font.custom("SFPro-Regular", size: 14))
                 }
-            Divider()
-                .background(.white.opacity(0.5))
-                .frame(height: 2)
+                .background {
+                    Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                        .cornerRadius(10)
+                }
         }
+        .frame(width: AppVM.uiScreenWidth * 0.98)
     }
 }
 
-
-struct TitleAndDivider_preview: PreviewProvider {
+struct CustomTextFieldWithName_preview: PreviewProvider {
     static var previews: some View {
-        TitleAndDivier(title: "Some Title")
+        CustomTextFieldWithName(title: "Text", infoContain: .constant("placce"), fieldName: "placeholder", hasContain: false)
     }
 }
+
+
+//struct TitleAndDivider_preview: PreviewProvider {
+//    static var previews: some View {
+//        TitleAndDivier(title: "Some Title")
+//    }
+//}
     
 //MARK: - Search Bar
 struct SearchBar: View {

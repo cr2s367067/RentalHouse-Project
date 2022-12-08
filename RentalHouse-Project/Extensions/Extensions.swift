@@ -20,7 +20,8 @@ extension View {
         @ViewBuilder placeholder: ()->Content
     ) -> some View {
         ZStack(alignment: alignment) {
-            placeholder().opacity(showText ? 1 : 0)
+            placeholder()
+                .opacity(showText ? 1 : 0)
             self
         }
     }
