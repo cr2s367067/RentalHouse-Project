@@ -22,6 +22,12 @@ class AppVM: ObservableObject {
         case isLocal, isPublic
     }
     
+    enum TextFieldType {
+        case normal
+        case secure
+        
+    }
+    
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
     }

@@ -109,32 +109,98 @@ struct TitleAndDivier: View {
 
 //MARK: - Post view room info text field
 struct CustomTextFieldWithName: View {
-    var fieldOpacity = 0.7
     var title: String
-    var infoContain: Binding<String>
+    @State var infoContain = ""
     var fieldName: String
     var hasContain: Bool
+    var fieldType: AppVM.TextFieldType = .secure
+    @State private var isSecure = true
+    var infoContainLength = 0
     var body: some View {
         VStack(spacing: (AppVM.uiScreenHeight / 5) * 0.1) {
             HStack {
                 Text(title)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color("TextFieldContainColor"))
                     .font(Font.custom("SFPro-Regular", size: 14))
                 Spacer()
             }
-            TextField("", text: infoContain)
-                .foregroundColor(.primary)
-                .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
-                .cornerRadius(10)
-                .placeholder(when: hasContain) {
-                    Text(fieldName)
-                        .foregroundColor(Color.init(red: 0.717, green: 0.717, blue: 0.717))
-                        .font(Font.custom("SFPro-Regular", size: 14))
-                }
-                .background {
-                    Color.init(red: 0.946, green: 0.946, blue: 0.946)
+            ZStack {
+                if fieldType == .normal {
+                    TextField("", text: $infoContain)
+                        .foregroundColor(Color("TextFieldContainColor"))
+                        .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
                         .cornerRadius(10)
+                        .placeholder(when: hasContain) {
+                            Text(fieldName)
+                                .foregroundColor(Color.init(hex: "B7B7B7"))
+                                .font(Font.custom("SFPro-Regular", size: 14))
+                        }
+                        .background {
+                            Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                                .cornerRadius(10)
+                                .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                        }
                 }
+                if fieldType == .secure {
+                    if isSecure {
+                        SecureField("", text: $infoContain)
+                            .placeholder(when: hasContain) {
+                                Text(fieldName)
+                                    .foregroundColor(Color.init(hex: "B7B7B7"))
+                                    .font(Font.custom("SFPro-Regular", size: 14))
+                            }
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(.default)
+                            .foregroundColor(Color("TextFieldContainColor"))
+                            .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
+                            .cornerRadius(10)
+                            .background {
+                                Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                                    .cornerRadius(10)
+                                    .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                            }
+                    } else {
+                        TextField("", text: $infoContain)
+                            .foregroundColor(Color("TextFieldContainColor"))
+                            .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
+                            .cornerRadius(10)
+                            .placeholder(when: hasContain) {
+                                Text(fieldName)
+                                    .foregroundColor(Color.init(hex: "B7B7B7"))
+                                    .font(Font.custom("SFPro-Regular", size: 14))
+                            }
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(.default)
+                            .background {
+                                Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                                    .cornerRadius(10)
+                                    .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                            }
+                    }
+                }
+                HStack(spacing: (AppVM.uiScreenWidth / 4) * 0.1) {
+                    Spacer()
+                    if infoContain.count > 0 {
+                        Button {
+                            infoContain.removeAll()
+                        } label: {
+                            Image("CloseButton")
+                        }
+                        if fieldType == .secure {
+                            Button {
+                                withAnimation {
+                                    isSecure.toggle()
+                                }
+                            } label: {
+                                Image(isSecure ? "CloseEye" : "OpenEye")
+                            }
+                        }
+                    }
+                }
+                .padding(.trailing, (AppVM.uiScreenWidth / 4) * 0.25)
+            }
         }
         .frame(width: AppVM.uiScreenWidth * 0.98)
     }
@@ -142,7 +208,7 @@ struct CustomTextFieldWithName: View {
 
 struct CustomTextFieldWithName_preview: PreviewProvider {
     static var previews: some View {
-        CustomTextFieldWithName(title: "Text", infoContain: .constant("placce"), fieldName: "placeholder", hasContain: false)
+        CustomTextFieldWithName(title: "Text", infoContain: "placce", fieldName: "placeholder", hasContain: false)
     }
 }
 
