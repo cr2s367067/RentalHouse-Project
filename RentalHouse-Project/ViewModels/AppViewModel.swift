@@ -44,3 +44,29 @@ class AppVM: ObservableObject {
     }
 
 }
+
+
+extension AppVM {
+    enum ColorSet: String {
+        case isSelectedButtonBackground = "IsSelectedButtonColor"
+        case unSelectedButtonBackground = "UnSelectedButtonColor"
+        case isSelectedButtonTextColor = "IsSelectedButtonTextColor"
+        case unSelectedButtonTextColor = "UnSelectedButtonTextColor"
+        case textFieldContainColor = "TextFieldContainColor"
+        case textFieldPlaceHolder = "TextFieldPlaceHolder"
+        case textFieldBackground = "TextFieldBackground"
+    }
+    
+    enum ButtonImagePositionConfig {
+        case imageLeft, imageRight, none
+    }
+    
+    enum ButtonHeightConfig {
+        case type1, type2
+    }
+    
+    enum SignUpStatus {
+        case userSelectionView, infoFieldView
+    }
+    
+}

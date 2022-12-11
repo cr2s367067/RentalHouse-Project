@@ -110,14 +110,13 @@ struct TitleAndDivier: View {
 //MARK: - Post view room info text field
 struct CustomTextFieldWithName: View {
     var title: String
-    @State var infoContain = ""
+    @Binding var infoContain: String
     var fieldName: String
     var hasContain: Bool
-    var fieldType: AppVM.TextFieldType = .secure
+    var fieldType: AppVM.TextFieldType = .normal
     @State private var isSecure = true
-    var infoContainLength = 0
     var body: some View {
-        VStack(spacing: (AppVM.uiScreenHeight / 5) * 0.1) {
+        VStack(spacing: (AppVM.uiScreenHeight / 6) * 0.1) {
             HStack {
                 Text(title)
                     .foregroundColor(Color("TextFieldContainColor"))
@@ -127,16 +126,16 @@ struct CustomTextFieldWithName: View {
             ZStack {
                 if fieldType == .normal {
                     TextField("", text: $infoContain)
+                        .placeholder(when: hasContain) {
+                            Text(fieldName)
+                                .foregroundColor(Color(AppVM.ColorSet.textFieldPlaceHolder.rawValue))
+                                .font(Font.custom("SFPro-Regular", size: 14))
+                        }
                         .foregroundColor(Color("TextFieldContainColor"))
                         .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
                         .cornerRadius(10)
-                        .placeholder(when: hasContain) {
-                            Text(fieldName)
-                                .foregroundColor(Color.init(hex: "B7B7B7"))
-                                .font(Font.custom("SFPro-Regular", size: 14))
-                        }
                         .background {
-                            Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                            Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                 .cornerRadius(10)
                                 .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
                         }
@@ -146,7 +145,7 @@ struct CustomTextFieldWithName: View {
                         SecureField("", text: $infoContain)
                             .placeholder(when: hasContain) {
                                 Text(fieldName)
-                                    .foregroundColor(Color.init(hex: "B7B7B7"))
+                                    .foregroundColor(Color(AppVM.ColorSet.textFieldPlaceHolder.rawValue))
                                     .font(Font.custom("SFPro-Regular", size: 14))
                             }
                             .disableAutocorrection(true)
@@ -156,7 +155,7 @@ struct CustomTextFieldWithName: View {
                             .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
                             .cornerRadius(10)
                             .background {
-                                Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                                Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                     .cornerRadius(10)
                                     .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
                             }
@@ -167,14 +166,14 @@ struct CustomTextFieldWithName: View {
                             .cornerRadius(10)
                             .placeholder(when: hasContain) {
                                 Text(fieldName)
-                                    .foregroundColor(Color.init(hex: "B7B7B7"))
+                                    .foregroundColor(Color(AppVM.ColorSet.textFieldPlaceHolder.rawValue))
                                     .font(Font.custom("SFPro-Regular", size: 14))
                             }
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
                             .keyboardType(.default)
                             .background {
-                                Color.init(red: 0.946, green: 0.946, blue: 0.946)
+                                Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                     .cornerRadius(10)
                                     .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
                             }
@@ -202,13 +201,13 @@ struct CustomTextFieldWithName: View {
                 .padding(.trailing, (AppVM.uiScreenWidth / 4) * 0.25)
             }
         }
-        .frame(width: AppVM.uiScreenWidth * 0.98)
+        .frame(width:  AppVM.uiScreenWidth * 0.97)
     }
 }
 
 struct CustomTextFieldWithName_preview: PreviewProvider {
     static var previews: some View {
-        CustomTextFieldWithName(title: "Text", infoContain: "placce", fieldName: "placeholder", hasContain: false)
+        CustomTextFieldWithName(title: "Text", infoContain: .constant(""), fieldName: "placeholder", hasContain: false)
     }
 }
 
@@ -434,22 +433,24 @@ struct CustomNaviLink<Destination: View>: View {
 }
 
 //MARK: - SignIn/SignUp button
-struct ReuseableAuthButton: View {
+struct ReuseableLargeButton: View {
     var buttonName: String
+    var isDarkGreen = true
+    var buttonWidth = AppVM.uiScreenWidth * 0.97
+    var buttonHeight = AppVM.uiScreenHeight * 0.05
     var taskFunction: (()->Void)? = nil
     var body: some View {
         Button {
             taskFunction?()
         } label: {
             Text(buttonName)
-                .font(.body)
-                .fontWeight(.heavy)
-                .foregroundColor(.primary)
-                .frame(width: AppVM.uiScreenWidth * 0.97, height: AppVM.uiScreenHeight * 0.05, alignment: .center)
+                .foregroundColor(Color(isDarkGreen ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
+                .font(.custom("SFPro-Regular", size: 15))
         }
-        .background(alignment: .center) {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(.cyan)
+        .frame(width: buttonWidth, height: buttonHeight, alignment: .center)
+        .background {
+            Color(isDarkGreen ? AppVM.ColorSet.isSelectedButtonBackground.rawValue : AppVM.ColorSet.unSelectedButtonBackground.rawValue)
+                .cornerRadius(4)
         }
     }
 }
@@ -558,3 +559,49 @@ struct PageHorizontalScrollView: View {
     }
     
 }
+
+
+//MARK: - Reuseable Button
+
+struct ReuseableButton: View {
+    var buttonToggle: Bool
+    var buttonTitle: String
+    var width = (AppVM.uiScreenWidth / 2) * 0.8
+    var height = (AppVM.uiScreenHeight / 4) * 0.2
+    var buttonImagePosition: AppVM.ButtonImagePositionConfig = .none
+    var action: (()->Void)? = nil
+    var body: some View {
+        Button {
+            action?()
+        } label: {
+            switch buttonImagePosition {
+            case .imageLeft:
+                HStack(spacing: 5) {
+                    Image(systemName: "photo")
+                    Text(buttonTitle)
+                        .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
+                }
+            case .imageRight:
+                HStack(spacing: 5) {
+                    Text(buttonTitle)
+                        .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
+                    Image(systemName: "photo")
+                }
+            case .none:
+                Text(buttonTitle)
+                    .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
+            }
+        }
+        .frame(width: width, height: height)
+        .background {
+            Color(buttonToggle ? AppVM.ColorSet.isSelectedButtonBackground.rawValue : AppVM.ColorSet.unSelectedButtonBackground.rawValue)
+                .cornerRadius(4)
+        }
+    }
+}
+
+//struct ReuseableButton_Provider: PreviewProvider {
+//    static var previews: some View {
+//        ReuseableButton(buttonToggle: false)
+//    }
+//}

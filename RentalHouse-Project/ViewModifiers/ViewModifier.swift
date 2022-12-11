@@ -46,11 +46,11 @@ struct ViewBackground: ViewModifier {
                 .navigationBarHidden(true)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(alignment: .center) {
-                    Image("room")
-                    Color.black.opacity(0.6)
-                        .edgesIgnoringSafeArea([.top, .bottom])
-                }
+//                .background(alignment: .center) {
+//                    Image("room")
+//                    Color.black.opacity(0.6)
+//                        .edgesIgnoringSafeArea([.top, .bottom])
+//                }
         case .naviBarIsShown:
             content
                 .navigationTitle(navigationTitle)
@@ -58,21 +58,21 @@ struct ViewBackground: ViewModifier {
                 .navigationBarHidden(false)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(alignment: .center) {
-                    Image("room")
-                    Color.black.opacity(0.6)
-                        .edgesIgnoringSafeArea([.top, .bottom])
-                }
+//                .background(alignment: .center) {
+//                    Image("room")
+//                    Color.black.opacity(0.6)
+//                        .edgesIgnoringSafeArea([.top, .bottom])
+//                }
         case .generalBackground:
             content
                 .navigationTitle(navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(alignment: .center) {
-                    Color("GeneralBackground")
-                        .edgesIgnoringSafeArea([.top, .bottom])
-                }
+//                .background(alignment: .center) {
+//                    Color("GeneralBackground")
+//                        .edgesIgnoringSafeArea([.top, .bottom])
+//                }
         }
     }
 }

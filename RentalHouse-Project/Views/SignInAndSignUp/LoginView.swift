@@ -15,47 +15,46 @@ struct LoginView: View {
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var errorHandler: ErrorHandler
     @State private var loginViewPath = NavigationPath()
+    
     var body: some View {
         NavigationStack(path: $loginViewPath) {
-            VStack(spacing: 15) {
-                HStack {
-                    Text("START TO FIND YOUR RIGHT PLACE")
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .fontWeight(.heavy)
-                    Spacer()
-                }
-                VStack(alignment: .center, spacing: 10) {
-                    HStack {
-                        Text("Sign In")
-                            .foregroundColor(.white)
-                            .font(.title3)
-                            .fontWeight(.bold)
-                        Spacer()
+            VStack(spacing: 10) {
+                Image(systemName: "photo")
+                    .frame(width: 100, height: 100)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.gray.opacity(0.5))
                     }
-                    AuthTextField(
-                        fieldContain: $userAuth.userName,
-                        fieldName: "Username",
-                        fieldType: .userName,
-                        hasContain: userAuth.userName.isEmpty
-                    )
-                    AuthTextField(
-                        fieldContain: $userAuth.password,
-                        fieldName: "Password",
-                        fieldType: .password,
-                        hasContain: userAuth.password.isEmpty
-                    )
+                Text("Log In")
+                    .foregroundColor(.primary)
+                    .fontWeight(.bold)
+                    .font(.custom("SFPro-Medium", size: 20))
+                VStack(alignment: .center, spacing: 10) {
+                    CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.userName, fieldName: "Please, Enter your email address", hasContain: userAuth.userName.isEmpty, fieldType: .normal)
+                    CustomTextFieldWithName(title: "Password", infoContain: $userAuth.password, fieldName: "Please, Enter your password", hasContain: userAuth.password.isEmpty, fieldType: .secure)
                     HStack {
+                        NavigationLink {
+                            SignUpView()
+                                .environmentObject(userAuth)
+                                .environmentObject(errorHandler)
+                        } label: {
+                            Text("Sign Up")
+                                .foregroundColor(.primary)
+                                .font(.custom("SFPro-Regular", size: 14))
+                        }
                         Spacer()
                         NavigationLink {
                             
                         } label: {
                             Text("Forget password?")
-                                .foregroundColor(.white.opacity(0.7))
+                                .foregroundColor(.primary)
+                                .font(.custom("SFPro-Regular", size: 14))
                         }
                     }
                 }
-                ReuseableAuthButton(buttonName: "Sign In") {
+                Spacer()
+                    .frame(maxHeight: (AppVM.uiScreenHeight / 2) * 0.15)
+                ReuseableLargeButton(buttonName: "Sign In") {
                     Task {
                         do {
                             try await userAuth.login()
@@ -66,18 +65,30 @@ struct LoginView: View {
                         }
                     }
                 }
-                HStack {
-                    NavigationLink {
-                        SignUpView()
-                            .environmentObject(userAuth)
-                            .environmentObject(errorHandler)
-                    } label: {
-                        Text("Sign up")
-                            .foregroundColor(Color("SignUpButton"))
-                    }
-                    .foregroundColor(.blue)
+                Spacer()
+                    .frame(maxHeight: (AppVM.uiScreenHeight / 2) * 0.2)
+                ReuseableLargeButton(buttonName: "Sign In with Apple", isDarkGreen: false) {
+//                    Task {
+//                        do {
+//                            try await userAuth.login()
+//                            guard loginViewPath.count > 1 else { return }
+//                            loginViewPath.removeLast()
+//                        } catch {
+//                            errorHandler.handler(error: error)
+//                        }
+//                    }
                 }
-                
+                ReuseableLargeButton(buttonName: "Sign In with Google", isDarkGreen: false) {
+//                    Task {
+//                        do {
+//                            try await userAuth.login()
+//                            guard loginViewPath.count > 1 else { return }
+//                            loginViewPath.removeLast()
+//                        } catch {
+//                            errorHandler.handler(error: error)
+//                        }
+//                    }
+                }
             }
             .modifier(ViewBackground(backgroundType: .naviBarIsHidden))
         }
@@ -88,9 +99,11 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static let userAuth = UserAuthenticationVM()
     static let appVM = AppVM()
+    static let errorHandler = ErrorHandler()
     static var previews: some View {
         LoginView()
             .environmentObject(userAuth)
             .environmentObject(appVM)
+            .environmentObject(errorHandler)
     }
 }
