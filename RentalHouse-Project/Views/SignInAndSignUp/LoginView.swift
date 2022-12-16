@@ -44,7 +44,7 @@ struct LoginView: View {
                         }
                         Spacer()
                         NavigationLink {
-                            
+                            ForgetPasswordView()
                         } label: {
                             Text("Forget password?")
                                 .foregroundColor(.primary)

@@ -55,6 +55,8 @@ extension AppVM {
         case textFieldContainColor = "TextFieldContainColor"
         case textFieldPlaceHolder = "TextFieldPlaceHolder"
         case textFieldBackground = "TextFieldBackground"
+        case lightTextGray = "LightTextGray"
+        case lightSpecialStyle2 = "LightSpecialStyle2"
     }
     
     enum ButtonImagePositionConfig {
@@ -66,7 +68,11 @@ extension AppVM {
     }
     
     enum SignUpStatus {
-        case userSelectionView, infoFieldView
+        case userSelectionView, infoFieldView, authenticationView
+    }
+    
+    enum ForgetPasswordStatus {
+        case recoveryEmailView, authenticationView, resetPassswordView
     }
     
 }

@@ -446,8 +446,8 @@ struct ReuseableLargeButton: View {
             Text(buttonName)
                 .foregroundColor(Color(isDarkGreen ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
                 .font(.custom("SFPro-Regular", size: 15))
+                .frame(width: buttonWidth, height: buttonHeight, alignment: .center)
         }
-        .frame(width: buttonWidth, height: buttonHeight, alignment: .center)
         .background {
             Color(isDarkGreen ? AppVM.ColorSet.isSelectedButtonBackground.rawValue : AppVM.ColorSet.unSelectedButtonBackground.rawValue)
                 .cornerRadius(4)
@@ -581,18 +581,20 @@ struct ReuseableButton: View {
                     Text(buttonTitle)
                         .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
                 }
+                .frame(width: width, height: height)
             case .imageRight:
                 HStack(spacing: 5) {
                     Text(buttonTitle)
                         .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
                     Image(systemName: "photo")
                 }
+                .frame(width: width, height: height)
             case .none:
                 Text(buttonTitle)
                     .foregroundColor(Color(buttonToggle ? AppVM.ColorSet.unSelectedButtonTextColor.rawValue : AppVM.ColorSet.isSelectedButtonTextColor.rawValue))
+                    .frame(width: width, height: height)
             }
         }
-        .frame(width: width, height: height)
         .background {
             Color(buttonToggle ? AppVM.ColorSet.isSelectedButtonBackground.rawValue : AppVM.ColorSet.unSelectedButtonBackground.rawValue)
                 .cornerRadius(4)

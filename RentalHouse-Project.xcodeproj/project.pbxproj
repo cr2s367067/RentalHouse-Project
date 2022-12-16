@@ -41,6 +41,7 @@
 		0EDA99F928C3299700B6B8A7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0EDA99F828C3299700B6B8A7 /* FirebaseAuth */; };
 		0EDA99FF28C3299700B6B8A7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0EDA99FE28C3299700B6B8A7 /* FirebaseStorage */; };
 		0EDA9A0128C32B1C00B6B8A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EDA9A0028C32B1C00B6B8A7 /* GoogleService-Info.plist */; };
+		0EE6C40E294CAF7100732706 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE6C40D294CAF7100732706 /* ForgetPasswordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		0EDA99F328C3261E00B6B8A7 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		0EDA99F528C3262C00B6B8A7 /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
 		0EDA9A0028C32B1C00B6B8A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0EE6C40D294CAF7100732706 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			children = (
 				0E27A8E028B9C71F007F91D8 /* LoginView.swift */,
 				0E4AEE5828BB364E000EAD84 /* SignUpView.swift */,
+				0EE6C40D294CAF7100732706 /* ForgetPasswordView.swift */,
 			);
 			path = SignInAndSignUp;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				0E51B78E28BDE89B003AB3ED /* CustomComponent.swift in Sources */,
 				0EBD055528C48AC1008B2D31 /* UserDM.swift in Sources */,
 				0E27A8D528B9C6C6007F91D8 /* ContentView.swift in Sources */,
+				0EE6C40E294CAF7100732706 /* ForgetPasswordView.swift in Sources */,
 				0EDA99F228C325CA00B6B8A7 /* FirebaseAuth.swift in Sources */,
 				0E4AEE5928BB364E000EAD84 /* SignUpView.swift in Sources */,
 				0E51B79728BE0898003AB3ED /* MenuView.swift in Sources */,
