@@ -30,7 +30,7 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .font(.custom("SFPro-Medium", size: 20))
                 VStack(alignment: .center, spacing: 10) {
-                    CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.userName, fieldName: "Please, Enter your email address", hasContain: userAuth.userName.isEmpty, fieldType: .normal)
+                    CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.emaillAddress, fieldName: "Please, Enter your email address", hasContain: userAuth.emaillAddress.isEmpty, fieldType: .normal)
                     CustomTextFieldWithName(title: "Password", infoContain: $userAuth.password, fieldName: "Please, Enter your password", hasContain: userAuth.password.isEmpty, fieldType: .secure)
                     HStack {
                         NavigationLink {

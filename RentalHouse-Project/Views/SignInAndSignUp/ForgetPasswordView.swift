@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ForgetPasswordView: View {
     
+    @EnvironmentObject var userAuth: UserAuthenticationVM
     @State private var forgetPasswordStatus: AppVM.ForgetPasswordStatus = .recoveryEmailView
     @State private var recoverEmailAddress = ""
     @State private var authCode = ""
@@ -18,16 +19,20 @@ struct ForgetPasswordView: View {
     var body: some View {
         switch forgetPasswordStatus {
         case .recoveryEmailView:
-            RecoveryEmailView(recoveryEmailAddress: $recoverEmailAddress) {
-                forgetPasswordStatus = .authenticationView
+            RecoveryEmailView(recoveryEmailAddress: $userAuth.emaillAddress) {
+                withAnimation {
+                    forgetPasswordStatus = .authenticationView
+                }
             }
         case .authenticationView:
-            AuthenticationView(authCode: $authCode) {
+            AuthenticationView(authCode: $userAuth.authCode) {
                 debugPrint("some action")
-                forgetPasswordStatus = .resetPassswordView
+                withAnimation {
+                    forgetPasswordStatus = .resetPassswordView
+                }
             }
         case .resetPassswordView:
-            ResetPasswordView(firstPassword: $firstPassword, secondPassword: $secondPassword) {
+            ResetPasswordView(firstPassword: $userAuth.password, secondPassword: $userAuth.rePassword) {
                 debugPrint("Set new password")
             }
         }

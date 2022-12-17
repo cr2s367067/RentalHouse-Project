@@ -31,36 +31,52 @@ class UserAuthenticationVM: ObservableObject {
     let errorHandler = ErrorHandler()
     
     @Published var user: UserDM = .empty
-    @Published var userName: String
+    @Published var emaillAddress: String
     @Published var password: String
+    @Published var rePassword: String
+    @Published var authCode: String
     @Published var isSignIn: Bool
     @Published var isProvider: Bool
     @Published var isRenter: Bool
     @Published var userStatue: SignUpUserType = .provider
     @Published var userUID: String
+    @Published var isRead: Bool
     
     private var tempHolder: UserDM = .empty
     
-    init(userName: String = "", password: String = "", isSignIn: Bool = false, isProvider: Bool = false, isRenter: Bool = false, userUID: String = "") {
-        self.userName = userName
+    init(
+        userName: String = "",
+        password: String = "",
+        rePassword: String = "",
+        authCode: String = "",
+        isSignIn: Bool = false,
+        isProvider: Bool = false,
+        isRenter: Bool = false,
+        userUID: String = "",
+        isRead: Bool = false
+    ) {
+        self.emaillAddress = userName
         self.password = password
+        self.rePassword = rePassword
+        self.authCode = authCode
         self.isSignIn = isSignIn
         self.isProvider = isProvider
         self.isRenter = isRenter
         self.userUID = userUID
+        self.isRead = isRead
     }
     
     
     @MainActor
     func login() async throws {
-        try await fireAuth.signIn(email: userName, password: password)
+        try await fireAuth.signIn(email: emaillAddress, password: password)
         self.isSignIn = true
         self.resetUsernameAndPassword()
     }
     
     @MainActor
     func createUser() async throws {
-        try await fireAuth.signUp(email: userName, password: password, uid: &userUID)
+        try await fireAuth.signUp(email: emaillAddress, password: password, uid: &userUID)
         try await fireDB.createUser(uid: userUID, user: .userIntoInit(signUpType: userStatue.rawValue))
         self.isSignIn = true
         resetUsernameAndPassword()
@@ -85,8 +101,8 @@ class UserAuthenticationVM: ObservableObject {
     }
     
     private func resetUsernameAndPassword() {
-        guard !userName.isEmpty && !password.isEmpty else { return }
-        userName.removeAll()
+        guard !emaillAddress.isEmpty && !password.isEmpty else { return }
+        emaillAddress.removeAll()
         password.removeAll()
         isRenter = false
         isProvider = false
@@ -110,4 +126,16 @@ extension UserAuthenticationVM {
     func storUserInfoInTemp() {
         self.tempHolder = user
     }
+}
+
+extension UserAuthenticationVM {
+    
+    func fieldReset() {
+        self.emaillAddress.removeAll()
+        self.password.removeAll()
+        self.rePassword.removeAll()
+        self.isRead = false
+        self.user.nickName.removeAll()
+    }
+    
 }

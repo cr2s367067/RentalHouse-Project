@@ -115,6 +115,7 @@ struct CustomTextFieldWithName: View {
     var hasContain: Bool
     var fieldType: AppVM.TextFieldType = .normal
     @State private var isSecure = true
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack(spacing: (AppVM.uiScreenHeight / 6) * 0.1) {
             HStack {
@@ -185,7 +186,7 @@ struct CustomTextFieldWithName: View {
                         Button {
                             infoContain.removeAll()
                         } label: {
-                            Image("CloseButton")
+                            Image(colorScheme == .dark ? "DarkCloseButton" : "LightCloseButton")
                         }
                         if fieldType == .secure {
                             Button {
@@ -193,7 +194,7 @@ struct CustomTextFieldWithName: View {
                                     isSecure.toggle()
                                 }
                             } label: {
-                                Image(isSecure ? "CloseEye" : "OpenEye")
+                                Image(isSecure ?  colorScheme == .dark ? "DarkCloseEye" : "LightCloseEye" : colorScheme == .dark ? "DarkOpenEye" : "LightOpenEye")
                             }
                         }
                     }

@@ -11,26 +11,34 @@ struct SignUpView: View {
     
     
     @EnvironmentObject var errorHandler: ErrorHandler
-    
+    @EnvironmentObject var userAuth: UserAuthenticationVM
     @State private var signUpSstatus: AppVM.SignUpStatus = .userSelectionView
-    
-    @State private var isRead = false
-    
-    @State private var authCode = ""
     
     var body: some View {
         switch signUpSstatus {
         case .userSelectionView:
-            UserSelectionView(signUpSstatus: $signUpSstatus)
+            UserSelectionView(signUpSstatus: $signUpSstatus) {
+                withAnimation {
+                    signUpSstatus = .infoFieldView
+                }
+            }
         case .infoFieldView:
-            SignUpInfoView(isRead: $isRead, signUpSstatus: $signUpSstatus)
+            SignUpInfoView(userAuth: userAuth, isRead: $userAuth.isRead, signUpSstatus: $signUpSstatus) {
+                withAnimation {
+                    signUpSstatus = .userSelectionView
+                }
+                userAuth.fieldReset()
+            } rightAction: {
+                //TODO: Navigate to identify view, if user account havn't created
+                withAnimation {
+                    signUpSstatus = .authenticationView
+                }
+            }
         case .authenticationView:
-            AuthenticationView(authCode: $authCode) {
+            AuthenticationView(authCode: $userAuth.authCode) {
                 debugPrint("some action......")
             }
         }
-        
-        
     }
 }
 
@@ -44,6 +52,7 @@ struct SignUpView_Previews: PreviewProvider {
 
 struct UserSelectionView: View {
     @Binding var signUpSstatus: AppVM.SignUpStatus
+    var action: (()->Void)? = nil
     var body: some View {
         VStack {
             //FIXME: Fix the button size for different screen
@@ -67,9 +76,7 @@ struct UserSelectionView: View {
             Spacer()
                 .frame(height: (AppVM.uiScreenHeight / 4) * 0.3)
             ReuseableLargeButton(buttonName: "Next") {
-                withAnimation {
-                    signUpSstatus = .infoFieldView
-                }
+                action?()
             }
             Spacer()
         }
@@ -78,10 +85,12 @@ struct UserSelectionView: View {
 
 struct SignUpInfoView: View {
     
-    @EnvironmentObject var userAuth: UserAuthenticationVM
+    @StateObject var userAuth: UserAuthenticationVM
     
     @Binding var isRead: Bool
     @Binding var signUpSstatus: AppVM.SignUpStatus
+    var leftAction: (()->Void)? = nil
+    var rightAction: (()->Void)? = nil
     
     var body: some View {
         VStack {
@@ -93,10 +102,10 @@ struct SignUpInfoView: View {
                         .fontWeight(.heavy)
                     Spacer()
                 }
-                CustomTextFieldWithName(title: "Name", infoContain: .constant("testName"), fieldName: "Please, enter your name", hasContain: false, fieldType: .normal)
-                CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.userName, fieldName: "Please, enter your email address", hasContain: userAuth.userName.isEmpty, fieldType: .normal)
+                CustomTextFieldWithName(title: "Name", infoContain: $userAuth.user.nickName, fieldName: "Please, enter your name", hasContain: userAuth.user.nickName.isEmpty, fieldType: .normal)
+                CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.emaillAddress, fieldName: "Please, enter your email address", hasContain: userAuth.emaillAddress.isEmpty, fieldType: .normal)
                 CustomTextFieldWithName(title: "Password", infoContain: $userAuth.password, fieldName: "Please, enter your password", hasContain: userAuth.password.isEmpty, fieldType: .secure)
-                CustomTextFieldWithName(title: "Re-Password", infoContain: $userAuth.password, fieldName: "Please, re-enter your password", hasContain: userAuth.password.isEmpty, fieldType: .secure)
+                CustomTextFieldWithName(title: "Re-Password", infoContain: $userAuth.rePassword, fieldName: "Please, re-enter your password", hasContain: userAuth.rePassword.isEmpty, fieldType: .secure)
                 
                 HStack {
                     Button {
@@ -123,27 +132,16 @@ struct SignUpInfoView: View {
                 HStack {
                     Spacer()
                     ReuseableLargeButton(buttonName: "Back", isDarkGreen: false, buttonWidth: (AppVM.uiScreenWidth / 2) * 0.8) {
-                        signUpSstatus = .userSelectionView
-//                        Task {
-//                            do {
-//                                try await userAuth.createUser()
-//                            } catch {
-//                                errorHandler.handler(error: error)
-//                            }
-//                        }
+                        leftAction?()
                     }
                     Spacer()
                     ReuseableLargeButton(buttonName: "Next", isDarkGreen: true, buttonWidth: (AppVM.uiScreenWidth / 2) * 0.8) {
-                        //TODO: Navigate to identify view, if user account havn't created
-                        withAnimation {
-                            signUpSstatus = .authenticationView
-                        }
+                        rightAction?()
                     }
                     Spacer()
                 }
             }
         }
-//            .modifier(ViewBackground(backgroundType: .naviBarIsShown))
     }
 }
 
@@ -154,8 +152,6 @@ struct AuthenticationView: View {
     
     var body: some View {
         VStack(spacing: (AppVM.uiScreenHeight / 5) * 0.2) {
-//                Spacer()
-//                    .frame(maxHeight: (AppVM.uiScreenHeight / 6) * 0.3)
             VStack(spacing: (AppVM.uiScreenHeight / 6) * 0.1) {
                 HStack {
                     Text("E-mail Authentication")
