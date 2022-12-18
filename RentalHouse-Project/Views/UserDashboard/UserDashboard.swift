@@ -95,9 +95,9 @@ extension UserDashboard {
     @ViewBuilder
     func editMode() -> some View {
         VStack {
-            CustomTextFieldWithName(title: UserDashboardContainTitle.nickName.rawValue, infoContain: $userAuthVM.user.nickName, fieldName: "Enter you nick name", hasContain: userAuthVM.user.nickName.isEmpty)
-            CustomTextFieldWithName(title: UserDashboardContainTitle.mobileNum.rawValue, infoContain: $userAuthVM.user.mobile, fieldName: "Enter mobile number, if need", hasContain: userAuthVM.user.mobile.isEmpty)
-            CustomTextFieldWithName(title: UserDashboardContainTitle.lineID.rawValue, infoContain: $userAuthVM.user.lineID, fieldName: "Enter line id, if need", hasContain: userAuthVM.user.lineID.isEmpty)
+//            CustomTextFieldWithName(title: UserDashboardContainTitle.nickName.rawValue, infoContain: $userAuthVM.user.nickName, fieldName: "Enter you nick name", hasContain: userAuthVM.user.nickName.isEmpty)
+//            CustomTextFieldWithName(title: UserDashboardContainTitle.mobileNum.rawValue, infoContain: $userAuthVM.user.mobile, fieldName: "Enter mobile number, if need", hasContain: userAuthVM.user.mobile.isEmpty)
+//            CustomTextFieldWithName(title: UserDashboardContainTitle.lineID.rawValue, infoContain: $userAuthVM.user.lineID, fieldName: "Enter line id, if need", hasContain: userAuthVM.user.lineID.isEmpty)
             Spacer()
         }
         .padding(.horizontal)

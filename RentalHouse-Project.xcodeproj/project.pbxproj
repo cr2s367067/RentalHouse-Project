@@ -20,6 +20,7 @@
 		0E51B78E28BDE89B003AB3ED /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */; };
 		0E51B79428BDF74A003AB3ED /* UserDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B79328BDF74A003AB3ED /* UserDashboard.swift */; };
 		0E51B79728BE0898003AB3ED /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51B79628BE0898003AB3ED /* MenuView.swift */; };
+		0E55E40A294EE964002DA45E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E55E409294EE964002DA45E /* SignUpViewModel.swift */; };
 		0E56122428BE16B700745AFA /* HousePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E56122328BE16B700745AFA /* HousePostView.swift */; };
 		0E56122628BE201F00745AFA /* RoomPostDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E56122528BE201F00745AFA /* RoomPostDM.swift */; };
 		0E56BD4228E9C4FB00CB4463 /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E56BD4128E9C4FB00CB4463 /* CoverView.swift */; };
@@ -59,6 +60,7 @@
 		0E51B78D28BDE89B003AB3ED /* CustomComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
 		0E51B79328BDF74A003AB3ED /* UserDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDashboard.swift; sourceTree = "<group>"; };
 		0E51B79628BE0898003AB3ED /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		0E55E409294EE964002DA45E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		0E56122328BE16B700745AFA /* HousePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePostView.swift; sourceTree = "<group>"; };
 		0E56122528BE201F00745AFA /* RoomPostDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPostDM.swift; sourceTree = "<group>"; };
 		0E56BD4128E9C4FB00CB4463 /* CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				0E27A8EA28B9E043007F91D8 /* UserAuthenticationVM.swift */,
+				0E55E409294EE964002DA45E /* SignUpViewModel.swift */,
 			);
 			path = SignInAndSignUpVM;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				0E5E24D428BA01E000629B1D /* Extensions.swift in Sources */,
 				0E9A740C28FC3003002D0CEF /* RoomUpdateSheetView.swift in Sources */,
 				0EDA99EC28C2E95600B6B8A7 /* PostCollectionView.swift in Sources */,
+				0E55E40A294EE964002DA45E /* SignUpViewModel.swift in Sources */,
 				0E27A8E128B9C71F007F91D8 /* LoginView.swift in Sources */,
 				0EDA99F628C3262C00B6B8A7 /* FirebaseStorage.swift in Sources */,
 				0EDA99F428C3261E00B6B8A7 /* Firestore.swift in Sources */,

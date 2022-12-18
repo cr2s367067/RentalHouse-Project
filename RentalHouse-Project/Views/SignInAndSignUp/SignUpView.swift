@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    
+    @EnvironmentObject var signUpVM: SignUpViewModel
     @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var userAuth: UserAuthenticationVM
     @State private var signUpSstatus: AppVM.SignUpStatus = .userSelectionView
@@ -17,13 +17,35 @@ struct SignUpView: View {
     var body: some View {
         switch signUpSstatus {
         case .userSelectionView:
-            UserSelectionView(signUpSstatus: $signUpSstatus) {
+            UserSelectionView(
+                signUpSstatus: $signUpSstatus,
+                topleftButton: $signUpVM.leftIsSelected ,
+                topRightButton: $signUpVM.rightIsSelected
+            ) {
+                withAnimation {
+                    signUpVM.leftIsSelected = true
+                    if signUpVM.leftIsSelected {
+                        signUpVM.rightIsSelected = false
+                    }
+                }
+                userAuth.userStatue = .renter
+            } topRightAction: {
+                withAnimation {
+                    signUpVM.rightIsSelected = true
+                    if signUpVM.rightIsSelected {
+                        signUpVM.leftIsSelected = false
+                    }
+                }
+                userAuth.userStatue = .provider
+            } action: {
                 withAnimation {
                     signUpSstatus = .infoFieldView
                 }
+                debugPrint("Chenk user type status: \(userAuth.userStatue.rawValue)")
             }
+
         case .infoFieldView:
-            SignUpInfoView(userAuth: userAuth, isRead: $userAuth.isRead, signUpSstatus: $signUpSstatus) {
+            SignUpInfoView(userAuth: userAuth, signUpVM: signUpVM, isRead: $userAuth.isRead, signUpSstatus: $signUpSstatus, summitCheck: .constant(false)) {
                 withAnimation {
                     signUpSstatus = .userSelectionView
                 }
@@ -52,17 +74,21 @@ struct SignUpView_Previews: PreviewProvider {
 
 struct UserSelectionView: View {
     @Binding var signUpSstatus: AppVM.SignUpStatus
+    @Binding var topleftButton: Bool
+    @Binding var topRightButton: Bool
+    var topLeftAction: (()->Void)? = nil
+    var topRightAction: (()->Void)? = nil
     var action: (()->Void)? = nil
     var body: some View {
         VStack {
             //FIXME: Fix the button size for different screen
             HStack {
                 Text("I am...")
-                ReuseableButton(buttonToggle: true, buttonTitle: "Renter") {
-                    
+                ReuseableButton(buttonToggle: topleftButton, buttonTitle: "Renter") {
+                    topLeftAction?()
                 }
-                ReuseableButton(buttonToggle: false, buttonTitle: "Provider") {
-                    
+                ReuseableButton(buttonToggle: topRightButton, buttonTitle: "Provider") {
+                    topRightAction?()
                 }
             }
             Spacer()
@@ -86,12 +112,12 @@ struct UserSelectionView: View {
 struct SignUpInfoView: View {
     
     @StateObject var userAuth: UserAuthenticationVM
-    
+    @StateObject var signUpVM: SignUpViewModel
     @Binding var isRead: Bool
     @Binding var signUpSstatus: AppVM.SignUpStatus
+    @Binding var summitCheck: Bool
     var leftAction: (()->Void)? = nil
     var rightAction: (()->Void)? = nil
-    
     var body: some View {
         VStack {
             VStack(spacing: 20) {
@@ -102,10 +128,44 @@ struct SignUpInfoView: View {
                         .fontWeight(.heavy)
                     Spacer()
                 }
-                CustomTextFieldWithName(title: "Name", infoContain: $userAuth.user.nickName, fieldName: "Please, enter your name", hasContain: userAuth.user.nickName.isEmpty, fieldType: .normal)
-                CustomTextFieldWithName(title: "E-Mail", infoContain: $userAuth.emaillAddress, fieldName: "Please, enter your email address", hasContain: userAuth.emaillAddress.isEmpty, fieldType: .normal)
-                CustomTextFieldWithName(title: "Password", infoContain: $userAuth.password, fieldName: "Please, enter your password", hasContain: userAuth.password.isEmpty, fieldType: .secure)
-                CustomTextFieldWithName(title: "Re-Password", infoContain: $userAuth.rePassword, fieldName: "Please, re-enter your password", hasContain: userAuth.rePassword.isEmpty, fieldType: .secure)
+                CustomTextFieldWithName(
+                    title: "Name",
+                    infoContain: $userAuth.user.nickName,
+                    summitCheck: false,
+                    showCautionBorder: false,
+                    fieldName: "Please, enter your name",
+                    hasContain: userAuth.user.nickName.isEmpty,
+                    fieldType: .normal
+                )
+//                signUpVM.isInSummitCheckMode(check: userAuth.user.nickName) {
+//                    Text(j)
+//                }
+                CustomTextFieldWithName(
+                    title: "E-Mail",
+                    infoContain: $userAuth.emaillAddress,
+                    summitCheck: false,
+                    showCautionBorder: false,
+                    fieldName: "Please, enter your email address",
+                    hasContain: userAuth.emaillAddress.isEmpty,
+                    fieldType: .normal)
+                CustomTextFieldWithName(
+                    title: "Password",
+                    infoContain: $userAuth.password,
+                    summitCheck: false,
+                    showCautionBorder: false,
+                    fieldName: "Please, enter your password",
+                    hasContain: userAuth.password.isEmpty,
+                    fieldType: .secure
+                )
+                CustomTextFieldWithName(
+                    title: "Re-Password",
+                    infoContain: $userAuth.rePassword,
+                    summitCheck: false,
+                    showCautionBorder: false,
+                    fieldName: "Please, re-enter your password",
+                    hasContain: userAuth.rePassword.isEmpty,
+                    fieldType: .secure
+                )
                 
                 HStack {
                     Button {
@@ -167,7 +227,15 @@ struct AuthenticationView: View {
             }
             .frame(width: AppVM.uiScreenWidth * 0.97)
             
-            CustomTextFieldWithName(title: "Authenticate Code", infoContain: $authCode, fieldName: "Please, Enter authenticate code", hasContain: authCode.isEmpty, fieldType: .normal)
+            CustomTextFieldWithName(
+                title: "Authenticate Code",
+                infoContain: $authCode,
+                summitCheck: false,
+                showCautionBorder: false,
+                fieldName: "Please, Enter authenticate code",
+                hasContain: authCode.isEmpty,
+                fieldType: .normal
+            )
             
             HStack {
                 Text("Did not receive authentication code?")

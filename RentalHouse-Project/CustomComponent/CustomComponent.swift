@@ -111,6 +111,8 @@ struct TitleAndDivier: View {
 struct CustomTextFieldWithName: View {
     var title: String
     @Binding var infoContain: String
+    var summitCheck: Bool
+    var showCautionBorder: Bool
     var fieldName: String
     var hasContain: Bool
     var fieldType: AppVM.TextFieldType = .normal
@@ -138,7 +140,7 @@ struct CustomTextFieldWithName: View {
                         .background {
                             Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                 .cornerRadius(10)
-                                .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                                .border(summitCheck ? showCautionBorder ? Color(AppVM.ColorSet.cautionTextColor.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue))
                         }
                 }
                 if fieldType == .secure {
@@ -158,7 +160,7 @@ struct CustomTextFieldWithName: View {
                             .background {
                                 Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                     .cornerRadius(10)
-                                    .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                                    .border(summitCheck ? showCautionBorder ? Color(AppVM.ColorSet.cautionTextColor.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue))
                             }
                     } else {
                         TextField("", text: $infoContain)
@@ -176,7 +178,7 @@ struct CustomTextFieldWithName: View {
                             .background {
                                 Color(AppVM.ColorSet.textFieldBackground.rawValue)
                                     .cornerRadius(10)
-                                    .border(Color.init(hex: "536B6D") ?? .gray, width: 0.5)
+                                    .border(summitCheck ? showCautionBorder ? Color(AppVM.ColorSet.cautionTextColor.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue) : Color(AppVM.ColorSet.isSelectedButtonBackground.rawValue))
                             }
                     }
                 }
@@ -208,7 +210,7 @@ struct CustomTextFieldWithName: View {
 
 struct CustomTextFieldWithName_preview: PreviewProvider {
     static var previews: some View {
-        CustomTextFieldWithName(title: "Text", infoContain: .constant(""), fieldName: "placeholder", hasContain: false)
+        CustomTextFieldWithName(title: "Text", infoContain: .constant(""), summitCheck: false, showCautionBorder: false, fieldName: "placeholder", hasContain: false)
     }
 }
 

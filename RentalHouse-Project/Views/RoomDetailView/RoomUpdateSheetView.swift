@@ -22,24 +22,24 @@ struct RoomUpdateSheetView: View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    CustomTextFieldWithName(
-                        title: "Room Size",
-                        infoContain: $roomInfo.roomSize,
-                        fieldName: "Please enter room size",
-                        hasContain: roomInfo.roomSize.isEmpty
-                    )
-                    CustomTextFieldWithName(
-                        title: "Room Address",
-                        infoContain: $roomInfo.roomAddress,
-                        fieldName: "Please enter room address",
-                        hasContain: roomInfo.roomAddress.isEmpty
-                    )
-                    CustomTextFieldWithName(
-                        title: "Rental Price",
-                        infoContain: $roomInfo.rentalPrice,
-                        fieldName: "Please enter rental price",
-                        hasContain: roomInfo.rentalPrice.isEmpty
-                    )
+//                    CustomTextFieldWithName(
+//                        title: "Room Size",
+//                        infoContain: $roomInfo.roomSize,
+//                        fieldName: "Please enter room size",
+//                        hasContain: roomInfo.roomSize.isEmpty
+//                    )
+//                    CustomTextFieldWithName(
+//                        title: "Room Address",
+//                        infoContain: $roomInfo.roomAddress,
+//                        fieldName: "Please enter room address",
+//                        hasContain: roomInfo.roomAddress.isEmpty
+//                    )
+//                    CustomTextFieldWithName(
+//                        title: "Rental Price",
+//                        infoContain: $roomInfo.rentalPrice,
+//                        fieldName: "Please enter rental price",
+//                        hasContain: roomInfo.rentalPrice.isEmpty
+//                    )
                     VStack {
                         HStack {
                             Text("Room Introdution")

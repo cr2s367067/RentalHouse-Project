@@ -66,7 +66,15 @@ struct RecoveryEmailView: View {
             }
             .frame(width: AppVM.uiScreenWidth * 0.97)
             
-            CustomTextFieldWithName(title: "Email Address", infoContain: $recoveryEmailAddress, fieldName: "Please, Enter authenticate code", hasContain: recoveryEmailAddress.isEmpty, fieldType: .normal)
+            CustomTextFieldWithName(
+                title: "Email Address",
+                infoContain: $recoveryEmailAddress,
+                summitCheck: false,
+                showCautionBorder: false,
+                fieldName: "Please, Enter authenticate code",
+                hasContain: recoveryEmailAddress.isEmpty,
+                fieldType: .normal
+            )
             
             Spacer()
                 .frame(maxHeight: (AppVM.uiScreenHeight / 6) * 0.1)
@@ -94,8 +102,24 @@ struct ResetPasswordView: View {
                 Spacer()
             }
             .frame(width: AppVM.uiScreenWidth * 0.97)
-            CustomTextFieldWithName(title: "Password", infoContain: $firstPassword, fieldName: "Enter your new password, please", hasContain: firstPassword.isEmpty, fieldType: .secure)
-            CustomTextFieldWithName(title: "Confirm Password", infoContain: $secondPassword, fieldName: "Enter your password again, please", hasContain: secondPassword.isEmpty, fieldType: .secure)
+            CustomTextFieldWithName(
+                title: "Password",
+                infoContain: $firstPassword,
+                summitCheck: false,
+                showCautionBorder: false,
+                fieldName: "Enter your new password, please",
+                hasContain: firstPassword.isEmpty,
+                fieldType: .secure
+            )
+            CustomTextFieldWithName(
+                title: "Confirm Password",
+                infoContain: $secondPassword,
+                summitCheck: false,
+                showCautionBorder: false,
+                fieldName: "Enter your password again, please",
+                hasContain: secondPassword.isEmpty,
+                fieldType: .secure
+            )
             Spacer()
                 .frame(maxHeight: (AppVM.uiScreenHeight / 6) * 0.1)
             ReuseableLargeButton(buttonName: "Confirm", isDarkGreen: true) {

@@ -46,4 +46,16 @@ class FirebaseUserAuth {
         }
     }
     
+    func signUpUserVerification() async throws {
+        try await auth.currentUser?.sendEmailVerification()
+    }
+    
+    func sendingPasswordReset(with email: String) async throws {
+        try await auth.sendPasswordReset(withEmail: email)
+    }
+    
+    func passwordUpdate(from password: String) async throws {
+        try await auth.currentUser?.updatePassword(to: password)
+    }
+    
 }

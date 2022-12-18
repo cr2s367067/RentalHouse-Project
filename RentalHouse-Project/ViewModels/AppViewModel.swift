@@ -57,6 +57,7 @@ extension AppVM {
         case textFieldBackground = "TextFieldBackground"
         case lightTextGray = "LightTextGray"
         case lightSpecialStyle2 = "LightSpecialStyle2"
+        case cautionTextColor = "CautionTextColor"
     }
     
     enum ButtonImagePositionConfig {

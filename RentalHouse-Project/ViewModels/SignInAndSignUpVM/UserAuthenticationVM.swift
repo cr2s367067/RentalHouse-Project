@@ -78,6 +78,8 @@ class UserAuthenticationVM: ObservableObject {
     func createUser() async throws {
         try await fireAuth.signUp(email: emaillAddress, password: password, uid: &userUID)
         try await fireDB.createUser(uid: userUID, user: .userIntoInit(signUpType: userStatue.rawValue))
+        //FIXME: Need to test!
+        try await fireAuth.signUpUserVerification()
         self.isSignIn = true
         resetUsernameAndPassword()
     }

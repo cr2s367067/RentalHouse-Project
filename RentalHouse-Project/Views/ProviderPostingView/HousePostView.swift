@@ -64,10 +64,10 @@ struct HousePostView: View {
                         }
                         .frame(width: AppVM.uiScreenWidth * 0.8)
                     }
-                    CustomTextFieldWithName(title: "Room Size", infoContain: $pacVM.roomData.roomSize, fieldName: "Please enter room size", hasContain: pacVM.roomData.roomSize.isEmpty)
-                    CustomTextFieldWithName(title: "Room Address", infoContain: $pacVM.roomData.roomAddress, fieldName: "Please enter room address", hasContain: pacVM.roomData.roomAddress.isEmpty)
-                    CustomTextFieldWithName(title: "Rental Price", infoContain: $pacVM.roomData.rentalPrice, fieldName: "Please enter rental price", hasContain: pacVM.roomData.rentalPrice.isEmpty)
-                    CustomTextFieldWithName(title: "Room Introdution", infoContain: $pacVM.roomData.additionalInfo, fieldName: "Please introduce this room", hasContain: pacVM.roomData.additionalInfo.isEmpty)
+//                    CustomTextFieldWithName(title: "Room Size", infoContain: $pacVM.roomData.roomSize, fieldName: "Please enter room size", hasContain: pacVM.roomData.roomSize.isEmpty)
+//                    CustomTextFieldWithName(title: "Room Address", infoContain: $pacVM.roomData.roomAddress, fieldName: "Please enter room address", hasContain: pacVM.roomData.roomAddress.isEmpty)
+//                    CustomTextFieldWithName(title: "Rental Price", infoContain: $pacVM.roomData.rentalPrice, fieldName: "Please enter rental price", hasContain: pacVM.roomData.rentalPrice.isEmpty)
+//                    CustomTextFieldWithName(title: "Room Introdution", infoContain: $pacVM.roomData.additionalInfo, fieldName: "Please introduce this room", hasContain: pacVM.roomData.additionalInfo.isEmpty)
                     postHeader(title: "Confirm and Upload")
                     ReuseableCofirmCheckBoxWithStatement(statement: "I have check room info.", isAgree: pacVM.roomData.tosAgree) {
                         pacVM.roomData.tosAgree.toggle()
