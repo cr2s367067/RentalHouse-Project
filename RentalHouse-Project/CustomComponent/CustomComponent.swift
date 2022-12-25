@@ -135,6 +135,8 @@ struct CustomTextFieldWithName: View {
                                 .font(Font.custom("SFPro-Regular", size: 14))
                         }
                         .foregroundColor(Color("TextFieldContainColor"))
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
                         .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)
                         .cornerRadius(10)
                         .background {
@@ -152,7 +154,7 @@ struct CustomTextFieldWithName: View {
                                     .font(Font.custom("SFPro-Regular", size: 14))
                             }
                             .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .textInputAutocapitalization(.never) 
                             .keyboardType(.default)
                             .foregroundColor(Color("TextFieldContainColor"))
                             .frame(height: (AppVM.uiScreenHeight / 4) * 0.24)

@@ -3,4 +3,54 @@
    uuid = "4CE8F196-07EA-4273-8D14-9724974ECB8E"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D75416D5-0F4C-4BCF-B82D-659B7606CC65"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RentalHouse-Project/ViewModels/SignInAndSignUpVM/UserAuthenticationVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "emailIsVerificated()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D75416D5-0F4C-4BCF-B82D-659B7606CC65 - 353c159cbbac8f81"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RentalHouse_Project.UserAuthenticationVM.emailIsVerificated() -&gt; ()"
+                  moduleName = "RentalHouse-Project"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kuan/Desktop/Business%20Project/SideProject/RentalHouse-Project/RentalHouse-Project/ViewModels/SignInAndSignUpVM/UserAuthenticationVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "D75416D5-0F4C-4BCF-B82D-659B7606CC65 - 1ee54305bf9c87dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in RentalHouse_Project.UserAuthenticationVM.emailIsVerificated() -&gt; ()"
+                  moduleName = "RentalHouse-Project"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kuan/Desktop/Business%20Project/SideProject/RentalHouse-Project/RentalHouse-Project/ViewModels/SignInAndSignUpVM/UserAuthenticationVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

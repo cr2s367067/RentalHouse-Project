@@ -41,7 +41,9 @@ class FirestoreDB {
             "signUpType" : user.signUpType,
             "mobile" : user.mobile,
             "lineID" : user.lineID,
-            "profileImagePath" : user.profileImagePath
+            "profileImagePath" : user.profileImagePath,
+            "accountVerificated" : user.accountVerificated,
+            "agreeTOSPolicy" : user.agreeTOSPolicy
         ])
     }
     

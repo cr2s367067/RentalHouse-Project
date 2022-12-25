@@ -38,16 +38,38 @@ class FirebaseUserAuth {
         try auth.signOut()
     }
     
-    func currentUserListener(mainView: @escaping ()->Void) {
+    func reloadUserData() async throws {
+        try await auth.currentUser?.reload()
+    }
+    
+    func currentUserListener(action: (()->Void)? = nil) {
         auth.addStateDidChangeListener { auth, currentUser in
             if currentUser != nil {
-                mainView()
+                Task {
+                    do {
+                        try await self.accountIsVerificated(action: action)
+                    } catch {
+                        fatalError()
+                    }
+                }
             }
         }
     }
     
-    func signUpUserVerification() async throws {
-        try await auth.currentUser?.sendEmailVerification()
+    func getUserVerification() async throws {
+        try await self.reloadUserData()
+        if auth.currentUser != nil && !(auth.currentUser?.isEmailVerified ?? false) {
+            try await auth.currentUser?.sendEmailVerification()
+        }
+    }
+    
+    
+    
+    func accountIsVerificated(action: (()->Void)? = nil) async throws {
+        try await self.reloadUserData()
+        if auth.currentUser?.isEmailVerified ?? false {
+            action?()
+        }
     }
     
     func sendingPasswordReset(with email: String) async throws {

@@ -40,7 +40,7 @@ class UserAuthenticationVM: ObservableObject {
     @Published var isRenter: Bool
     @Published var userStatue: SignUpUserType = .provider
     @Published var userUID: String
-    @Published var isRead: Bool
+//    @Published var isRead: Bool
     
     private var tempHolder: UserDM = .empty
     
@@ -52,8 +52,8 @@ class UserAuthenticationVM: ObservableObject {
         isSignIn: Bool = false,
         isProvider: Bool = false,
         isRenter: Bool = false,
-        userUID: String = "",
-        isRead: Bool = false
+        userUID: String = ""
+//        isRead: Bool = false
     ) {
         self.emaillAddress = userName
         self.password = password
@@ -63,7 +63,7 @@ class UserAuthenticationVM: ObservableObject {
         self.isProvider = isProvider
         self.isRenter = isRenter
         self.userUID = userUID
-        self.isRead = isRead
+//        self.isRead = isRead
     }
     
     
@@ -77,11 +77,9 @@ class UserAuthenticationVM: ObservableObject {
     @MainActor
     func createUser() async throws {
         try await fireAuth.signUp(email: emaillAddress, password: password, uid: &userUID)
-        try await fireDB.createUser(uid: userUID, user: .userIntoInit(signUpType: userStatue.rawValue))
+        try await fireDB.createUser(uid: userUID, user: .userIntoInit(signUpType: userStatue.rawValue, isRead: user.agreeTOSPolicy))
         //FIXME: Need to test!
-        try await fireAuth.signUpUserVerification()
-        self.isSignIn = true
-        resetUsernameAndPassword()
+        try await getSendVerificationMail()
     }
     
     func userSignOut() throws {
@@ -91,6 +89,7 @@ class UserAuthenticationVM: ObservableObject {
     
     func listenUser() {
         fireAuth.currentUserListener {
+            
             self.isSignIn = true
         }
     }
@@ -100,6 +99,20 @@ class UserAuthenticationVM: ObservableObject {
         userUID = fireAuth.getUid()
         try await fireDB.fetchUserInto(uid: userUID, user: &user)
         userStatue = .init(rawValue: user.signUpType) ?? .provider
+    }
+    
+    @MainActor
+    func getSendVerificationMail() async throws {
+        try await fireAuth.getUserVerification()
+    }
+    
+    @MainActor
+    func emailIsVerificated() async throws {
+        try await fireAuth.accountIsVerificated(action: {
+            DispatchQueue.main.async {
+                self.isSignIn = true
+            }
+        })
     }
     
     private func resetUsernameAndPassword() {
@@ -136,7 +149,7 @@ extension UserAuthenticationVM {
         self.emaillAddress.removeAll()
         self.password.removeAll()
         self.rePassword.removeAll()
-        self.isRead = false
+        self.user.agreeTOSPolicy = false
         self.user.nickName.removeAll()
     }
     

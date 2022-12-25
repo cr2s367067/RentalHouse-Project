@@ -45,20 +45,42 @@ struct SignUpView: View {
             }
 
         case .infoFieldView:
-            SignUpInfoView(userAuth: userAuth, signUpVM: signUpVM, isRead: $userAuth.isRead, signUpSstatus: $signUpSstatus, summitCheck: .constant(false)) {
+            SignUpInfoView(userAuth: userAuth, signUpVM: signUpVM, isRead: $userAuth.user.agreeTOSPolicy, signUpSstatus: $signUpSstatus, summitCheck: .constant(false)) {
                 withAnimation {
                     signUpSstatus = .userSelectionView
                 }
                 userAuth.fieldReset()
             } rightAction: {
                 //TODO: Navigate to identify view, if user account havn't created
-                withAnimation {
-                    signUpSstatus = .authenticationView
+                Task {
+                    do {
+                        debugPrint("user info: \(userAuth.user)")
+                        try await userAuth.createUser()
+                        withAnimation {
+                            signUpSstatus = .authenticationView
+                        }
+                    } catch {
+                        self.errorHandler.handler(error: error)
+                    }
                 }
             }
         case .authenticationView:
             AuthenticationView(authCode: $userAuth.authCode) {
-                debugPrint("some action......")
+                Task {
+                    do {
+                        try await userAuth.emailIsVerificated()
+                    } catch {
+                        self.errorHandler.handler(error: error)
+                    }
+                }
+            } reSendAction: {
+                Task {
+                    do {
+                        try await userAuth.getSendVerificationMail()
+                    } catch {
+                        self.errorHandler.handler(error: error)
+                    }
+                }
             }
         }
     }
@@ -206,10 +228,9 @@ struct SignUpInfoView: View {
 }
 
 struct AuthenticationView: View {
-    
     @Binding var authCode: String
     var action: (()->Void)? = nil
-    
+    var reSendAction: (()->Void)? = nil
     var body: some View {
         VStack(spacing: (AppVM.uiScreenHeight / 5) * 0.2) {
             VStack(spacing: (AppVM.uiScreenHeight / 6) * 0.1) {
@@ -242,6 +263,9 @@ struct AuthenticationView: View {
                     .foregroundColor(Color(AppVM.ColorSet.lightTextGray.rawValue))
                 Text("Re-send")
                     .foregroundColor(Color(AppVM.ColorSet.lightSpecialStyle2.rawValue))
+                    .onTapGesture {
+                        reSendAction?()
+                    }
                 Spacer()
             }
             .font(.custom("SFPro-Regular", size: 14))

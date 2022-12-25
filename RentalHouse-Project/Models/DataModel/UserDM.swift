@@ -15,6 +15,7 @@ struct UserDM: Codable, Equatable {
     var lineID: String
     var profileImagePath: String
     var accountVerificated: Bool
+    var agreeTOSPolicy: Bool
 }
 
 extension UserDM {
@@ -24,17 +25,19 @@ extension UserDM {
         mobile: "",
         lineID: "",
         profileImagePath: "",
-        accountVerificated: false
+        accountVerificated: false,
+        agreeTOSPolicy: false
     )
     
-    static func userIntoInit(signUpType: String) -> UserDM {
+    static func userIntoInit(signUpType: String, isRead: Bool) -> UserDM {
         return UserDM (
             nickName: "",
             signUpType: signUpType,
             mobile: "",
             lineID: "",
             profileImagePath: "",
-            accountVerificated: false
+            accountVerificated: false,
+            agreeTOSPolicy: isRead
         )
     }
 }
