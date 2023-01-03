@@ -10,6 +10,7 @@ import SwiftUI
 struct ForgetPasswordView: View {
     
     @EnvironmentObject var userAuth: UserAuthenticationVM
+    @EnvironmentObject var errorHandler: ErrorHandler
     @State private var forgetPasswordStatus: AppVM.ForgetPasswordStatus = .recoveryEmailView
     @State private var recoverEmailAddress = ""
     @State private var authCode = ""
@@ -17,25 +18,33 @@ struct ForgetPasswordView: View {
     @State private var secondPassword = ""
     
     var body: some View {
-        switch forgetPasswordStatus {
-        case .recoveryEmailView:
+//        switch forgetPasswordStatus {
+//        case .recoveryEmailView:
             RecoveryEmailView(recoveryEmailAddress: $userAuth.emaillAddress) {
-                withAnimation {
-                    forgetPasswordStatus = .authenticationView
+//                withAnimation {
+//                    forgetPasswordStatus = .authenticationView
+//                }
+                Task {
+                    do {
+                        try await userAuth.passwordResetRequest()
+                    } catch {
+                        self.errorHandler.handler(error: error)
+                    }
                 }
+                
             }
-        case .authenticationView:
-            AuthenticationView(authCode: $userAuth.authCode) {
-                debugPrint("some action")
-                withAnimation {
-                    forgetPasswordStatus = .resetPassswordView
-                }
-            }
-        case .resetPassswordView:
-            ResetPasswordView(firstPassword: $userAuth.password, secondPassword: $userAuth.rePassword) {
-                debugPrint("Set new password")
-            }
-        }
+//        case .authenticationView:
+//            AuthenticationView(authCode: $userAuth.authCode) {
+//                debugPrint("some action")
+//                withAnimation {
+//                    forgetPasswordStatus = .resetPassswordView
+//                }
+//            }
+//        case .resetPassswordView:
+//            ResetPasswordView(firstPassword: $userAuth.password, secondPassword: $userAuth.rePassword) {
+//                debugPrint("Set new password")
+//            }
+//        }
         
     }
 }

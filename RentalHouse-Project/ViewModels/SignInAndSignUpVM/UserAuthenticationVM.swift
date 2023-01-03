@@ -89,8 +89,9 @@ class UserAuthenticationVM: ObservableObject {
     
     func listenUser() {
         fireAuth.currentUserListener {
-            
-            self.isSignIn = true
+            DispatchQueue.main.async {
+                self.isSignIn = true
+            }
         }
     }
     
@@ -121,6 +122,10 @@ class UserAuthenticationVM: ObservableObject {
         password.removeAll()
         isRenter = false
         isProvider = false
+    }
+    
+    func passwordResetRequest() async throws {
+        try await fireAuth.sendingPasswordReset(with: self.emaillAddress)
     }
     
 }
